@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Directory Lab — Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --ink: #0e0e0e;
+  --paper: #f5f0e8;
+  --cream: #ede7d9;
+  --rule: #c8bfaa;
+  --accent: #1a4a8a;
+  --accent2: #c0392b;
+  --accent3: #2e7d32;
+  --stamp: #7b3f00;
+  --muted: #6b5e4e;
+  --highlight: #fff3b0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #d4c9b5;
+  font-family: 'Lora', Georgia, serif;
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.04) 27px, rgba(0,0,0,0.04) 28px);
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--paper);
+  border-radius: 2px;
+  box-shadow: 4px 4px 0 #9e8f7a, 8px 8px 0 #bbb0a0, 0 0 40px rgba(0,0,0,0.25);
+  padding: 3rem 3.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Notebook hole punches */
+.page::before {
+  content: '';
+  position: absolute;
+  left: 52px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(180,50,50,0.25);
+}
+
+.holes {
+  position: absolute;
+  left: 42px;
+  top: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  pointer-events: none;
+  z-index: 10;
+}
+.hole {
+  width: 22px; height: 22px;
+  background: #d4c9b5;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.content { padding-left: 1.5rem; }
+
+/* Header */
+.doc-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.doc-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.doc-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+
+.doc-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.doc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 1rem 0 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.doc-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Stamp */
+.stamp {
+  position: absolute;
+  top: 0; right: 0;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent3);
+  border: 2.5px solid var(--accent3);
+  padding: 5px 12px;
+  border-radius: 3px;
+  transform: rotate(3deg);
+  opacity: 0.85;
+}
+
+/* Section headings */
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+/* Objective box */
+.objective-box {
+  background: var(--highlight);
+  border-left: 4px solid var(--stamp);
+  padding: 14px 16px;
+  margin: 0 0 2rem;
+  font-size: 14px;
+  line-height: 1.7;
+  border-radius: 0 4px 4px 0;
+}
+.objective-box strong { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stamp); display: block; margin-bottom: 4px; }
+
+/* Task list */
+.task-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+}
+.task-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+  min-width: 22px;
+  padding-top: 1px;
+}
+.task-check {
+  color: var(--accent3);
+  font-size: 14px;
+  min-width: 16px;
+}
+
+/* Steps section */
+.steps { margin-bottom: 2rem; }
+.step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.step::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 36px;
+  bottom: -10px;
+  width: 1px;
+  background: var(--rule);
+}
+.step:last-child::before { display: none; }
+.step-num {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.step-body { flex: 1; padding-top: 4px; }
+.step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+.step-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 4px 9px;
+  margin-top: 5px;
+  display: inline-block;
+  color: var(--accent2);
+}
+
+/* Screenshots */
+.screenshots { margin-bottom: 2rem; }
+.screenshot-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.screenshot-row.single { grid-template-columns: 1fr; }
+.ss-card {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--cream);
+}
+.ss-bar {
+  background: var(--ink);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ss-dot { width: 8px; height: 8px; border-radius: 50%; }
+.ss-label { color: rgba(255,255,255,0.6); font-family: 'IBM Plex Mono', monospace; font-size: 10px; flex: 1; text-align: center; }
+.ss-img { width: 100%; display: block; }
+.ss-caption { padding: 7px 10px; font-size: 12px; color: var(--muted); font-style: italic; border-top: 1px solid var(--rule); background: var(--paper); }
+
+/* AD structure diagram */
+.ad-diagram {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+.ad-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.ad-indent1 { padding-left: 20px; }
+.ad-indent2 { padding-left: 40px; }
+.ad-indent3 { padding-left: 60px; }
+.ad-indent4 { padding-left: 80px; }
+.ad-icon { font-size: 14px; }
+.ad-name { font-weight: 500; }
+.ad-desc { color: var(--muted); font-size: 11px; margin-left: 4px; }
+
+/* Key learnings */
+.learnings { margin-bottom: 2rem; }
+.learning-item {
+  display: flex; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--rule);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.learning-item:last-child { border-bottom: none; }
+.learning-icon { font-size: 16px; min-width: 22px; }
+
+/* Skills tags */
+.skills-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+.skill-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.tag-blue  { color: var(--accent);  border-color: var(--accent);  background: rgba(26,74,138,0.07); }
+.tag-red   { color: var(--accent2); border-color: var(--accent2); background: rgba(192,57,43,0.07); }
+.tag-green { color: var(--accent3); border-color: var(--accent3); background: rgba(46,125,50,0.07); }
+.tag-brown { color: var(--stamp);   border-color: var(--stamp);   background: rgba(123,63,0,0.07); }
+
+/* Footer sig */
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.footer-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; }
+.footer-meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: right; }
+
+.spacer { margin-bottom: 2rem; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .page { padding: 2rem 1.5rem 2.5rem; }
+  .task-grid { grid-template-columns: 1fr; }
+  .screenshot-row { grid-template-columns: 1fr; }
+  .doc-title { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Header -->
+    <div class="doc-header">
+      <div class="doc-meta">
+        <span class="doc-tag">SAD622S · System Administration</span>
+        <span class="doc-date">Lab completed: 3 June 2026</span>
+      </div>
+      <div class="doc-title">Active Directory<br>Domain Setup Lab</div>
+      <div class="doc-subtitle">Practical lab — configuring AD DS, domain users, OUs, and security groups on Windows Server</div>
+      <div class="stamp">✓ Completed</div>
+    </div>
+
+    <!-- Objective -->
+    <div class="section-label">Lab Objective</div>
+    <div class="objective-box">
+      <strong>Task Summary</strong>
+      Set up a Windows Server 2019 domain environment (<strong>jay.local</strong>), promote the server to a Domain Controller, and configure Active Directory by creating Organisational Units, user accounts, and security groups — then add a full-time employee (Martin / JoE) to the Finance department group with correct folder access.
+    </div>
+
+    <!-- Tasks completed -->
+    <div class="section-label">Tasks Completed</div>
+    <div class="task-grid">
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">01</span>Installed AD DS role via Server Manager</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">02</span>Promoted server to Domain Controller (jay.local)</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">03</span>Created Organisational Units (Accounts, Groups)</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">04</span>Created user accounts with naming conventions</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">05</span>Created Security Groups: Finance, HR, IT, Marketing</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">06</span>Added user JoE Martin to Finance group</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">07</span>Joined a client computer to the domain</div>
+      <div class="task-item"><span class="task-check">✓</span><span class="task-num">08</span>Signed in to domain from client using domain user</div>
+    </div>
+
+    <!-- Step by step -->
+    <div class="section-label">Step-by-Step Process</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Open Server Manager Dashboard</div>
+          <div class="step-desc">Launched Server Manager on Windows Server 2019. Navigated to <em>Add Roles and Features</em> and selected the <strong>Active Directory Domain Services (AD DS)</strong> role to install.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Promote Server to Domain Controller</div>
+          <div class="step-desc">After AD DS installed, used the post-install wizard to promote the server to a Domain Controller. Created a new forest with the domain name <strong>jay.local</strong>. Set the DSRM (Directory Services Restore Mode) password and completed the promotion.</div>
+          <span class="step-code">Domain: jay.local</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Open Active Directory Users and Computers (ADUC)</div>
+          <div class="step-desc">Accessed ADUC via <em>Tools → Active Directory Users and Computers</em> in Server Manager. This is the main tool for managing all AD objects. Confirmed the domain structure was visible: <strong>jay.local</strong> with default containers.</div>
+          <span class="step-code">Tools → Active Directory Users and Computers (dsa.msc)</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Create Organisational Units (OUs)</div>
+          <div class="step-desc">Right-clicked <strong>jay.local</strong> → New → Organisational Unit. Created two OUs: <strong>Accounts</strong> (to hold user accounts) and <strong>Groups</strong> (to hold security groups). OUs are like folders that help organise and apply different policies to different sets of users.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Create User Accounts</div>
+          <div class="step-desc">Navigated to the <strong>Accounts OU</strong>, right-clicked → New → User. Created a new user following the naming convention (first name + last initial). Set a temporary password and required the user to change it at first login.</div>
+          <span class="step-code">Example: JoE Martin → username: jmartin</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Create Security Groups</div>
+          <div class="step-desc">Navigated to the <strong>Groups OU</strong>, right-clicked → New → Group. Created four Security Groups: <strong>Finance</strong>, <strong>HR</strong>, <strong>IT</strong>, and <strong>Marketing</strong>. Security groups control which resources (folders, printers, apps) each department can access.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <div class="step-title">Add User to Finance Group</div>
+          <div class="step-desc">Double-clicked the <strong>Finance</strong> group → Members tab → Add. Added <strong>JoE Martin</strong> (from jay.local/Accounts). This gives Martin access to Finance department resources. Verified the membership was saved correctly.</div>
+          <span class="step-code">Finance Properties → Members → Add → JoE Martin</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <div class="step-title">Join Client Computer to Domain & Test Login</div>
+          <div class="step-desc">On a client Windows machine, navigated to <em>System Properties → Computer Name → Change</em>. Changed from Workgroup to Domain, entered <strong>jay.local</strong>. Provided domain admin credentials. After reboot, signed in using the domain user account to confirm authentication was working.</div>
+          <span class="step-code">sysdm.cpl → Computer Name → Change → Domain: jay.local</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AD Structure -->
+    <div class="section-label">Domain Structure Created</div>
+    <div class="ad-diagram">
+      <div class="ad-row"><span class="ad-icon">🌲</span><span class="ad-name">jay.local</span><span class="ad-desc">— Forest root domain</span></div>
+      <div class="ad-row ad-indent1"><span class="ad-icon">📁</span><span class="ad-name">Accounts</span><span class="ad-desc">— OU for user accounts</span></div>
+      <div class="ad-row ad-indent2"><span class="ad-icon">👤</span><span class="ad-name">JoE Martin</span><span class="ad-desc">— Full-time employee, Finance Dept</span></div>
+      <div class="ad-row ad-indent1"><span class="ad-icon">📁</span><span class="ad-name">Groups</span><span class="ad-desc">— OU for security groups</span></div>
+      <div class="ad-row ad-indent2"><span class="ad-icon">👥</span><span class="ad-name">Finance</span><span class="ad-desc">— Security Group (members: JoE Martin)</span></div>
+      <div class="ad-row ad-indent2"><span class="ad-icon">👥</span><span class="ad-name">HR</span><span class="ad-desc">— Security Group</span></div>
+      <div class="ad-row ad-indent2"><span class="ad-icon">👥</span><span class="ad-name">IT</span><span class="ad-desc">— Security Group</span></div>
+      <div class="ad-row ad-indent2"><span class="ad-icon">👥</span><span class="ad-name">Marketing</span><span class="ad-desc">— Security Group</span></div>
+      <div class="ad-row ad-indent1"><span class="ad-icon">🖥️</span><span class="ad-name">Domain Controllers</span><span class="ad-desc">— WIN-2ALUAB97MUI</span></div>
+    </div>
+
+    <!-- Screenshots -->
+    <div class="section-label">Lab Screenshots</div>
+    <div class="screenshots">
+      <div class="screenshot-row">
+        <div class="ss-card">
+          <div class="ss-bar">
+            <div class="ss-dot" style="background:#ff5f57"></div>
+            <div class="ss-dot" style="background:#ffbd2e"></div>
+            <div class="ss-dot" style="background:#28ca42"></div>
+            <div class="ss-label">Server Manager Dashboard</div>
+          </div>
+          <img src="IMG_8882.jpeg" class="ss-img" alt="Server Manager Dashboard showing AD DS role installed">
+          <div class="ss-caption">Server Manager Dashboard — AD DS role active with 4 roles installed</div>
+        </div>
+        <div class="ss-card">
+          <div class="ss-bar">
+            <div class="ss-dot" style="background:#ff5f57"></div>
+            <div class="ss-dot" style="background:#ffbd2e"></div>
+            <div class="ss-dot" style="background:#28ca42"></div>
+            <div class="ss-label">ADUC — Domain Structure</div>
+          </div>
+          <img src="IMG_8881.jpeg" class="ss-img" alt="Active Directory Users and Computers showing jay.local structure">
+          <div class="ss-caption">ADUC showing jay.local domain with Accounts, Groups OUs created</div>
+        </div>
+      </div>
+      <div class="screenshot-row">
+        <div class="ss-card">
+          <div class="ss-bar">
+            <div class="ss-dot" style="background:#ff5f57"></div>
+            <div class="ss-dot" style="background:#ffbd2e"></div>
+            <div class="ss-dot" style="background:#28ca42"></div>
+            <div class="ss-label">Security Groups</div>
+          </div>
+          <img src="IMG_8879.jpeg" class="ss-img" alt="Groups OU showing Finance, HR, IT, Marketing security groups">
+          <div class="ss-caption">Groups OU — Finance, HR, IT, Marketing security groups created</div>
+        </div>
+        <div class="ss-card">
+          <div class="ss-bar">
+            <div class="ss-dot" style="background:#ff5f57"></div>
+            <div class="ss-dot" style="background:#ffbd2e"></div>
+            <div class="ss-dot" style="background:#28ca42"></div>
+            <div class="ss-label">Finance Group Members</div>
+          </div>
+          <img src="IMG_8880.jpeg" class="ss-img" alt="Finance group properties showing JoE Martin as member">
+          <div class="ss-caption">Finance Properties → Members tab — JoE Martin added from jay.local/Accounts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key learnings -->
+    <div class="section-label">Key Concepts Practised</div>
+    <div class="learnings">
+      <div class="learning-item">
+        <span class="learning-icon">🏗️</span>
+        <span><strong>Forest & Domain creation</strong> — A new AD forest is created when promoting the first DC. The forest root domain (jay.local) is the top of the entire AD hierarchy.</span>
+      </div>
+      <div class="learning-item">
+        <span class="learning-icon">📁</span>
+        <span><strong>Organisational Units (OUs)</strong> — OUs are containers that organise objects and allow different Group Policies to be applied to different sets of users and computers.</span>
+      </div>
+      <div class="learning-item">
+        <span class="learning-icon">👥</span>
+        <span><strong>Security Groups</strong> — Used to control resource access for a department. Instead of setting permissions per user, you set them on the group — all members inherit that access automatically.</span>
+      </div>
+      <div class="learning-item">
+        <span class="learning-icon">🔐</span>
+        <span><strong>Domain Authentication</strong> — When a user logs in on any domain-joined computer, the Domain Controller verifies their credentials from the AD database — not the local machine.</span>
+      </div>
+      <div class="learning-item">
+        <span class="learning-icon">📋</span>
+        <span><strong>Naming Conventions</strong> — Following a consistent naming convention for users (e.g. first name + last initial) is a sysadmin best practice to keep accounts organised and predictable.</span>
+      </div>
+      <div class="learning-item">
+        <span class="learning-icon">🔑</span>
+        <span><strong>Group Membership</strong> — Adding a user to a Security Group grants them the permissions assigned to that group — e.g. Finance group members can access the Finance shared folder.</span>
+      </div>
+    </div>
+
+    <!-- Skills demonstrated -->
+    <div class="section-label">Skills Demonstrated</div>
+    <div class="skills-row">
+      <span class="skill-tag tag-blue">Windows Server 2019</span>
+      <span class="skill-tag tag-blue">Active Directory DS</span>
+      <span class="skill-tag tag-blue">Server Manager</span>
+      <span class="skill-tag tag-red">Domain Controller Setup</span>
+      <span class="skill-tag tag-red">Forest & Domain Config</span>
+      <span class="skill-tag tag-green">ADUC (dsa.msc)</span>
+      <span class="skill-tag tag-green">OU Creation</span>
+      <span class="skill-tag tag-green">User Account Management</span>
+      <span class="skill-tag tag-green">Security Group Management</span>
+      <span class="skill-tag tag-brown">Group Membership</span>
+      <span class="skill-tag tag-brown">Domain Join (client)</span>
+      <span class="skill-tag tag-brown">AD Naming Conventions</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>
+        <div class="footer-name">System Administration Lab</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted);">SAD622S · NUST · Faculty of Computing and Informatics</div>
+      </div>
+      <div class="footer-meta">
+        Completed: 3 June 2026<br>
+        Environment: Windows Server 2019 (VM)<br>
+        Domain: jay.local
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end page -->
+
+</body>
+</html>
