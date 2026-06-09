@@ -636,6 +636,34 @@
       .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
+
+    /* ACADEMIC TRANSCRIPT */
+    .transcript-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--accent);
+      text-transform: uppercase; margin: 2rem 0 0.6rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .transcript-year::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .transcript-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 0.25rem; }
+    .transcript-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(30,30,46,0.7);
+      color: var(--text);
+    }
+    .transcript-table td:first-child { color: var(--muted); font-size: 0.78rem; }
+    .transcript-table td:last-child {
+      text-align: right; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; font-weight: 700; white-space: nowrap;
+    }
+    .g-distinction { color: #10b981; }
+    .g-merit       { color: #00e5ff; }
+    .g-credit      { color: #a78bfa; }
+    .g-pass        { color: var(--muted); }
+    .g-fail        { color: #ef4444; }
+    .g-na          { color: var(--muted); font-style: italic; }
   </style>
 </head>
 <body>
@@ -727,47 +755,51 @@
     <div class="skills-grid">
       <div class="skill-category">
         <div class="skill-icon">🖥️</div>
-        <div class="skill-cat-title">Infrastructure</div>
+        <div class="skill-cat-title">Hardware &amp; Infrastructure</div>
         <div class="skill-tags">
+          <span class="skill-tag">Hardware Installation</span>
+          <span class="skill-tag">Server Configuration</span>
           <span class="skill-tag">HP Servers</span>
           <span class="skill-tag">Supermicro</span>
           <span class="skill-tag">SSD Replication</span>
           <span class="skill-tag">BIOS/BMC Config</span>
           <span class="skill-tag">Firmware Upgrades</span>
-          <span class="skill-tag">Active Directory</span>
-          <span class="skill-tag">Windows Server</span>
-          <span class="skill-tag">Domain Controller</span>
         </div>
       </div>
       <div class="skill-category">
         <div class="skill-icon">🌐</div>
         <div class="skill-cat-title">Networking</div>
         <div class="skill-tags">
-          <span class="skill-tag">Fortinet Firewalls</span>
+          <span class="skill-tag">Packet Tracer</span>
           <span class="skill-tag">IP Configuration</span>
           <span class="skill-tag">NIC Setup</span>
+          <span class="skill-tag">Fortinet Firewalls</span>
           <span class="skill-tag">Wireless APs</span>
           <span class="skill-tag">Network Troubleshooting</span>
         </div>
       </div>
       <div class="skill-category">
         <div class="skill-icon">🐧</div>
-        <div class="skill-cat-title">Systems</div>
+        <div class="skill-cat-title">Operating Systems</div>
         <div class="skill-tags">
+          <span class="skill-tag">Windows Server</span>
+          <span class="skill-tag">Active Directory</span>
+          <span class="skill-tag">OS Installations</span>
           <span class="skill-tag">Linux Ubuntu</span>
           <span class="skill-tag">Linux Mint</span>
           <span class="skill-tag">FreeBSD</span>
+          <span class="skill-tag">Linux CLI</span>
           <span class="skill-tag">VirtualBox</span>
-          <span class="skill-tag">Email Server Admin</span>
         </div>
       </div>
       <div class="skill-category">
         <div class="skill-icon">📄</div>
-        <div class="skill-cat-title">Documentation</div>
+        <div class="skill-cat-title">Documentation &amp; Management</div>
         <div class="skill-tags">
           <span class="skill-tag">SOP Authoring</span>
-          <span class="skill-tag">Technical Docs</span>
+          <span class="skill-tag">Technical Documentation</span>
           <span class="skill-tag">Inventory Management</span>
+          <span class="skill-tag">Email Server Administration</span>
           <span class="skill-tag">Netdata Monitoring</span>
         </div>
       </div>
@@ -820,23 +852,31 @@
           VIEW FULL LAB REPORT →
         </div>
       </a>
-      <div class="project-card">
+      <a href="Data_Centre_Design_Lab.html" style="text-decoration:none;color:inherit;display:block;" class="project-card">
         <div class="project-header">
           <span class="project-num">003</span>
           <span class="project-arrow">↗</span>
         </div>
-        <h3 class="project-title">Tier-1 Data Centre Design</h3>
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
+          <h3 class="project-title" style="margin-bottom:0;">Tier-1 Data Centre Design</h3>
+          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;padding:0.2rem 0.6rem;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.25);color:var(--accent);letter-spacing:0.08em;white-space:nowrap;">LAB REPORT</span>
+        </div>
         <p class="project-desc">
-          Designing the hardware, power, and cooling specifications for a Tier-1
-          data centre facility, focusing on reliability, redundancy, and scalability.
+          Engineered a complete Tier-1 data centre specification across 6 standard 42U racks within 16 m² — 65 active devices, 40.3 kW total IT load, dual Magnizon MU40KXL UPS units (altitude-derated for Windhoek at 1,654 m), and a Vertiv Liebert CR066 precision cooling system rated at 64.6 kW for a 48.4 kW total heat load.
         </p>
         <div class="project-tech">
-          <span class="tech-badge">Data Centre</span>
-          <span class="tech-badge">Power Systems</span>
-          <span class="tech-badge">Cooling</span>
-          <span class="tech-badge">Hardware</span>
+          <span class="tech-badge">Cisco Nexus 9504</span>
+          <span class="tech-badge">Cisco C9300</span>
+          <span class="tech-badge">Supermicro</span>
+          <span class="tech-badge">UPS Systems</span>
+          <span class="tech-badge">Precision Cooling</span>
+          <span class="tech-badge">Power Planning</span>
+          <span class="tech-badge">Rack Design</span>
         </div>
-      </div>
+        <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.1em;">
+          VIEW FULL LAB REPORT →
+        </div>
+      </a>
       <a href="Netdata_Monitoring_Lab.html" style="text-decoration:none;color:inherit;display:block;" class="project-card">
         <div class="project-header">
           <span class="project-num">004</span>
@@ -918,13 +958,100 @@
       <div class="exp-item" style="border-bottom: none;">
         <div class="exp-date">2023 – 2026</div>
         <div>
-          <div class="exp-role">BSc Computer Science</div>
+          <div class="exp-role">BSc Computer Science (NQF Level 7)</div>
           <div class="exp-company" style="color: var(--green);">Namibia University of Science and Technology (NUST)</div>
-          <ul class="exp-points">
-            <li>Distinction in Linux Systems Administration, Wireless Technologies &amp; Innovation</li>
-            <li>Distinction in IT Infrastructure Administration and Systems Virtualisation</li>
-            <li>Coursework in Advanced Network Security, Data Centre Infrastructure, and Database Administration</li>
+          <ul class="exp-points" style="margin-bottom: 2rem;">
+            <li>Distinction in IT Infrastructure Administration &amp; Services, Systems Virtualisation, and Applied Statistics &amp; Probability</li>
+            <li>Distinction in Linux Systems Administration, Wireless Technologies, and Innovation &amp; Entrepreneurship</li>
+            <li>Coursework in Advanced Network Security, Data Centre Infrastructure Management, and Database Administration</li>
           </ul>
+
+          <!-- FULL TRANSCRIPT -->
+          <div style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem;">Full Academic Transcript</div>
+
+          <div class="transcript-year">2023</div>
+          <table class="transcript-table">
+            <tbody>
+              <tr><td>Introduction to Computing</td><td class="g-pass">54 · PASS</td></tr>
+              <tr><td>Business Management Information Systems</td><td class="g-credit">68 · CREDIT</td></tr>
+              <tr><td>Basic Science</td><td class="g-credit">60 · CREDIT</td></tr>
+              <tr><td>Database Fundamentals</td><td class="g-credit">60 · CREDIT</td></tr>
+              <tr><td>Design Thinking</td><td class="g-credit">68 · CREDIT</td></tr>
+              <tr><td>Mathematics for Computing &amp; Informatics 1A</td><td class="g-pass">50 · PASS</td></tr>
+              <tr><td>Principles of English Language Use</td><td class="g-pass">57 · PASS</td></tr>
+              <tr><td>Computer Organisation and Architecture</td><td class="g-merit">72 · MERIT</td></tr>
+              <tr><td>Data Structures and Algorithm 1</td><td class="g-pass">57 · PASS</td></tr>
+              <tr><td>Mathematics for Computing &amp; Informatics 1B</td><td class="g-pass">50 · PASS</td></tr>
+              <tr><td>Programming 1</td><td class="g-credit">67 · CREDIT</td></tr>
+              <tr><td>Systems Administration</td><td class="g-pass">55 · PASS</td></tr>
+              <tr><td>Operating Systems</td><td class="g-merit">74 · MERIT</td></tr>
+              <tr><td>Information Systems</td><td class="g-merit">72 · MERIT</td></tr>
+              <tr><td>Programming 2</td><td class="g-credit">69 · CREDIT</td></tr>
+            </tbody>
+          </table>
+
+          <div class="transcript-year">2024</div>
+          <table class="transcript-table">
+            <tbody>
+              <tr><td>Applied Statistics &amp; Probability</td><td class="g-distinction">76 · DISTINCTION</td></tr>
+              <tr><td>Data Networks</td><td class="g-credit">63 · CREDIT</td></tr>
+              <tr><td>English in Practice</td><td class="g-fail">48 · FAIL</td></tr>
+              <tr><td>English in Practice (Jun/Aug)</td><td class="g-fail">45 · FAIL</td></tr>
+            </tbody>
+          </table>
+
+          <div class="transcript-year">2025</div>
+          <table class="transcript-table">
+            <tbody>
+              <tr><td>IT Infrastructure Administration &amp; Services</td><td class="g-distinction">83 · DISTINCTION</td></tr>
+              <tr><td>Systems Virtualisation</td><td class="g-distinction">76 · DISTINCTION</td></tr>
+              <tr><td>Innovation, Creativity &amp; Entrepreneurship</td><td class="g-distinction">75 · DISTINCTION</td></tr>
+              <tr><td>Linux Systems Administration</td><td class="g-distinction">75 · DISTINCTION</td></tr>
+              <tr><td>Wireless Technologies</td><td class="g-distinction">75 · DISTINCTION</td></tr>
+              <tr><td>High Performance Computing</td><td class="g-credit">69 · CREDIT</td></tr>
+              <tr><td>Ethics for Computing</td><td class="g-credit">69 · CREDIT</td></tr>
+              <tr><td>Database Administration</td><td class="g-credit">66 · CREDIT</td></tr>
+              <tr><td>English in Practice</td><td class="g-pass">58 · PASS</td></tr>
+              <tr><td>English for Academic Purposes</td><td class="g-pass">57 · PASS</td></tr>
+              <tr><td>Communication Networks</td><td class="g-pass">50 · PASS</td></tr>
+              <tr><td>Advanced Network Security</td><td class="g-pass">51 · PASS</td></tr>
+              <tr><td>Data Centre Infrastructure Management</td><td class="g-fail">44 · FAIL</td></tr>
+              <tr><td>Core Networks Engineering</td><td class="g-na">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECONDARY EDUCATION -->
+      <div style="margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border);">
+        <div class="section-label" style="margin-bottom: 1.5rem;">04c // Secondary</div>
+        <h2 class="section-title" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); margin-bottom: 0.5rem;">Secondary Education</h2>
+        <div class="exp-company" style="color: var(--muted); margin-bottom: 2rem; font-size: 0.85rem;">Namibia Senior Secondary Certificate (NSSC)</div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div>
+            <div class="transcript-year">Grade 11 · 2020</div>
+            <table class="transcript-table">
+              <tbody>
+                <tr><td>English as a Second Language</td><td class="g-merit">B</td></tr>
+                <tr><td>First Language Oshindonga</td><td class="g-pass">D</td></tr>
+                <tr><td>Mathematics</td><td class="g-pass">D</td></tr>
+                <tr><td>Biology</td><td class="g-pass">E</td></tr>
+                <tr><td>Chemistry</td><td class="g-pass">E</td></tr>
+                <tr><td>Physics</td><td class="g-fail">F</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="transcript-year">Grade 11 · 2021</div>
+            <table class="transcript-table">
+              <tbody>
+                <tr><td>Biology</td><td class="g-merit">B</td></tr>
+                <tr><td>Chemistry</td><td class="g-credit">C</td></tr>
+                <tr><td>Physics</td><td class="g-credit">C</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -936,13 +1063,14 @@
     <div class="section-label">05 // Certifications</div>
     <h2 class="section-title">Credentials</h2>
     <div class="certs-grid">
-      <div class="cert-card">
+      <a href="NetworkSupportandSecurityUpdate20260407-31-72pt3a.pdf" target="_blank" class="cert-card" style="text-decoration:none;color:inherit;">
         <div class="cert-icon">🏅</div>
         <div>
           <div class="cert-name">Network Support and Security</div>
-          <div class="cert-issuer">Cisco Networking Academy · 2026</div>
+          <div class="cert-issuer">Cisco Networking Academy · Apr 2026</div>
+          <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);margin-top:0.35rem;letter-spacing:0.08em;">VIEW CERTIFICATE →</div>
         </div>
-      </div>
+      </a>
       <div class="cert-card">
         <div class="cert-icon">🏅</div>
         <div>
@@ -950,13 +1078,14 @@
           <div class="cert-issuer">Cisco Networking Academy · 2026</div>
         </div>
       </div>
-      <div class="cert-card">
+      <a href="ComputerHardwareBasicsUpdate20260407-32-yuda9k.pdf" target="_blank" class="cert-card" style="text-decoration:none;color:inherit;">
         <div class="cert-icon">🏅</div>
         <div>
           <div class="cert-name">Computer Hardware Basics</div>
-          <div class="cert-issuer">Cisco Networking Academy · 2026</div>
+          <div class="cert-issuer">Cisco Networking Academy · Apr 2026</div>
+          <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);margin-top:0.35rem;letter-spacing:0.08em;">VIEW CERTIFICATE →</div>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
