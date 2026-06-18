@@ -637,39 +637,6 @@
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
 
-    /* ACADEMIC TRANSCRIPT */
-    .transcript-year {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--accent);
-      text-transform: uppercase; margin: 2rem 0 0.6rem;
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .transcript-year::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
-    }
-    .transcript-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 0.25rem; }
-    .transcript-table td {
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid rgba(30,30,46,0.7);
-      color: var(--text);
-    }
-    .transcript-table td:first-child { color: var(--muted); font-size: 0.78rem; }
-    .transcript-table td:last-child {
-      text-align: right; font-family: 'Space Mono', monospace;
-      font-size: 0.68rem; font-weight: 700; white-space: nowrap;
-    }
-    .g-distinction { color: #10b981; }
-    .g-merit       { color: #00e5ff; }
-    .g-credit      { color: #a78bfa; }
-    .g-pass        { color: var(--muted); }
-    .g-fail        { color: #ef4444; }
-    .g-na          { color: var(--muted); font-style: italic; }
-    .g-exemption   { color: var(--muted); font-style: italic; letter-spacing: 0.05em; }
-    .transcript-block {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--accent2); margin: 1rem 0 0.4rem 0.1rem;
-    }
   </style>
 </head>
 <body>
@@ -789,7 +756,10 @@
         <div class="skill-cat-title">Operating Systems</div>
         <div class="skill-tags">
           <span class="skill-tag">Windows Server</span>
-          <span class="skill-tag">Active Directory</span>
+          <span class="skill-tag">Active Directory (AD DS)</span>
+          <span class="skill-tag">Group Policy (GPO)</span>
+          <span class="skill-tag">OU &amp; Group Management</span>
+          <span class="skill-tag">Delegated Administration</span>
           <span class="skill-tag">OS Installations</span>
           <span class="skill-tag">Linux Ubuntu</span>
           <span class="skill-tag">Linux Mint</span>
@@ -914,11 +884,11 @@
           <span class="project-arrow">↗</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
-          <h3 class="project-title" style="margin-bottom:0;">Active Directory Domain Setup</h3>
+          <h3 class="project-title" style="margin-bottom:0;">Active Directory Administration</h3>
           <span style="font-family:'Space Mono',monospace;font-size:0.6rem;padding:0.2rem 0.6rem;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.25);color:var(--accent);letter-spacing:0.08em;white-space:nowrap;">LAB REPORT</span>
         </div>
         <p class="project-desc">
-          Built a Windows Server 2019 domain environment (jay.local) from scratch — promoted the server to Domain Controller, structured OUs, created department security groups (Finance, HR, IT, Marketing), added users with naming conventions, and verified domain authentication from a joined client machine.
+          Built a Windows Server 2019 domain environment (jay.local) from scratch — promoted the server to Domain Controller, structured OUs across departments, created 7 departmental security groups, set up delegated least-privilege admin accounts, configured file-share/NTFS permissions and a Group Policy restriction, and resolved a computer trust-relationship issue across domain-joined clients.
         </p>
         <div class="project-tech">
           <span class="tech-badge">Windows Server 2019</span>
@@ -927,6 +897,7 @@
           <span class="tech-badge">GPO</span>
           <span class="tech-badge">ADUC</span>
           <span class="tech-badge">Security Groups</span>
+          <span class="tech-badge">Delegated Admin</span>
         </div>
         <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.1em;">
           VIEW FULL LAB REPORT →
@@ -972,118 +943,9 @@
             <li>Coursework in Advanced Network Security, Data Centre Infrastructure Management, Operating Systems, and Information Systems Security Essentials</li>
           </ul>
 
-          <!-- FULL TRANSCRIPT -->
-          <div style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem;">Full Academic Transcript</div>
-
-          <!-- 2023 -->
-          <div class="transcript-year">2023 <span style="color:var(--muted);font-weight:400;font-size:0.55rem;letter-spacing:0.08em;">· PH PASS FIRST YEAR</span></div>
-
-          <div class="transcript-block">JUN/AUG EXAMINATIONS</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Introduction to Computing</td><td class="g-pass">54 · PASS (SUPP.)</td></tr>
-          </tbody></table>
-
-          <div class="transcript-block">SEMESTER 1</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Business Management Information Systems</td><td class="g-credit">68 · CREDIT</td></tr>
-            <tr><td>Basic Science</td><td class="g-exemption">EXEMPTION</td></tr>
-            <tr><td>Database Fundamentals</td><td class="g-credit">60 · CREDIT</td></tr>
-            <tr><td>Design Thinking</td><td class="g-credit">68 · CREDIT</td></tr>
-            <tr><td>Introduction to Computing</td><td class="g-fail">47 · FAIL</td></tr>
-            <tr><td>Mathematics for Computing &amp; Informatics 1A</td><td class="g-pass">50 · PASS</td></tr>
-            <tr><td>Principles of English Language Use</td><td class="g-exemption">EXEMPTION</td></tr>
-          </tbody></table>
-
-          <div class="transcript-block">SEMESTER 2</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Computer Organisation and Architecture</td><td class="g-merit">72 · MERIT</td></tr>
-            <tr><td>Data Structures and Algorithm 1</td><td class="g-pass">57 · PASS</td></tr>
-            <tr><td>Mathematics for Computing &amp; Informatics 1B</td><td class="g-pass">50 · PASS</td></tr>
-            <tr><td>Programming 1</td><td class="g-credit">67 · CREDIT</td></tr>
-            <tr><td>Systems Administration</td><td class="g-pass">55 · PASS</td></tr>
-          </tbody></table>
-
-          <!-- 2024 -->
-          <div class="transcript-year" style="margin-top:1.75rem;">2024 <span style="color:var(--muted);font-weight:400;font-size:0.55rem;letter-spacing:0.08em;">· PJ PASS SECOND YEAR</span></div>
-
-          <div class="transcript-block">JUN/AUG EXAMINATIONS</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>English in Practice</td><td class="g-fail">45 · FAIL (SUPP.)</td></tr>
-          </tbody></table>
-
-          <div class="transcript-block">SEMESTER 1</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Applied Stats &amp; Probability</td><td class="g-distinction">76 · DISTINCTION</td></tr>
-            <tr><td>Data Networks</td><td class="g-credit">63 · CREDIT</td></tr>
-            <tr><td>English in Practice</td><td class="g-fail">48 · FAIL</td></tr>
-          </tbody></table>
-
-          <div class="transcript-block">SEMESTER 2</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Information Systems Security Essentials</td><td class="g-merit">72 · MERIT</td></tr>
-            <tr><td>Operating Systems</td><td class="g-merit">74 · MERIT</td></tr>
-            <tr><td>Programming 2</td><td class="g-credit">69 · CREDIT</td></tr>
-            <tr><td>Innovation, Creativity &amp; Entrepreneurship</td><td class="g-credit">69 · CREDIT</td></tr>
-            <tr><td>Wireless Technologies</td><td class="g-distinction">75 · DISTINCTION</td></tr>
-            <tr><td>Ethics for Computing</td><td class="g-pass">57 · PASS</td></tr>
-            <tr><td>Linux Systems Administration</td><td class="g-pass">58 · PASS</td></tr>
-            <tr><td>Communication Networks</td><td class="g-fail">45 · FAIL</td></tr>
-            <tr><td>Core Networks Engineering</td><td class="g-na">—</td></tr>
-          </tbody></table>
-
-          <div class="transcript-block">DEC/FEB EXAMINATIONS</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>Communication Networks</td><td class="g-pass">50 · PASS (SUPP.)</td></tr>
-          </tbody></table>
-
-          <!-- 2025 -->
-          <div class="transcript-year" style="margin-top:1.75rem;">2025</div>
-
-          <div class="transcript-block">SEMESTER 1</div>
-          <table class="transcript-table"><tbody>
-            <tr><td>IT Infrastructure Administration &amp; Services</td><td class="g-distinction">83 · DISTINCTION</td></tr>
-            <tr><td>Systems Virtualisation</td><td class="g-distinction">76 · DISTINCTION</td></tr>
-            <tr><td>High Performance Computing</td><td class="g-credit">69 · CREDIT</td></tr>
-            <tr><td>Database Administration</td><td class="g-credit">66 · CREDIT</td></tr>
-            <tr><td>English for Academic Purposes</td><td class="g-pass">57 · PASS</td></tr>
-            <tr><td>Advanced Network Security</td><td class="g-pass">51 · PASS</td></tr>
-            <tr><td>Data Centre Infrastructure Management</td><td class="g-fail">44 · FAIL</td></tr>
-          </tbody></table>
         </div>
       </div>
 
-      <!-- SECONDARY EDUCATION -->
-      <div style="margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border);">
-        <div class="section-label" style="margin-bottom: 1.5rem;">04c // Secondary</div>
-        <h2 class="section-title" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); margin-bottom: 0.5rem;">Secondary Education</h2>
-        <div class="exp-company" style="color: var(--muted); margin-bottom: 2rem; font-size: 0.85rem;">Namibia Senior Secondary Certificate (NSSC)</div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <div class="transcript-year">Grade 11 · 2020</div>
-            <table class="transcript-table">
-              <tbody>
-                <tr><td>English as a Second Language</td><td class="g-merit">B</td></tr>
-                <tr><td>First Language Oshindonga</td><td class="g-pass">D</td></tr>
-                <tr><td>Mathematics</td><td class="g-pass">D</td></tr>
-                <tr><td>Biology</td><td class="g-pass">E</td></tr>
-                <tr><td>Chemistry</td><td class="g-pass">E</td></tr>
-                <tr><td>Physics</td><td class="g-fail">F</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <div class="transcript-year">Grade 11 · 2021</div>
-            <table class="transcript-table">
-              <tbody>
-                <tr><td>Biology</td><td class="g-merit">B</td></tr>
-                <tr><td>Chemistry</td><td class="g-credit">C</td></tr>
-                <tr><td>Physics</td><td class="g-credit">C</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
 
   </section>
