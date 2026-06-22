@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DHCP Server Lab — Likubangwa Jay-Z Nyeliso</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --green: #10b981;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-back:hover { color: var(--accent); }
+
+    /* LAYOUT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+
+    /* HEADER */
+    .lab-header {
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lab-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lab-tag::before {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--accent);
+    }
+
+    .lab-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .lab-subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .lab-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .meta-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .meta-badge.tool  { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); }
+    .meta-badge.env   { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: var(--green); }
+    .meta-badge.type  { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); color: #a78bfa; }
+
+    /* SECTIONS */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-body {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    /* OBJECTIVE CARD */
+    .objective-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    /* TOPOLOGY DIAGRAM */
+    .topology {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    /* SCREENSHOT */
+    .screenshot-block {
+      margin-bottom: 2rem;
+    }
+
+    .screenshot-block img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .screenshot-caption {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 0.75rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* TABLES */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .data-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .data-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+    }
+
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .td-static { color: var(--accent); }
+    .td-dhcp   { color: var(--green); }
+
+    /* CODE BLOCKS */
+    .code-block {
+      background: #0d0d14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .code-block-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block pre {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--green);
+      line-height: 1.8;
+      white-space: pre;
+    }
+
+    .code-comment { color: var(--muted); }
+    .code-cmd     { color: var(--accent); }
+
+    /* STEPS */
+    .steps-list {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps-list li {
+      counter-increment: step;
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .steps-list li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 4px;
+      padding: 0.3rem 0.5rem;
+      min-width: 2.5rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      padding-top: 0.2rem;
+    }
+
+    .step-text strong { color: var(--text); }
+
+    /* VERIFICATION TABLE */
+    .verify-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .verify-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .verify-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    .verify-table td:first-child { color: var(--accent); }
+    .verify-table td:last-child  { color: var(--muted); }
+
+    /* OUTCOME CARDS */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .outcome-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .outcome-card .ok {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--green);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.5rem;
+    }
+
+    .outcome-card .label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .outcome-card .detail {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+    .lab-footer {
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-back {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-back:hover { color: var(--accent); }
+
+    .footer-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .container { padding: 7rem 1.25rem 4rem; }
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">LN://PORTFOLIO</a>
+    <a class="nav-back" href="index.html">← Back to Portfolio</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="lab-header">
+      <div class="lab-tag">006 // Lab Report</div>
+      <h1 class="lab-title">DHCP Server Configuration</h1>
+      <p class="lab-subtitle">
+        Configured a Cisco 2911 router as a DHCP server within a simulated corporate network using Cisco Packet Tracer. The lab covers IP pool setup, static exclusions, DNS assignment, and end-to-end verification across three DHCP client PCs and a static server.
+      </p>
+      <div class="lab-meta">
+        <span class="meta-badge tool">Cisco Packet Tracer</span>
+        <span class="meta-badge tool">Cisco IOS CLI</span>
+        <span class="meta-badge env">Router 2911</span>
+        <span class="meta-badge env">Switch 2960</span>
+        <span class="meta-badge type">Networking Lab</span>
+      </div>
+    </div>
+
+    <!-- OBJECTIVE -->
+    <div class="section">
+      <div class="section-label">01 // Objective</div>
+      <div class="objective-card">
+        Configure a Cisco 2911 router as a DHCP server to automatically assign IP addresses to three client PCs on the <strong>192.168.10.0/24</strong> network. The router acts as both the default gateway and DHCP server. A static server at <strong>192.168.10.2</strong> is excluded from the pool and configured as the DNS server for all clients.
+      </div>
+    </div>
+
+    <!-- TOPOLOGY -->
+    <div class="section">
+      <div class="section-label">02 // Network Topology</div>
+      <div class="section-title">Logical Diagram</div>
+      <div class="topology">
+<pre>
+        [ Router 2911 — DHCP_Router ]
+               192.168.10.1
+                     |
+              G0/0 (Trunk)
+                     |
+           [ Switch 2960 — SW1 ]
+          /          |          \          \
+      Fa0/2       Fa0/3       Fa0/4       Fa0/5
+        |           |           |           |
+      PC0         PC1         PC2        Server0
+   .3 (DHCP)   .4 (DHCP)  .5 (DHCP)   .2 (Static)
+</pre>
+      </div>
+
+      <div class="screenshots-grid">
+        <div class="screenshot-block">
+          <img src="dhcp_lab.png" alt="Packet Tracer logical topology showing DHCP_Router, Switch 1, three PCs and a server"/>
+          <div class="screenshot-caption">Logical view — DHCP_Router → SW1 → PC0, PC1, PC2, Server0</div>
+        </div>
+        <div class="screenshot-block">
+          <img src="dcph_3.png" alt="Packet Tracer physical rack view showing router and switch mounted"/>
+          <div class="screenshot-caption">Physical rack view — Router and Switch mounted in Corporate Office</div>
+        </div>
+      </div>
+
+      <div class="screenshot-block">
+        <img src="dhcp_physical.png" alt="Packet Tracer physical view showing PCs cabled to rack"/>
+        <div class="screenshot-caption">Physical view — PCs cabled to rack via copper straight-through</div>
+      </div>
+    </div>
+
+    <!-- IP SCHEME -->
+    <div class="section">
+      <div class="section-label">03 // IP Address Scheme</div>
+      <div class="section-title">Device Address Table</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Device</th>
+            <th>Interface</th>
+            <th>IP Address</th>
+            <th>Subnet Mask</th>
+            <th>Assignment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DHCP_Router</td>
+            <td>G0/0</td>
+            <td class="td-static">192.168.10.1</td>
+            <td>255.255.255.0</td>
+            <td class="td-static">Static</td>
+          </tr>
+          <tr>
+            <td>Server0 (DNS)</td>
+            <td>NIC</td>
+            <td class="td-static">192.168.10.2</td>
+            <td>255.255.255.0</td>
+            <td class="td-static">Static</td>
+          </tr>
+          <tr>
+            <td>PC0</td>
+            <td>NIC</td>
+            <td class="td-dhcp">192.168.10.3</td>
+            <td>255.255.255.0</td>
+            <td class="td-dhcp">DHCP</td>
+          </tr>
+          <tr>
+            <td>PC1</td>
+            <td>NIC</td>
+            <td class="td-dhcp">192.168.10.4</td>
+            <td>255.255.255.0</td>
+            <td class="td-dhcp">DHCP</td>
+          </tr>
+          <tr>
+            <td>PC2</td>
+            <td>NIC</td>
+            <td class="td-dhcp">192.168.10.5</td>
+            <td>255.255.255.0</td>
+            <td class="td-dhcp">DHCP</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">DHCP Pool Settings</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Pool Name</td><td>AD_LAB_POOL</td></tr>
+          <tr><td>Network</td><td>192.168.10.0 / 255.255.255.0</td></tr>
+          <tr><td>Default Gateway</td><td>192.168.10.1</td></tr>
+          <tr><td>DNS Server</td><td>192.168.10.2</td></tr>
+          <tr><td>Excluded Range</td><td>192.168.10.1 — 192.168.10.2</td></tr>
+          <tr><td>Assignable Range Starts</td><td>192.168.10.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CONFIGURATION -->
+    <div class="section">
+      <div class="section-label">04 // Router Configuration</div>
+      <div class="section-title">Cisco IOS Commands</div>
+
+      <div class="code-block">
+        <div class="code-block-label">Step 1 — Enter configuration mode &amp; set hostname</div>
+        <pre><span class="code-cmd">Router> enable
+Router# configure terminal</span>
+<span class="code-cmd">Router(config)# hostname DHCP_Router</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-label">Step 2 — Configure router interface G0/0</div>
+        <pre><span class="code-cmd">DHCP_Router(config)# interface gigabitEthernet 0/0
+DHCP_Router(config-if)# ip address 192.168.10.1 255.255.255.0
+DHCP_Router(config-if)# no shutdown
+DHCP_Router(config-if)# exit</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-label">Step 3 — Exclude static addresses from the pool</div>
+        <pre><span class="code-cmd">DHCP_Router(config)# ip dhcp excluded-address 192.168.10.1 192.168.10.2</span>
+<span class="code-comment">! Excludes router (.1) and DNS server (.2) from DHCP assignment</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-label">Step 4 — Create the DHCP pool</div>
+        <pre><span class="code-cmd">DHCP_Router(config)# ip dhcp pool AD_LAB_POOL
+DHCP_Router(dhcp-config)# network 192.168.10.0 255.255.255.0
+DHCP_Router(dhcp-config)# default-router 192.168.10.1
+DHCP_Router(dhcp-config)# dns-server 192.168.10.2
+DHCP_Router(dhcp-config)# exit</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-label">Step 5 — Save configuration</div>
+        <pre><span class="code-cmd">DHCP_Router(config)# end
+DHCP_Router# copy running-config startup-config</span>
+<span class="code-comment">! Persists config across reloads</span></pre>
+      </div>
+    </div>
+
+    <!-- CLIENT CONFIG -->
+    <div class="section">
+      <div class="section-label">05 // Client &amp; Server Configuration</div>
+      <div class="section-title">PC Setup (PC0, PC1, PC2)</div>
+      <ul class="steps-list">
+        <li><div class="step-text">Click the PC → <strong>Desktop</strong> tab → <strong>IP Configuration</strong></div></li>
+        <li><div class="step-text">Select the <strong>DHCP</strong> radio button and wait 5–10 seconds</div></li>
+        <li><div class="step-text">Verify that an IP address in the <strong>192.168.10.3–5</strong> range appears automatically along with the correct gateway and DNS</div></li>
+      </ul>
+
+      <div class="section-title" style="margin-top: 2rem;">Server0 Static Configuration</div>
+      <div class="code-block">
+        <div class="code-block-label">Server0 — Desktop → IP Configuration</div>
+        <pre><span class="code-comment">IP Address:      </span><span class="code-cmd">192.168.10.2</span>
+<span class="code-comment">Subnet Mask:     </span><span class="code-cmd">255.255.255.0</span>
+<span class="code-comment">Default Gateway: </span><span class="code-cmd">192.168.10.1</span>
+<span class="code-comment">DNS Server:      </span><span class="code-cmd">192.168.10.2</span></pre>
+      </div>
+    </div>
+
+    <!-- VERIFICATION -->
+    <div class="section">
+      <div class="section-label">06 // Verification</div>
+      <div class="section-title">IOS Verification Commands</div>
+
+      <table class="verify-table">
+        <thead>
+          <tr>
+            <th>Command</th>
+            <th>What It Confirms</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>show ip interface brief</td>
+            <td>G0/0 is up/up with correct IP</td>
+          </tr>
+          <tr>
+            <td>show ip dhcp binding</td>
+            <td>Shows PC0–PC2 assigned .3, .4, .5</td>
+          </tr>
+          <tr>
+            <td>show ip dhcp pool</td>
+            <td>Pool statistics — total/used/free leases</td>
+          </tr>
+          <tr>
+            <td>show running-config | section dhcp</td>
+            <td>Confirms pool name, exclusions, and parameters</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-block-label">Expected output — show ip dhcp binding</div>
+        <pre><span class="code-cmd">DHCP_Router# show ip dhcp binding</span>
+<span class="code-comment">
+IP address       Client-ID              Type
+192.168.10.3     0063.6973.636f...      Automatic
+192.168.10.4     0063.6973.636f...      Automatic
+192.168.10.5     0063.6973.636f...      Automatic</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-label">Connectivity test — ping from Server0</div>
+        <pre><span class="code-cmd">ping 192.168.10.1</span>
+<span class="code-comment">
+Pinging 192.168.10.1 with 32 bytes of data:
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255</span></pre>
+      </div>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="section">
+      <div class="section-label">07 // Outcomes</div>
+      <div class="section-title">Lab Results</div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">DHCP Leases Assigned</div>
+          <div class="detail">PC0 → .3 · PC1 → .4 · PC2 → .5</div>
+        </div>
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">Static Exclusions Working</div>
+          <div class="detail">.1 and .2 not leased by DHCP</div>
+        </div>
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">Default Gateway Pushed</div>
+          <div class="detail">192.168.10.1 on all clients</div>
+        </div>
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">DNS Server Pushed</div>
+          <div class="detail">192.168.10.2 on all clients</div>
+        </div>
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">Ping Successful</div>
+          <div class="detail">Server0 → Router (.1) reachable</div>
+        </div>
+        <div class="outcome-card">
+          <div class="ok">✓ CONFIRMED</div>
+          <div class="label">Config Persisted</div>
+          <div class="detail">copy running-config startup-config</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="lab-footer">
+      <a class="footer-back" href="index.html">← Back to Portfolio</a>
+      <div class="footer-label">DHCP Server Lab · Cisco Packet Tracer · 2026</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
