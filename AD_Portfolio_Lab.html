@@ -346,6 +346,12 @@ h2 {
 </head>
 <body>
 
+<div style="position:fixed;top:0;left:0;right:0;z-index:999;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 2rem;background:rgba(10,10,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(30,30,46,0.8);">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#00e5ff;letter-spacing:0.15em;">LN://PORTFOLIO</span>
+  <a href="portfolio.html" style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#64748b;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#00e5ff'" onmouseout="this.style.color='#64748b'">← Back to Portfolio</a>
+</div>
+<div style="height:52px;"></div>
+
 <div class="page">
   <div class="holes">
     <div class="hole"></div>
@@ -411,7 +417,7 @@ h2 {
         <div class="step-body">
           <div class="step-title">Promote Server to Domain Controller</div>
           <div class="step-desc">After AD DS installed, used the post-install wizard to promote the server to a Domain Controller. Created a new forest with the domain name <strong>jay.local</strong>. Set the DSRM (Directory Services Restore Mode) password and completed the promotion.</div>
-          <span class="step-code">Domain: jay.local</span>
+          <span class="step-code">Domain: corp.local</span>
         </div>
       </div>
 
@@ -528,7 +534,7 @@ h2 {
         <div class="step-body">
           <div class="step-title">Join Computers to the Domain</div>
           <div class="step-desc">On two client machines, went to <em>System Properties → Computer Name → Change</em>, switched from Workgroup to Domain, and joined <strong>jay.local</strong> using domain admin credentials. After rebooting, signed in with a domain user account on each to confirm authentication was working.</div>
-          <span class="step-code">sysdm.cpl → Computer Name → Change → Domain: jay.local</span>
+          <span class="step-code">sysdm.cpl → Computer Name → Change → Domain: corp.local</span>
         </div>
       </div>
 
@@ -733,8 +739,8 @@ h2 {
       </div>
       <div class="footer-meta">
         Initial setup: 3 June 2026 · Extended: 18 June 2026<br>
-        Environment: Windows Server 2019 (VM)<br>
-        Domain: jay.local
+        Environment: Windows Server 2022 (VM)<br>
+        Domain: corp.local
       </div>
     </div>
 
