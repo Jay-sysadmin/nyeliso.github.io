@@ -853,7 +853,7 @@
           <div class="hero-stat-label">Servers Deployed</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-val">12</div>
+          <div class="hero-stat-val">11</div>
           <div class="hero-stat-label">Lab Projects</div>
         </div>
         <div class="hero-stat">
@@ -999,7 +999,13 @@
       <section class="portfolio-section" id="projects">
         <div class="sec-tag">Projects</div>
         <h2 class="sec-title">Lab Work &amp; Builds</h2>
-        <div class="project-list">
+
+        <!-- CATEGORY 1 -->
+        <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
+          Systems &amp; Infrastructure
+          <span style="flex:1;height:1px;background:var(--border);display:block;"></span>
+        </div>
+        <div class="project-list" style="margin-bottom:3rem;">
 
           <div class="project-row">
             <div>
@@ -1044,7 +1050,7 @@
           <a href="AD_Portfolio_Lab.html" class="project-row">
             <div>
               <div class="project-name">Active Directory Administration</div>
-              <div class="project-summary">Windows Server 2022 AD domain (corp.local) built from scratch — OU structure, Admins OU, seven departmental security groups, two delegated least-privilege admin accounts, GPO restrictions, NTFS permissions, and trust-relationship troubleshooting.</div>
+              <div class="project-summary">Windows Server 2022 AD domain (corp.local) built from scratch — OU structure, Admins OU, seven departmental security groups, two delegated admin accounts, GPO restrictions, NTFS permissions, and trust-relationship troubleshooting.</div>
               <div class="project-tags">
                 <span class="project-tag">AD DS</span>
                 <span class="project-tag">GPO</span>
@@ -1055,17 +1061,36 @@
             <div class="project-arrow-col">↗</div>
           </a>
 
+        </div>
+
+        <!-- CATEGORY 2 -->
+        <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
+          Networking — Cisco Packet Tracer
+          <span style="flex:1;height:1px;background:var(--border);display:block;"></span>
+        </div>
+        <div class="project-list">
+
+          <a href="Basic_Network_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Basic LAN &amp; Routed Network</div>
+              <div class="project-summary">Foundational lab — simple switch-based LAN progressing to a fully routed two-network topology. Covers MAC vs IP addressing, subnet boundaries, and cross-network routing.</div>
+              <div class="project-tags">
+                <span class="project-tag">Switching</span>
+                <span class="project-tag">Routing Basics</span>
+                <span class="project-tag">Subnetting</span>
+              </div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
           <a href="DHCP_Lab.html" class="project-row">
             <div>
-              <div class="project-name">DHCP, DNS, Web Server &amp; Telnet</div>
-              <div class="project-summary">Complete small office network in Cisco Packet Tracer — router-based DHCP, dedicated DNS server resolving mylab.com, HTTP web server, and Telnet remote management with VTY lines and two-level authentication.</div>
+              <div class="project-name">DHCP Server Configuration</div>
+              <div class="project-summary">Router configured as DHCP server — excluded reserved addresses, created OFFICE pool on 192.168.2.0/24, pushed gateway and DNS to clients automatically. No manual PC configuration needed.</div>
               <div class="project-tags">
-                <span class="project-tag">Cisco IOS</span>
                 <span class="project-tag">DHCP</span>
-                <span class="project-tag">DNS</span>
-                <span class="project-tag">HTTP</span>
-                <span class="project-tag">Telnet</span>
-                <span class="project-tag">Packet Tracer</span>
+                <span class="project-tag">IP Pools</span>
+                <span class="project-tag">Cisco IOS</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
@@ -1074,41 +1099,11 @@
           <a href="VLAN_Lab.html" class="project-row">
             <div>
               <div class="project-name">VLANs &amp; Router-on-a-Stick</div>
-              <div class="project-summary">Multi-VLAN enterprise network in Cisco Packet Tracer — four-stage lab progression from basic connectivity to full inter-VLAN routing via 802.1Q subinterfaces. Simulates departmental segmentation across IT, HR, and Finance.</div>
+              <div class="project-summary">Students and Staff separated into VLAN 10 and VLAN 20 — trunk link configured between switch and router, then inter-VLAN routing enabled via 802.1Q subinterfaces on a single physical router port.</div>
               <div class="project-tags">
                 <span class="project-tag">VLANs</span>
                 <span class="project-tag">802.1Q Trunking</span>
                 <span class="project-tag">Inter-VLAN Routing</span>
-                <span class="project-tag">Cisco IOS</span>
-                <span class="project-tag">Packet Tracer</span>
-              </div>
-            </div>
-            <div class="project-arrow-col">↗</div>
-          </a>
-
-          <a href="Basic_Network_Lab.html" class="project-row">
-            <div>
-              <div class="project-name">Basic LAN &amp; Routed Network</div>
-              <div class="project-summary">Foundational networking lab progressing from a simple switch-based LAN to a fully routed two-network topology — covers MAC vs IP addressing, subnet boundaries, and how routers enable cross-network communication.</div>
-              <div class="project-tags">
-                <span class="project-tag">Switching</span>
-                <span class="project-tag">Routing Basics</span>
-                <span class="project-tag">Subnetting</span>
-                <span class="project-tag">Packet Tracer</span>
-              </div>
-            </div>
-            <div class="project-arrow-col">↗</div>
-          </a>
-
-          <a href="VLAN_Basics_Lab.html" class="project-row">
-            <div>
-              <div class="project-name">VLAN Segmentation — Layer 2 Isolation</div>
-              <div class="project-summary">Configured VLANs on a Cisco 2960 switch to logically segment Sales and HR departments — demonstrating isolated broadcast domains and intra/inter-VLAN connectivity testing on a single physical switch.</div>
-              <div class="project-tags">
-                <span class="project-tag">VLANs</span>
-                <span class="project-tag">Layer 2 Switching</span>
-                <span class="project-tag">Cisco IOS</span>
-                <span class="project-tag">Packet Tracer</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
@@ -1117,12 +1112,11 @@
           <a href="Static_Routing_Lab.html" class="project-row">
             <div>
               <div class="project-name">Static Routing — Dual-Router Topology</div>
-              <div class="project-summary">Two interconnected routers over a WAN link, configured with static routes to enable end-to-end communication between two separate LANs — a site-to-site routing scenario with full cable and IP planning.</div>
+              <div class="project-summary">Two routers interconnected over a WAN link (10.0.0.0/30) — static routes configured on both to enable end-to-end communication between two separate LANs. Site-to-site routing scenario.</div>
               <div class="project-tags">
                 <span class="project-tag">Static Routing</span>
                 <span class="project-tag">WAN Link</span>
                 <span class="project-tag">Cisco IOS</span>
-                <span class="project-tag">Packet Tracer</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
@@ -1131,12 +1125,24 @@
           <a href="LAN_Internet_Lab.html" class="project-row">
             <div>
               <div class="project-name">LAN-to-Internet Connectivity</div>
-              <div class="project-summary">LAN-to-server network simulating internet-facing communication through a router gateway — includes real troubleshooting of an incorrect default gateway and the step-by-step fix that restored connectivity.</div>
+              <div class="project-summary">LAN PC routing to an external server through a gateway router — includes real troubleshooting of an incorrect default gateway and the fix that restored end-to-end connectivity.</div>
               <div class="project-tags">
                 <span class="project-tag">Default Gateway</span>
                 <span class="project-tag">Routing</span>
                 <span class="project-tag">Troubleshooting</span>
-                <span class="project-tag">Packet Tracer</span>
+              </div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Console_Telnet_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Console Line &amp; Telnet</div>
+              <div class="project-summary">Two router access methods — direct physical management via console cable and remote network management via Telnet VTY lines. Passwords configured for both console and privileged EXEC modes.</div>
+              <div class="project-tags">
+                <span class="project-tag">Console</span>
+                <span class="project-tag">VTY Lines</span>
+                <span class="project-tag">Telnet</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
@@ -1145,12 +1151,11 @@
           <a href="SSH_Lab.html" class="project-row">
             <div>
               <div class="project-name">SSH &amp; Secure Remote Access</div>
-              <div class="project-summary">Configured SSH version 2 on a Cisco router for encrypted remote management — RSA key generation, local user authentication, VTY restriction to SSH-only, and a security banner, replacing insecure Telnet.</div>
+              <div class="project-summary">SSH version 2 configured on a Cisco router — RSA key generation, local user authentication, VTY lines restricted to SSH only. Encrypted replacement for Telnet.</div>
               <div class="project-tags">
                 <span class="project-tag">SSH v2</span>
                 <span class="project-tag">RSA Encryption</span>
                 <span class="project-tag">Network Security</span>
-                <span class="project-tag">Cisco IOS</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
