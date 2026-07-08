@@ -24,7 +24,7 @@
       --accent: #00e5ff;
       --accent2: #7c3aed;
       --text: #e8eaf6;
-      --muted: #5a6280;
+      --muted: #94a3b8;
       --green: #00c896;
     }
 
@@ -426,8 +426,8 @@
 
     .skill-block-title {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1.25rem;
@@ -446,13 +446,13 @@
     .skill-pill-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
 
     .skill-pill {
       font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      padding: 0.35rem 0.8rem;
+      font-size: 0.75rem;
+      padding: 0.4rem 0.9rem;
       border: 1px solid rgba(0,229,255,0.2);
       background: rgba(0,229,255,0.04);
       color: var(--text);
@@ -511,10 +511,10 @@
     .project-row:hover::before { transform: scaleY(1); }
 
     .project-name {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       color: var(--text);
       transition: color 0.2s;
     }
@@ -523,28 +523,28 @@
 
     .project-summary {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.03em;
-      line-height: 1.6;
-      max-width: 540px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+      line-height: 1.75;
+      max-width: 580px;
     }
 
     .project-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-top: 0.75rem;
+      margin-top: 0.85rem;
     }
 
     .project-tag {
       font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      padding: 0.2rem 0.6rem;
+      font-size: 0.65rem;
+      padding: 0.25rem 0.7rem;
       background: rgba(0,229,255,0.05);
-      border: 1px solid rgba(0,229,255,0.12);
+      border: 1px solid rgba(0,229,255,0.15);
       color: var(--accent);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
 
     .project-arrow-col {
@@ -577,15 +577,15 @@
 
     .exp-date-col {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--muted);
       letter-spacing: 0.08em;
       padding-top: 0.2rem;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .exp-role {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       margin-bottom: 0.3rem;
       letter-spacing: -0.01em;
@@ -593,7 +593,7 @@
 
     .exp-org {
       font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.75rem;
       color: var(--accent);
       letter-spacing: 0.08em;
       margin-bottom: 1.25rem;
@@ -607,9 +607,9 @@
     }
 
     .exp-points li {
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.75;
       padding-left: 1rem;
       position: relative;
     }
@@ -824,6 +824,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -930,18 +931,35 @@
           <div class="skill-block">
             <div class="skill-block-title">Networking</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Cisco Packet Tracer</span>
               <span class="skill-pill">IP Configuration</span>
+              <span class="skill-pill">Subnetting</span>
               <span class="skill-pill">NIC Configuration</span>
+              <span class="skill-pill">VLANs (802.1Q)</span>
+              <span class="skill-pill">Inter-VLAN Routing</span>
+              <span class="skill-pill">Trunking</span>
+              <span class="skill-pill">Static Routing</span>
               <span class="skill-pill">DHCP Configuration</span>
               <span class="skill-pill">DNS Configuration</span>
-              <span class="skill-pill">VLANs</span>
-              <span class="skill-pill">SSH</span>
+              <span class="skill-pill">Default Gateway Config</span>
               <span class="skill-pill">Fortinet Firewalls</span>
-              <span class="skill-pill">FortiGate</span>
-              <span class="skill-pill">FortiOS / ENOS</span>
+              <span class="skill-pill">FortiGate / FortiOS</span>
               <span class="skill-pill">Wireless Access Points</span>
               <span class="skill-pill">Network Troubleshooting</span>
+            </div>
+          </div>
+          <div class="skill-block">
+            <div class="skill-block-title">Cisco IOS &amp; Remote Access</div>
+            <div class="skill-pill-group">
+              <span class="skill-pill">Cisco Packet Tracer</span>
+              <span class="skill-pill">Cisco IOS CLI</span>
+              <span class="skill-pill">Router Configuration</span>
+              <span class="skill-pill">Switch Configuration</span>
+              <span class="skill-pill">Console Line Access</span>
+              <span class="skill-pill">VTY Line Configuration</span>
+              <span class="skill-pill">Telnet</span>
+              <span class="skill-pill">SSH v2</span>
+              <span class="skill-pill">RSA Key Generation</span>
+              <span class="skill-pill">Router Subinterfaces</span>
             </div>
           </div>
           <div class="skill-block">
