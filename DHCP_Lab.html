@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DHCP Server Configuration — Likubangwa Jay-Z Nyeliso</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>:root{--bg:#0a0a0f;--surface:#111118;--border:#1e1e2e;--accent:#00e5ff;--accent2:#7c3aed;--text:#e2e8f0;--muted:#64748b;--green:#10b981;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;border-bottom:1px solid var(--border);background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--accent);letter-spacing:0.15em;text-decoration:none;}
+.nav-back{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}.nav-back:hover{color:var(--accent);}
+.container{max-width:900px;margin:0 auto;padding:8rem 2rem 6rem;}
+.lab-header{margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
+.lab-tag{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;}.lab-tag::before{content:'';width:30px;height:1px;background:var(--accent);}
+.lab-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.25rem;}
+.lab-subtitle{color:var(--muted);font-size:1rem;line-height:1.7;max-width:680px;margin-bottom:2rem;}
+.lab-meta{display:flex;flex-wrap:wrap;gap:1rem;}
+.meta-badge{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;padding:0.4rem 0.9rem;border-radius:4px;text-transform:uppercase;}
+.meta-badge.tool{background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);color:var(--accent);}
+.meta-badge.env{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:var(--green);}
+.meta-badge.type{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);color:#a78bfa;}
+.section{margin-bottom:4rem;}
+.section-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;}
+.section-title{font-size:1.5rem;font-weight:800;margin-bottom:1.5rem;letter-spacing:-0.01em;}
+.objective-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:1.75rem 2rem;margin-bottom:2rem;font-size:0.95rem;line-height:1.8;color:var(--text);}
+.topology{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:2rem;margin-bottom:2rem;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent);line-height:2;overflow-x:auto;}
+.code-block{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.25rem;overflow-x:auto;}
+.code-block-label{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.code-block pre{font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--green);line-height:1.8;white-space:pre;}
+.code-comment{color:var(--muted);}.code-cmd{color:var(--accent);}
+.data-table{width:100%;border-collapse:collapse;font-size:0.83rem;margin-bottom:1.5rem;}
+.data-table th{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.8rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--surface);}
+.data-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.72rem;}
+.data-table tr:hover td{background:rgba(255,255,255,0.02);}
+.verify-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:1.5rem;}
+.verify-table th{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--surface);}
+.verify-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.7rem;}
+.verify-table td:first-child{color:var(--accent);}
+.verify-table td:last-child{color:var(--muted);}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+.outcome-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;}
+.outcome-card .ok{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--green);letter-spacing:0.12em;margin-bottom:0.5rem;}
+.outcome-card .label{font-weight:600;font-size:0.9rem;margin-bottom:0.35rem;}
+.outcome-card .detail{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.6;}
+.lab-footer{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-back{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}.footer-back:hover{color:var(--accent);}
+.footer-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;}
+@media(max-width:640px){nav{padding:1rem 1.5rem;}.container{padding:7rem 1.25rem 4rem;}.outcomes-grid{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="portfolio.html">LN://PORTFOLIO</a>
+    <a class="nav-back" href="portfolio.html">← Back to Portfolio</a>
+  </nav>
+  <div class="container">
+    <div class="lab-header">
+      <div class="lab-tag">// Networking Lab</div>
+      <h1 class="lab-title">DHCP Server Configuration</h1>
+      <p class="lab-subtitle">Configured a Cisco router to act as a DHCP server — automatically assigning IP addresses, subnet masks, default gateways, and DNS servers to client PCs on the 192.168.2.0/24 network. No manual PC configuration needed.</p>
+      <div class="lab-meta">
+        <span class="meta-badge tool">Cisco Packet Tracer</span>
+        <span class="meta-badge tool">Cisco IOS CLI</span>
+        <span class="meta-badge env">Router 2911</span>
+        <span class="meta-badge env">Switch 2960</span>
+        <span class="meta-badge type">DHCP</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">01 // Objective</div>
+      <div class="objective-card">Configure the router interface as the DHCP server for the <strong>192.168.2.0/24</strong> network. Exclude reserved addresses, define a DHCP pool named <strong>OFFICE</strong>, set the default gateway and DNS server, then verify automatic IP assignment on client PCs.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">02 // Topology</div>
+      <div class="topology"><pre>
+     [ Router 2911 ]
+     G0/0: 192.168.2.1
+     DHCP Server + Gateway
+           |
+    (Straight-Through)
+           |
+     [ Switch 2960 ]
+      /    |        PC1   PC2   PC3
+   DHCP  DHCP  DHCP
+  .11    .12   .13
+</pre></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">03 // Configuration</div>
+      <div class="code-block">
+        <div class="code-block-label">Step 1 — Configure Router Interface</div>
+        <pre><span class="code-cmd">interface g0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown</span>
+<span class="code-comment">! Creates the 192.168.2.0/24 network
+! Sets router IP to 192.168.2.1 — acts as gateway
+! Enables the interface</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-block-label">Step 2 — Exclude Reserved Addresses</div>
+        <pre><span class="code-cmd">ip dhcp excluded-address 192.168.2.1 192.168.2.10</span>
+<span class="code-comment">! Reserves .1 to .10 for router, servers, printers
+! DHCP will only assign .11 and above</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-block-label">Steps 3–6 — Create DHCP Pool</div>
+        <pre><span class="code-cmd">ip dhcp pool OFFICE</span>
+<span class="code-comment">! Creates pool named OFFICE</span>
+<span class="code-cmd">network 192.168.2.0 255.255.255.0</span>
+<span class="code-comment">! Defines the network DHCP manages</span>
+<span class="code-cmd">default-router 192.168.2.1</span>
+<span class="code-comment">! Gives clients the gateway IP</span>
+<span class="code-cmd">dns-server 8.8.8.8</span>
+<span class="code-comment">! Gives clients Google DNS for name resolution</span></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">04 // PC Setup &amp; Verification</div>
+      <div class="code-block">
+        <div class="code-block-label">PC — Set to DHCP</div>
+        <pre><span class="code-comment">Desktop → IP Configuration → DHCP
+PC automatically receives:
+  IP Address:      192.168.2.11
+  Subnet Mask:     255.255.255.0
+  Default Gateway: 192.168.2.1
+  DNS Server:      8.8.8.8</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-block-label">Router — Verification Commands</div>
+        <pre><span class="code-cmd">show ip dhcp binding</span>    <span class="code-comment">Shows leased IPs</span>
+<span class="code-cmd">show ip dhcp pool</span>       <span class="code-comment">Shows pool info</span>
+<span class="code-cmd">show ip interface brief</span> <span class="code-comment">Confirms interface up</span>
+
+<span class="code-comment">PC Command Prompt:</span>
+<span class="code-cmd">ipconfig</span>               <span class="code-comment">Shows assigned config</span>
+<span class="code-cmd">ping 192.168.2.1</span>       <span class="code-comment">Tests gateway connectivity</span></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">05 // Outcomes</div>
+      <div class="outcomes-grid">
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Interface Configured</div><div class="detail">G0/0: 192.168.2.1/24 — up/up</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Exclusions Set</div><div class="detail">192.168.2.1–10 reserved — not assigned by DHCP</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Pool Created</div><div class="detail">OFFICE pool — network, gateway, DNS configured</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Auto-Assignment</div><div class="detail">PCs receive IP, mask, gateway, DNS automatically</div></div>
+      </div>
+    </div>
+
+    <div class="lab-footer">
+      <a class="footer-back" href="portfolio.html">← Back to Portfolio</a>
+      <div class="footer-label">DHCP Server Configuration · Cisco Packet Tracer · 2026</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Console Line & Telnet — Likubangwa Jay-Z Nyeliso</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>:root{--bg:#0a0a0f;--surface:#111118;--border:#1e1e2e;--accent:#00e5ff;--accent2:#7c3aed;--text:#e2e8f0;--muted:#64748b;--green:#10b981;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;border-bottom:1px solid var(--border);background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--accent);letter-spacing:0.15em;text-decoration:none;}
+.nav-back{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}.nav-back:hover{color:var(--accent);}
+.container{max-width:900px;margin:0 auto;padding:8rem 2rem 6rem;}
+.lab-header{margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
+.lab-tag{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;}.lab-tag::before{content:'';width:30px;height:1px;background:var(--accent);}
+.lab-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.25rem;}
+.lab-subtitle{color:var(--muted);font-size:1rem;line-height:1.7;max-width:680px;margin-bottom:2rem;}
+.lab-meta{display:flex;flex-wrap:wrap;gap:1rem;}
+.meta-badge{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;padding:0.4rem 0.9rem;border-radius:4px;text-transform:uppercase;}
+.meta-badge.tool{background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);color:var(--accent);}
+.meta-badge.env{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:var(--green);}
+.meta-badge.type{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);color:#a78bfa;}
+.section{margin-bottom:4rem;}
+.section-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;}
+.section-title{font-size:1.5rem;font-weight:800;margin-bottom:1.5rem;letter-spacing:-0.01em;}
+.objective-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:1.75rem 2rem;margin-bottom:2rem;font-size:0.95rem;line-height:1.8;color:var(--text);}
+.topology{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:2rem;margin-bottom:2rem;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent);line-height:2;overflow-x:auto;}
+.code-block{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.25rem;overflow-x:auto;}
+.code-block-label{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.code-block pre{font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--green);line-height:1.8;white-space:pre;}
+.code-comment{color:var(--muted);}.code-cmd{color:var(--accent);}
+.data-table{width:100%;border-collapse:collapse;font-size:0.83rem;margin-bottom:1.5rem;}
+.data-table th{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.8rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--surface);}
+.data-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.72rem;}
+.data-table tr:hover td{background:rgba(255,255,255,0.02);}
+.verify-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:1.5rem;}
+.verify-table th{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--surface);}
+.verify-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.7rem;}
+.verify-table td:first-child{color:var(--accent);}
+.verify-table td:last-child{color:var(--muted);}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+.outcome-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;}
+.outcome-card .ok{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--green);letter-spacing:0.12em;margin-bottom:0.5rem;}
+.outcome-card .label{font-weight:600;font-size:0.9rem;margin-bottom:0.35rem;}
+.outcome-card .detail{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.6;}
+.lab-footer{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-back{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}.footer-back:hover{color:var(--accent);}
+.footer-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;}
+@media(max-width:640px){nav{padding:1rem 1.5rem;}.container{padding:7rem 1.25rem 4rem;}.outcomes-grid{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="portfolio.html">LN://PORTFOLIO</a>
+    <a class="nav-back" href="portfolio.html">← Back to Portfolio</a>
+  </nav>
+  <div class="container">
+    <div class="lab-header">
+      <div class="lab-tag">// Networking Lab</div>
+      <h1 class="lab-title">Console Line &amp; Telnet</h1>
+      <p class="lab-subtitle">Configured two different methods for accessing and managing a Cisco router — direct physical access via console line and remote network access via Telnet VTY lines. Includes password protection for both console and privileged EXEC modes.</p>
+      <div class="lab-meta">
+        <span class="meta-badge tool">Cisco Packet Tracer</span>
+        <span class="meta-badge tool">Cisco IOS CLI</span>
+        <span class="meta-badge env">Console Access</span>
+        <span class="meta-badge env">VTY Lines</span>
+        <span class="meta-badge type">Remote Management</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">01 // Objective</div>
+      <div class="objective-card">Learn two methods of router access: <strong>Console Line</strong> for direct physical management and <strong>Telnet via VTY Lines</strong> for remote network-based management. Configure passwords for both to protect router access.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">02 // Topology</div>
+      <div class="topology"><pre>
+  [ Laptop ]                         [ PC ]
+      |                                 |
+ Console Cable              Network cable
+      |                                 |
+  [ Router ] ─────── Switch ───────────┘
+  G0/0: 192.168.1.1
+
+  Laptop (Console): 192.168.1.20 / GW: 192.168.1.1
+  PC (Telnet):      192.168.1.10 / GW: 192.168.1.1
+</pre></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">03 // Part 1 — Console Line</div>
+      <div class="section-title">Direct Physical Access</div>
+      <div class="code-block">
+        <div class="code-block-label">Configure console password</div>
+        <pre><span class="code-cmd">line console 0</span>
+<span class="code-comment">! Selects the router console connection</span>
+<span class="code-cmd">password cisco123</span>
+<span class="code-comment">! Sets the console access password</span>
+<span class="code-cmd">login</span>
+<span class="code-comment">! Forces router to prompt for the password</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-block-label">Configure enable secret (privileged mode)</div>
+        <pre><span class="code-cmd">enable secret admin123</span>
+<span class="code-comment">! Protects privileged EXEC mode (#)
+! Required after login to get full access</span></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">04 // Part 2 — Router IP &amp; PC Setup</div>
+      <div class="code-block">
+        <div class="code-block-label">Configure router interface</div>
+        <pre><span class="code-cmd">interface g0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown</span></pre>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Device</th><th>IP Address</th><th>Subnet Mask</th><th>Gateway</th></tr></thead>
+        <tbody>
+          <tr><td>Router G0/0</td><td>192.168.1.1</td><td>255.255.255.0</td><td>—</td></tr>
+          <tr><td>PC (Telnet client)</td><td>192.168.1.10</td><td>255.255.255.0</td><td>192.168.1.1</td></tr>
+          <tr><td>Laptop (Console)</td><td>192.168.1.20</td><td>255.255.255.0</td><td>192.168.1.1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">05 // Part 3 — Telnet via VTY Lines</div>
+      <div class="section-title">Remote Network Access</div>
+      <div class="code-block">
+        <div class="code-block-label">Configure VTY lines for Telnet</div>
+        <pre><span class="code-cmd">line vty 0 4</span>
+<span class="code-comment">! Opens VTY lines 0–4 (5 simultaneous remote sessions)</span>
+<span class="code-cmd">password telnet123</span>
+<span class="code-comment">! Sets the Telnet login password</span>
+<span class="code-cmd">login</span>
+<span class="code-comment">! Forces password prompt on remote login</span>
+<span class="code-cmd">transport input telnet</span>
+<span class="code-comment">! Allows Telnet connections on these lines</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-block-label">PC — Connect via Telnet</div>
+        <pre><span class="code-comment">Desktop → Command Prompt</span>
+<span class="code-cmd">telnet 192.168.1.1</span>
+<span class="code-comment">Password: </span><span class="code-cmd">telnet123</span>
+<span class="code-comment">Router> </span><span class="code-cmd">enable</span>
+<span class="code-comment">Password: </span><span class="code-cmd">admin123</span>
+<span class="code-comment">Router#  ← Full privileged access</span></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">06 // Console vs Telnet</div>
+      <table class="verify-table">
+        <thead><tr><th>Feature</th><th>Console</th><th>Telnet</th></tr></thead>
+        <tbody>
+          <tr><td>Connection</td><td>Console cable — physical</td><td>Over network</td></tr>
+          <tr><td>When Used</td><td>Initial setup, no IP yet</td><td>Daily remote management</td></tr>
+          <tr><td>Security</td><td>Requires physical access</td><td style="color:#f87171;">Unencrypted</td></tr>
+          <tr><td>Port</td><td>Physical console port</td><td>23</td></tr>
+          <tr><td>Password Line</td><td>line console 0</td><td>line vty 0 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">07 // Outcomes</div>
+      <div class="outcomes-grid">
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Console Password Set</div><div class="detail">line console 0 · password cisco123 · login</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Enable Secret Active</div><div class="detail">admin123 — protects privileged EXEC mode</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">VTY Lines Configured</div><div class="detail">line vty 0 4 · telnet123 · transport input telnet</div></div>
+        <div class="outcome-card"><div class="ok">✓ CONFIRMED</div><div class="label">Remote Telnet Works</div><div class="detail">PC → telnet 192.168.1.1 → Router# reached</div></div>
+      </div>
+    </div>
+
+    <div class="lab-footer">
+      <a class="footer-back" href="portfolio.html">← Back to Portfolio</a>
+      <div class="footer-label">Console Line &amp; Telnet · Cisco Packet Tracer · 2026</div>
+    </div>
+  </div>
+</body>
+</html>
