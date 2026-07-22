@@ -193,20 +193,67 @@
     }
 
     .hero-stat {
+      position: relative;
       padding: 1.75rem;
       background: var(--bg);
-      transition: background 0.2s;
+      overflow: hidden;
+      transition: background 0.25s ease, transform 0.25s ease;
     }
 
-    .hero-stat:hover { background: var(--surface); }
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--stat-c, var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-stat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--stat-c, var(--accent)) 18%, transparent), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .hero-stat.in-view::before { transform: scaleX(1); }
+
+    .hero-stat:hover {
+      background: var(--surface);
+      transform: translateY(-2px);
+    }
+
+    .hero-stat:hover::after { opacity: 1; }
+
+    .hero-stat-index {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.9rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--border);
+      letter-spacing: 0.1em;
+      transition: color 0.25s ease;
+    }
+
+    .hero-stat:hover .hero-stat-index { color: var(--stat-c, var(--accent)); }
 
     .hero-stat-val {
       font-size: 2.2rem;
       font-weight: 800;
       letter-spacing: -0.04em;
-      color: var(--accent);
       line-height: 1;
       margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--stat-c, var(--accent)), var(--text) 160%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-variant-numeric: tabular-nums;
     }
 
     .hero-stat-label {
@@ -849,21 +896,25 @@
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-val">250+</div>
+      <div class="hero-stats" id="heroStats">
+        <div class="hero-stat" style="--stat-c: var(--accent);">
+          <div class="hero-stat-index">01</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="250" data-suffix="+">0</span></div>
           <div class="hero-stat-label">Servers Deployed</div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-val">11</div>
+        <div class="hero-stat" style="--stat-c: var(--accent2);">
+          <div class="hero-stat-index">02</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="11">0</span></div>
           <div class="hero-stat-label">Lab Projects</div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-val">3×</div>
+        <div class="hero-stat" style="--stat-c: var(--green);">
+          <div class="hero-stat-index">03</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="3" data-suffix="×">0</span></div>
           <div class="hero-stat-label">Cisco Certified</div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-val">2026</div>
+        <div class="hero-stat" style="--stat-c: var(--accent);">
+          <div class="hero-stat-index">04</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="2026" data-duration="1800">0</span></div>
           <div class="hero-stat-label">BSc Graduating</div>
         </div>
       </div>
@@ -918,32 +969,25 @@
           <div class="skill-block wide">
             <div class="skill-block-title">Hardware &amp; Infrastructure</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Hardware Setup</span>
-              <span class="skill-pill">Server Configuration</span>
+              <span class="skill-pill">Server Hardware Setup &amp; Configuration</span>
               <span class="skill-pill">HP Servers</span>
               <span class="skill-pill">Supermicro Servers</span>
-              <span class="skill-pill">SSD Replication</span>
-              <span class="skill-pill">SSD Swapping</span>
+              <span class="skill-pill">SSD Replication &amp; Swapping</span>
               <span class="skill-pill">BIOS / BMC Configuration</span>
               <span class="skill-pill">Firmware Upgrades</span>
-              <span class="skill-pill">Storage / RAM Installation</span>
+              <span class="skill-pill">Storage &amp; RAM Installation</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Networking</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">IP Configuration</span>
-              <span class="skill-pill">Subnetting</span>
+              <span class="skill-pill">IP Addressing &amp; Subnetting</span>
               <span class="skill-pill">NIC Configuration</span>
-              <span class="skill-pill">VLANs (802.1Q)</span>
-              <span class="skill-pill">Inter-VLAN Routing</span>
-              <span class="skill-pill">Trunking</span>
-              <span class="skill-pill">Static Routing</span>
-              <span class="skill-pill">DHCP Configuration</span>
-              <span class="skill-pill">DNS Configuration</span>
-              <span class="skill-pill">Default Gateway Config</span>
-              <span class="skill-pill">Fortinet Firewalls</span>
-              <span class="skill-pill">FortiGate / FortiOS</span>
+              <span class="skill-pill">VLANs (802.1Q) &amp; Inter-VLAN Routing</span>
+              <span class="skill-pill">Trunking &amp; Static Routing</span>
+              <span class="skill-pill">DHCP &amp; DNS Configuration</span>
+              <span class="skill-pill">Default Gateway Configuration</span>
+              <span class="skill-pill">Fortinet Firewalls (FortiGate / FortiOS)</span>
               <span class="skill-pill">Wireless Access Points</span>
               <span class="skill-pill">Network Troubleshooting</span>
             </div>
@@ -952,13 +996,9 @@
             <div class="skill-block-title">Cisco IOS &amp; Remote Access</div>
             <div class="skill-pill-group">
               <span class="skill-pill">Cisco Packet Tracer</span>
-              <span class="skill-pill">Cisco IOS CLI</span>
-              <span class="skill-pill">Router Configuration</span>
-              <span class="skill-pill">Switch Configuration</span>
-              <span class="skill-pill">Console Line Access</span>
-              <span class="skill-pill">VTY Line Configuration</span>
-              <span class="skill-pill">Telnet</span>
-              <span class="skill-pill">SSH v2</span>
+              <span class="skill-pill">Cisco IOS CLI (Router &amp; Switch Configuration)</span>
+              <span class="skill-pill">Console &amp; VTY Line Configuration</span>
+              <span class="skill-pill">Telnet &amp; SSH v2</span>
               <span class="skill-pill">RSA Key Generation</span>
               <span class="skill-pill">Router Subinterfaces</span>
             </div>
@@ -966,13 +1006,11 @@
           <div class="skill-block">
             <div class="skill-block-title">Operating Systems &amp; Virtualization</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Windows Server</span>
-              <span class="skill-pill">Windows Desktop</span>
-              <span class="skill-pill">Linux Ubuntu</span>
-              <span class="skill-pill">Linux Mint</span>
+              <span class="skill-pill">Windows Server &amp; Desktop</span>
+              <span class="skill-pill">Linux (Ubuntu, Mint)</span>
               <span class="skill-pill">FreeBSD</span>
               <span class="skill-pill">macOS</span>
-              <span class="skill-pill">OS Installations</span>
+              <span class="skill-pill">OS Installation</span>
               <span class="skill-pill">VirtualBox</span>
               <span class="skill-pill">VMware</span>
             </div>
@@ -984,8 +1022,7 @@
               <span class="skill-pill">Group Policy Objects (GPO)</span>
               <span class="skill-pill">OU &amp; Group Management</span>
               <span class="skill-pill">Delegated Administration</span>
-              <span class="skill-pill">Shared Folders</span>
-              <span class="skill-pill">Permissions</span>
+              <span class="skill-pill">Shared Folders &amp; Permissions</span>
               <span class="skill-pill">ADUC</span>
             </div>
           </div>
@@ -993,21 +1030,16 @@
             <div class="skill-block-title">Desktop Support &amp; Remote Tools</div>
             <div class="skill-pill-group">
               <span class="skill-pill">IT Troubleshooting</span>
-              <span class="skill-pill">RDP</span>
-              <span class="skill-pill">TeamViewer</span>
-              <span class="skill-pill">AnyDesk</span>
-              <span class="skill-pill">Microsoft Office Suite</span>
-              <span class="skill-pill">Microsoft Word</span>
-              <span class="skill-pill">Microsoft PowerPoint</span>
+              <span class="skill-pill">RDP, TeamViewer &amp; AnyDesk</span>
+              <span class="skill-pill">Microsoft Office Suite (Word, PowerPoint)</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Documentation &amp; Operations</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">SOP Authoring</span>
-              <span class="skill-pill">Technical Documentation</span>
+              <span class="skill-pill">SOP Authoring &amp; Technical Documentation</span>
               <span class="skill-pill">Inventory Management</span>
-              <span class="skill-pill">Email Server Admin</span>
+              <span class="skill-pill">Email Server Administration</span>
               <span class="skill-pill">Netdata Monitoring</span>
             </div>
           </div>
@@ -1351,8 +1383,48 @@
     }, { rootMargin: '-40% 0px -55% 0px' });
 
     sections.forEach(s => observer.observe(s));
+
+    // Animated stat counters
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const statEls = document.querySelectorAll('.hero-stat');
+
+    function animateCount(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = parseInt(el.dataset.duration, 10) || 1200;
+
+      if (reduceMotion) {
+        el.textContent = target + suffix;
+        return;
+      }
+
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out-cubic
+        const value = Math.round(target * eased);
+        el.textContent = value + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          const counter = entry.target.querySelector('.count-up');
+          if (counter && !counter.dataset.animated) {
+            counter.dataset.animated = 'true';
+            animateCount(counter);
+          }
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    statEls.forEach(el => statObserver.observe(el));
   </script>
 
 </body>
 </html>
-
