@@ -909,12 +909,12 @@
         </div>
         <div class="hero-stat" style="--stat-c: var(--accent2);">
           <div class="hero-stat-index">02</div>
-          <div class="hero-stat-val"><span class="count-up" data-count="14">0</span></div>
+          <div class="hero-stat-val"><span class="count-up" data-source=".project-row">0</span></div>
           <div class="hero-stat-label">Lab Projects</div>
         </div>
         <div class="hero-stat" style="--stat-c: var(--green);">
           <div class="hero-stat-index">03</div>
-          <div class="hero-stat-val"><span class="count-up" data-count="3" data-suffix="×">0</span></div>
+          <div class="hero-stat-val"><span class="count-up" data-source=".cert-row" data-suffix="×">0</span></div>
           <div class="hero-stat-label">Cisco Certified</div>
         </div>
         <div class="hero-stat" style="--stat-c: var(--accent);">
@@ -1433,7 +1433,9 @@
     const statEls = document.querySelectorAll('.hero-stat');
 
     function animateCount(el) {
-      const target = parseInt(el.dataset.count, 10);
+      const target = el.dataset.source
+        ? document.querySelectorAll(el.dataset.source).length
+        : parseInt(el.dataset.count, 10);
       const suffix = el.dataset.suffix || '';
       const duration = parseInt(el.dataset.duration, 10) || 1200;
 
