@@ -451,12 +451,10 @@
 
     /* ── SKILLS ── */
     .skills-bento {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: auto;
-      grid-auto-flow: dense;
-      gap: 1px;
-      background: var(--border);
+      column-count: 3;
+      column-gap: 0;
+      column-rule: 1px solid var(--border);
+      background: var(--bg);
       border: 1px solid var(--border);
     }
 
@@ -464,6 +462,10 @@
       background: var(--surface);
       padding: 1.75rem;
       min-width: 0;
+      border-bottom: 1px solid var(--border);
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
       transition: background 0.25s;
       position: relative;
     }
@@ -471,7 +473,7 @@
     .skill-block:hover { background: var(--surface2); }
 
     .skill-block.wide {
-      grid-column: span 2;
+      column-span: all;
     }
 
     .skill-block-title {
@@ -855,8 +857,7 @@
       .sidebar { display: none; }
       .portfolio-section { padding: 3.5rem 1.5rem; }
       .about-split { grid-template-columns: 1fr; gap: 2.5rem; }
-      .skills-bento { grid-template-columns: 1fr; }
-      .skill-block.wide { grid-column: span 1; }
+      .skills-bento { column-count: 1; }
       .exp-block { grid-template-columns: 1fr; gap: 0.5rem; }
       .contact-split { grid-template-columns: 1fr; gap: 2rem; }
       .contact-cards { grid-template-columns: 1fr; }
@@ -908,7 +909,7 @@
         </div>
         <div class="hero-stat" style="--stat-c: var(--accent2);">
           <div class="hero-stat-index">02</div>
-          <div class="hero-stat-val"><span class="count-up" data-count="11">0</span></div>
+          <div class="hero-stat-val"><span class="count-up" data-count="14">0</span></div>
           <div class="hero-stat-label">Lab Projects</div>
         </div>
         <div class="hero-stat" style="--stat-c: var(--green);">
@@ -1111,6 +1112,45 @@
                 <span class="project-tag">GPO</span>
                 <span class="project-tag">ADUC</span>
                 <span class="project-tag">Windows Server 2022</span>
+              </div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_Dns_Server_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">DNS Server Deployment (BIND9)</div>
+              <div class="project-summary">Linux Mint 22 configured as a BIND9 DNS server — forward and reverse zones for server.lan, A and PTR records, UFW firewall rules for port 53, and cross-platform resolution testing from a Windows 10 client.</div>
+              <div class="project-tags">
+                <span class="project-tag">BIND9</span>
+                <span class="project-tag">Forward &amp; Reverse DNS</span>
+                <span class="project-tag">UFW</span>
+              </div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_File_Server_Samba_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Linux File Server &amp; Samba Access Control</div>
+              <div class="project-summary">Linux Mint server configured with Samba for department-based file shares — IT, HR, and Finance isolated using Linux groups, Setgid permissions, and Samba authentication. Tested and verified access from a Windows 10 client.</div>
+              <div class="project-tags">
+                <span class="project-tag">Samba</span>
+                <span class="project-tag">Setgid</span>
+                <span class="project-tag">SMB Auth</span>
+              </div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_Backup_Automation_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Server Backup, Restore &amp; Automation</div>
+              <div class="project-summary">Compressed tar/gzip backups of departmental data, restore-tested with ownership preserved, wrapped in a bash script scheduled nightly via cron — with logging, 7-day retention cleanup, and a deliberate failure test.</div>
+              <div class="project-tags">
+                <span class="project-tag">tar / gzip</span>
+                <span class="project-tag">Bash Scripting</span>
+                <span class="project-tag">Cron</span>
               </div>
             </div>
             <div class="project-arrow-col">↗</div>
