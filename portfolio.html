@@ -449,12 +449,12 @@
       flex-shrink: 0;
     }
 
-    /* ── SKILLS ── */
+    /* ── SKILLS (grid-based, no masonry gaps) ── */
     .skills-bento {
-      column-count: 3;
-      column-gap: 0;
-      column-rule: 1px solid var(--border);
-      background: var(--bg);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
       border: 1px solid var(--border);
     }
 
@@ -462,10 +462,6 @@
       background: var(--surface);
       padding: 1.75rem;
       min-width: 0;
-      border-bottom: 1px solid var(--border);
-      break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-      page-break-inside: avoid;
       transition: background 0.25s;
       position: relative;
     }
@@ -473,7 +469,7 @@
     .skill-block:hover { background: var(--surface2); }
 
     .skill-block.wide {
-      column-span: all;
+      grid-column: 1 / -1;
     }
 
     .skill-block-title {
@@ -510,10 +506,12 @@
       color: var(--text);
       letter-spacing: 0.01em;
       border-radius: 2px;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s;
       white-space: normal;
       max-width: 100%;
       line-height: 1.4;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .skill-block:hover .skill-pill {
@@ -525,6 +523,139 @@
       background: rgba(0,229,255,0.15) !important;
       border-color: var(--accent) !important;
       color: var(--accent) !important;
+    }
+
+    .skill-pill:active {
+      transform: scale(0.94);
+      background: rgba(0,229,255,0.28) !important;
+    }
+
+    .skill-pill:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ── SKILL MODAL ── */
+    .skill-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4,4,9,0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 1.5rem;
+    }
+
+    .skill-modal-overlay.open {
+      display: flex;
+    }
+
+    .skill-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      max-width: 460px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .skill-modal-top {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-modal-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      padding-right: 2rem;
+    }
+
+    .skill-modal-close {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.5rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 28px;
+      height: 28px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1;
+    }
+
+    .skill-modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
+    .skill-modal-body {
+      padding: 1.5rem 1.75rem 1.75rem;
+    }
+
+    .skill-modal-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .skill-modal-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.56rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-modal-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .skill-modal-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .skill-modal-link:hover {
+      border-color: var(--accent);
+      background: rgba(0,229,255,0.06);
+      color: var(--accent);
+    }
+
+    .skill-modal-link-arrow {
+      font-size: 0.9rem;
+      flex-shrink: 0;
     }
 
     /* ── PROJECTS ── */
@@ -857,13 +988,18 @@
       .sidebar { display: none; }
       .portfolio-section { padding: 3.5rem 1.5rem; }
       .about-split { grid-template-columns: 1fr; gap: 2.5rem; }
-      .skills-bento { column-count: 1; }
+      .skills-bento { grid-template-columns: 1fr; }
+      .skill-block.wide { grid-column: 1 / -1; }
       .exp-block { grid-template-columns: 1fr; gap: 0.5rem; }
       .contact-split { grid-template-columns: 1fr; gap: 2rem; }
       .contact-cards { grid-template-columns: 1fr; }
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+    }
+
+    @media (max-width: 1200px) and (min-width: 901px) {
+      .skills-bento { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -974,78 +1110,78 @@
           <div class="skill-block wide">
             <div class="skill-block-title">Hardware &amp; Infrastructure</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Server Hardware Setup &amp; Configuration</span>
-              <span class="skill-pill">HP Servers</span>
-              <span class="skill-pill">Supermicro Servers</span>
-              <span class="skill-pill">SSD Replication &amp; Swapping</span>
-              <span class="skill-pill">BIOS / BMC Configuration</span>
-              <span class="skill-pill">Firmware Upgrades</span>
-              <span class="skill-pill">Storage &amp; RAM Installation</span>
+              <span class="skill-pill" tabindex="0" role="button">Server Hardware Setup &amp; Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">HP Servers</span>
+              <span class="skill-pill" tabindex="0" role="button">Supermicro Servers</span>
+              <span class="skill-pill" tabindex="0" role="button">SSD Replication &amp; Swapping</span>
+              <span class="skill-pill" tabindex="0" role="button">BIOS / BMC Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">Firmware Upgrades</span>
+              <span class="skill-pill" tabindex="0" role="button">Storage &amp; RAM Installation</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Networking</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">IP Addressing &amp; Subnetting</span>
-              <span class="skill-pill">NIC Configuration</span>
-              <span class="skill-pill">VLANs (802.1Q) &amp; Inter-VLAN Routing</span>
-              <span class="skill-pill">Trunking &amp; Static Routing</span>
-              <span class="skill-pill">DHCP &amp; DNS Configuration</span>
-              <span class="skill-pill">Default Gateway Configuration</span>
-              <span class="skill-pill">Fortinet Firewalls (FortiGate / FortiOS)</span>
-              <span class="skill-pill">Wireless Access Points</span>
-              <span class="skill-pill">Network Troubleshooting</span>
+              <span class="skill-pill" tabindex="0" role="button">IP Addressing &amp; Subnetting</span>
+              <span class="skill-pill" tabindex="0" role="button">NIC Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">VLANs (802.1Q) &amp; Inter-VLAN Routing</span>
+              <span class="skill-pill" tabindex="0" role="button">Trunking &amp; Static Routing</span>
+              <span class="skill-pill" tabindex="0" role="button">DHCP &amp; DNS Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">Default Gateway Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">Fortinet Firewalls (FortiGate / FortiOS)</span>
+              <span class="skill-pill" tabindex="0" role="button">Wireless Access Points</span>
+              <span class="skill-pill" tabindex="0" role="button">Network Troubleshooting</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Cisco IOS &amp; Remote Access</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Cisco Packet Tracer</span>
-              <span class="skill-pill">Cisco IOS CLI (Router &amp; Switch Configuration)</span>
-              <span class="skill-pill">Console &amp; VTY Line Configuration</span>
-              <span class="skill-pill">Telnet &amp; SSH v2</span>
-              <span class="skill-pill">RSA Key Generation</span>
-              <span class="skill-pill">Router Subinterfaces</span>
+              <span class="skill-pill" tabindex="0" role="button">Cisco Packet Tracer</span>
+              <span class="skill-pill" tabindex="0" role="button">Cisco IOS CLI (Router &amp; Switch Configuration)</span>
+              <span class="skill-pill" tabindex="0" role="button">Console &amp; VTY Line Configuration</span>
+              <span class="skill-pill" tabindex="0" role="button">Telnet &amp; SSH v2</span>
+              <span class="skill-pill" tabindex="0" role="button">RSA Key Generation</span>
+              <span class="skill-pill" tabindex="0" role="button">Router Subinterfaces</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Operating Systems &amp; Virtualization</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Windows Server &amp; Desktop</span>
-              <span class="skill-pill">Linux (Ubuntu, Mint)</span>
-              <span class="skill-pill">FreeBSD</span>
-              <span class="skill-pill">macOS</span>
-              <span class="skill-pill">OS Installation</span>
-              <span class="skill-pill">VirtualBox</span>
-              <span class="skill-pill">VMware</span>
+              <span class="skill-pill" tabindex="0" role="button">Windows Server &amp; Desktop</span>
+              <span class="skill-pill" tabindex="0" role="button">Linux (Ubuntu, Mint)</span>
+              <span class="skill-pill" tabindex="0" role="button">FreeBSD</span>
+              <span class="skill-pill" tabindex="0" role="button">macOS</span>
+              <span class="skill-pill" tabindex="0" role="button">OS Installation</span>
+              <span class="skill-pill" tabindex="0" role="button">VirtualBox</span>
+              <span class="skill-pill" tabindex="0" role="button">VMware</span>
             </div>
           </div>
           <div class="skill-block wide">
             <div class="skill-block-title">Active Directory &amp; Identity Management</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">Active Directory Domain Services (AD DS)</span>
-              <span class="skill-pill">Group Policy Objects (GPO)</span>
-              <span class="skill-pill">OU &amp; Group Management</span>
-              <span class="skill-pill">Delegated Administration</span>
-              <span class="skill-pill">Shared Folders &amp; Permissions</span>
-              <span class="skill-pill">ADUC</span>
+              <span class="skill-pill" tabindex="0" role="button">Active Directory Domain Services (AD DS)</span>
+              <span class="skill-pill" tabindex="0" role="button">Group Policy Objects (GPO)</span>
+              <span class="skill-pill" tabindex="0" role="button">OU &amp; Group Management</span>
+              <span class="skill-pill" tabindex="0" role="button">Delegated Administration</span>
+              <span class="skill-pill" tabindex="0" role="button">Shared Folders &amp; Permissions</span>
+              <span class="skill-pill" tabindex="0" role="button">ADUC</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Desktop Support &amp; Remote Tools</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">IT Troubleshooting</span>
-              <span class="skill-pill">RDP, TeamViewer &amp; AnyDesk</span>
-              <span class="skill-pill">Microsoft Office Suite (Word, PowerPoint)</span>
+              <span class="skill-pill" tabindex="0" role="button">IT Troubleshooting</span>
+              <span class="skill-pill" tabindex="0" role="button">RDP, TeamViewer &amp; AnyDesk</span>
+              <span class="skill-pill" tabindex="0" role="button">Microsoft Office Suite (Word, PowerPoint)</span>
             </div>
           </div>
           <div class="skill-block">
             <div class="skill-block-title">Documentation &amp; Operations</div>
             <div class="skill-pill-group">
-              <span class="skill-pill">SOP Authoring &amp; Technical Documentation</span>
-              <span class="skill-pill">Inventory Management</span>
-              <span class="skill-pill">Email Server Administration</span>
-              <span class="skill-pill">Netdata Monitoring</span>
+              <span class="skill-pill" tabindex="0" role="button">SOP Authoring &amp; Technical Documentation</span>
+              <span class="skill-pill" tabindex="0" role="button">Inventory Management</span>
+              <span class="skill-pill" tabindex="0" role="button">Email Server Administration</span>
+              <span class="skill-pill" tabindex="0" role="button">Netdata Monitoring</span>
             </div>
           </div>
         </div>
@@ -1411,6 +1547,24 @@
     </main>
   </div>
 
+  <!-- SKILL DETAIL MODAL -->
+  <div class="skill-modal-overlay" id="skillModalOverlay">
+    <div class="skill-modal" role="dialog" aria-modal="true" aria-labelledby="skillModalTitle">
+      <div class="skill-modal-top">
+        <button class="skill-modal-close" id="skillModalClose" aria-label="Close">✕</button>
+        <div class="skill-modal-cat" id="skillModalCat">Category</div>
+        <div class="skill-modal-title" id="skillModalTitle">Skill name</div>
+      </div>
+      <div class="skill-modal-body">
+        <p class="skill-modal-note" id="skillModalNote"></p>
+        <div id="skillModalLinksWrap">
+          <div class="skill-modal-label">Where I've used this</div>
+          <div class="skill-modal-links" id="skillModalLinks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Highlight active sidebar link on scroll
     const sections = document.querySelectorAll('section[id]');
@@ -1470,6 +1624,122 @@
     }, { threshold: 0.4 });
 
     statEls.forEach(el => statObserver.observe(el));
+
+    // ── SKILL MODAL ──
+    // Maps each skill pill's exact visible text to related project pages (real hrefs
+    // already used in the Projects section) and/or a short note pulled from the
+    // actual About/Experience copy on this page.
+    const SKILL_INFO = {
+      "Server Hardware Setup & Configuration": { links: [], note: "Deployed and configured 250+ HP and Supermicro servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "HP Servers": { links: [], note: "Deployed and configured 250+ HP servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "Supermicro Servers": { links: [], note: "Deployed and configured Supermicro servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "SSD Replication & Swapping": { links: [], note: "Hands-on hardware maintenance and storage swaps performed during the national server deployment." },
+      "BIOS / BMC Configuration": { links: [], note: "Performed firmware upgrades and BIOS/BMC configuration across healthcare facility servers." },
+      "Firmware Upgrades": { links: [], note: "Performed firmware upgrades and hardware scaling across facilities during the PEPFAR rollout." },
+      "Storage & RAM Installation": { links: [], note: "Hardware scaling — storage and RAM installation — across facilities during the PEPFAR server deployment." },
+
+      "IP Addressing & Subnetting": { links: ["Basic_Network_Lab.html"], note: "Core addressing and subnet-boundary work covered in the Basic LAN &amp; Routed Network lab." },
+      "NIC Configuration": { links: [], note: "Applied across home lab builds and desktop support work." },
+      "VLANs (802.1Q) & Inter-VLAN Routing": { links: ["VLAN_Lab.html"], note: "" },
+      "Trunking & Static Routing": { links: ["Static_Routing_Lab.html", "VLAN_Lab.html"], note: "" },
+      "DHCP & DNS Configuration": { links: ["DHCP_Lab.html", "Linux_Dns_Server_Lab.html"], note: "" },
+      "Default Gateway Configuration": { links: ["LAN_Internet_Lab.html"], note: "" },
+      "Fortinet Firewalls (FortiGate / FortiOS)": { links: [], note: "Deployed Fortinet firewalls nationwide across healthcare facilities as part of the PEPFAR infrastructure rollout." },
+      "Wireless Access Points": { links: [], note: "Configured and deployed wireless access points across healthcare facilities during the Ministry of Health internship." },
+      "Network Troubleshooting": { links: ["LAN_Internet_Lab.html"], note: "Also applied day-to-day during network troubleshooting and IT support at the Ministry of Health." },
+
+      "Cisco Packet Tracer": { links: ["Basic_Network_Lab.html", "DHCP_Lab.html", "VLAN_Lab.html", "Static_Routing_Lab.html", "LAN_Internet_Lab.html", "Console_Telnet_Lab.html", "SSH_Lab.html"], note: "Used across every Cisco networking lab below." },
+      "Cisco IOS CLI (Router & Switch Configuration)": { links: ["DHCP_Lab.html", "VLAN_Lab.html", "Static_Routing_Lab.html"], note: "" },
+      "Console & VTY Line Configuration": { links: ["Console_Telnet_Lab.html"], note: "" },
+      "Telnet & SSH v2": { links: ["Console_Telnet_Lab.html", "SSH_Lab.html"], note: "" },
+      "RSA Key Generation": { links: ["SSH_Lab.html"], note: "" },
+      "Router Subinterfaces": { links: ["VLAN_Lab.html"], note: "" },
+
+      "Windows Server & Desktop": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Linux (Ubuntu, Mint)": { links: ["Netdata_Monitoring_Lab.html", "Linux_Dns_Server_Lab.html", "Linux_File_Server_Samba_Lab.html", "Linux_Backup_Automation_Lab.html"], note: "" },
+      "FreeBSD": { links: [], note: "Explored in home lab virtualization environment." },
+      "macOS": { links: [], note: "Everyday desktop support and administration experience." },
+      "OS Installation": { links: [], note: "Routine part of server hardware setup and home lab builds." },
+      "VirtualBox": { links: [], note: "Home lab environment used for building and testing Windows Server and Linux systems." },
+      "VMware": { links: [], note: "Used for virtualization coursework and lab environments." },
+
+      "Active Directory Domain Services (AD DS)": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Group Policy Objects (GPO)": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "OU & Group Management": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Delegated Administration": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Shared Folders & Permissions": { links: ["AD_Portfolio_Lab.html", "Linux_File_Server_Samba_Lab.html"], note: "" },
+      "ADUC": { links: ["AD_Portfolio_Lab.html"], note: "" },
+
+      "IT Troubleshooting": { links: ["LAN_Internet_Lab.html"], note: "Applied daily during network troubleshooting and IT support work." },
+      "RDP, TeamViewer & AnyDesk": { links: [], note: "Used for remote desktop support and troubleshooting." },
+      "Microsoft Office Suite (Word, PowerPoint)": { links: [], note: "Used for documentation, SOPs, and reporting." },
+
+      "SOP Authoring & Technical Documentation": { links: [], note: "Authored SOPs to standardise system management across health facilities during the PEPFAR rollout." },
+      "Inventory Management": { links: [], note: "Maintained technical documentation and IT inventory during the Ministry of Health internship." },
+      "Email Server Administration": { links: [], note: "Part of ongoing IT operations and infrastructure administration work." },
+      "Netdata Monitoring": { links: ["Netdata_Monitoring_Lab.html"], note: "" }
+    };
+
+    const overlay = document.getElementById('skillModalOverlay');
+    const modalCat = document.getElementById('skillModalCat');
+    const modalTitle = document.getElementById('skillModalTitle');
+    const modalNote = document.getElementById('skillModalNote');
+    const modalLinksWrap = document.getElementById('skillModalLinksWrap');
+    const modalLinks = document.getElementById('skillModalLinks');
+    const modalClose = document.getElementById('skillModalClose');
+
+    function projectTitleFor(href) {
+      const row = document.querySelector(`a.project-row[href="${href}"]`);
+      return row ? row.querySelector('.project-name').textContent : href;
+    }
+
+    function openSkillModal(pillEl) {
+      const skillText = pillEl.textContent.trim();
+      const blockTitle = pillEl.closest('.skill-block').querySelector('.skill-block-title').textContent.trim();
+      const info = SKILL_INFO[skillText] || { links: [], note: '' };
+
+      modalCat.textContent = blockTitle;
+      modalTitle.textContent = skillText;
+      modalNote.textContent = info.note || `Part of the ${blockTitle} toolkit.`;
+
+      modalLinks.innerHTML = '';
+      if (info.links && info.links.length > 0) {
+        modalLinksWrap.style.display = 'block';
+        info.links.forEach(href => {
+          const a = document.createElement('a');
+          a.href = href;
+          a.className = 'skill-modal-link';
+          a.innerHTML = `<span>${projectTitleFor(href)}</span><span class="skill-modal-link-arrow">↗</span>`;
+          modalLinks.appendChild(a);
+        });
+      } else {
+        modalLinksWrap.style.display = 'none';
+      }
+
+      overlay.classList.add('open');
+    }
+
+    function closeSkillModal() {
+      overlay.classList.remove('open');
+    }
+
+    document.querySelectorAll('.skill-pill').forEach(pill => {
+      pill.addEventListener('click', () => openSkillModal(pill));
+      pill.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openSkillModal(pill);
+        }
+      });
+    });
+
+    modalClose.addEventListener('click', closeSkillModal);
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeSkillModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeSkillModal();
+    });
   </script>
 
 </body>
