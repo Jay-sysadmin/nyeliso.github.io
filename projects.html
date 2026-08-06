@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Likubangwa Jay-Z Nyeliso</title>
+  <meta name="description" content="Hands-on lab builds and infrastructure projects by Likubangwa Jay-Z Nyeliso."/>
+  <link rel="canonical" href="https://jay-sysadmin.github.io/nyeliso.github.io/projects.html"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/site.css"/>
+</head>
+<body>
+
+  <nav>
+    <a href="about.html" class="nav-logo">Jay-Z Nyeliso</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="experience.html">Experience</a></li>
+      <li><a href="experience.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <div class="sec-tag">Lab Work</div>
+    <h1 class="sec-title">Hands-On Builds &amp; Lab Reports</h1>
+    <p class="page-hero-sub">Real deployments and reproducible lab environments — each one documented the way I'd document it on the job.</p>
+  </header>
+
+  <main>
+    <div class="project-cat-label reveal">Systems &amp; Infrastructure</div>
+    <div class="project-list reveal">
+
+      <div class="project-row" id="pepfar">
+        <div>
+          <div class="project-name">PEPFAR Digital Infrastructure Rollout</div>
+          <div class="project-summary">National deployment of 250+ HP and Supermicro servers and Fortinet firewalls across Namibia's healthcare facilities under the PEPFAR initiative, seconded through I-TECH Namibia to the Ministry of Health.</div>
+          <div class="project-tags">
+            <span class="project-tag">HP Servers</span>
+            <span class="project-tag">Supermicro</span>
+            <span class="project-tag">Fortinet</span>
+            <span class="project-tag">Healthcare IT</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">—</div>
+      </div>
+
+      <a href="Data_Centre_Design_Lab.html" class="project-row" id="data-centre">
+        <div>
+          <div class="project-name">Tier-1 Data Centre Design</div>
+          <div class="project-summary">Complete Tier-1 spec across 6×42U racks, 65 active devices — power planning, altitude-derated UPS sizing for Windhoek at 1,654 m ASL, and precision cooling calculations for a ~40.3 kW IT load.</div>
+          <div class="project-tags">
+            <span class="project-tag">Rack Design</span>
+            <span class="project-tag">UPS Sizing</span>
+            <span class="project-tag">Precision Cooling</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Netdata_Monitoring_Lab.html" class="project-row" id="netdata">
+        <div>
+          <div class="project-name">Netdata Server Monitoring</div>
+          <div class="project-summary">Real-time infrastructure monitoring on a Linux Ubuntu VM — CPU, RAM, disk I/O and network metrics, live alerting configuration, and custom dashboard setup via Netdata Cloud.</div>
+          <div class="project-tags">
+            <span class="project-tag">Netdata</span>
+            <span class="project-tag">Linux Ubuntu</span>
+            <span class="project-tag">systemctl</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="AD_Portfolio_Lab.html" class="project-row" id="ad">
+        <div>
+          <div class="project-name">Active Directory Administration</div>
+          <div class="project-summary">Windows Server 2022 AD domain (corp.local) built from scratch — OU structure, Admins OU, seven departmental security groups, two delegated admin accounts, GPO restrictions, NTFS permissions, and trust-relationship troubleshooting.</div>
+          <div class="project-tags">
+            <span class="project-tag">AD DS</span>
+            <span class="project-tag">GPO</span>
+            <span class="project-tag">ADUC</span>
+            <span class="project-tag">Windows Server 2022</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Linux_Dns_Server_Lab.html" class="project-row" id="dns">
+        <div>
+          <div class="project-name">DNS Server Deployment (BIND9)</div>
+          <div class="project-summary">Linux Mint 22 configured as a BIND9 DNS server — forward and reverse zones for server.lan, A and PTR records, UFW firewall rules for port 53, and cross-platform resolution testing from a Windows 10 client.</div>
+          <div class="project-tags">
+            <span class="project-tag">BIND9</span>
+            <span class="project-tag">Forward &amp; Reverse DNS</span>
+            <span class="project-tag">UFW</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Linux_File_Server_Samba_Lab.html" class="project-row" id="samba">
+        <div>
+          <div class="project-name">Linux File Server &amp; Samba Access Control</div>
+          <div class="project-summary">Linux Mint server configured with Samba for department-based file shares — IT, HR, and Finance isolated using Linux groups, Setgid permissions, and Samba authentication. Tested and verified access from a Windows 10 client.</div>
+          <div class="project-tags">
+            <span class="project-tag">Samba</span>
+            <span class="project-tag">Setgid</span>
+            <span class="project-tag">SMB Auth</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Linux_Backup_Automation_Lab.html" class="project-row" id="backup">
+        <div>
+          <div class="project-name">Server Backup, Restore &amp; Automation</div>
+          <div class="project-summary">Compressed tar/gzip backups of departmental data, restore-tested with ownership preserved, wrapped in a bash script scheduled nightly via cron — with logging, 7-day retention cleanup, and a deliberate failure test.</div>
+          <div class="project-tags">
+            <span class="project-tag">tar / gzip</span>
+            <span class="project-tag">Bash Scripting</span>
+            <span class="project-tag">Cron</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+    </div>
+
+    <div class="project-cat-label reveal">Networking — Cisco Packet Tracer</div>
+    <div class="project-list reveal">
+
+      <a href="Basic_Network_Lab.html" class="project-row" id="basic-network">
+        <div>
+          <div class="project-name">Basic LAN &amp; Routed Network</div>
+          <div class="project-summary">Foundational lab — simple switch-based LAN progressing to a fully routed two-network topology. Covers MAC vs IP addressing, subnet boundaries, and cross-network routing.</div>
+          <div class="project-tags">
+            <span class="project-tag">Switching</span>
+            <span class="project-tag">Routing Basics</span>
+            <span class="project-tag">Subnetting</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="DHCP_Lab.html" class="project-row" id="dhcp">
+        <div>
+          <div class="project-name">DHCP Server Configuration</div>
+          <div class="project-summary">Router configured as DHCP server — excluded reserved addresses, created OFFICE pool on 192.168.2.0/24, pushed gateway and DNS to clients automatically. No manual PC configuration needed.</div>
+          <div class="project-tags">
+            <span class="project-tag">DHCP</span>
+            <span class="project-tag">IP Pools</span>
+            <span class="project-tag">Cisco IOS</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="VLAN_Lab.html" class="project-row" id="vlan">
+        <div>
+          <div class="project-name">VLANs &amp; Router-on-a-Stick</div>
+          <div class="project-summary">Students and Staff separated into VLAN 10 and VLAN 20 — trunk link configured between switch and router, then inter-VLAN routing enabled via 802.1Q subinterfaces on a single physical router port.</div>
+          <div class="project-tags">
+            <span class="project-tag">VLANs</span>
+            <span class="project-tag">802.1Q Trunking</span>
+            <span class="project-tag">Inter-VLAN Routing</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Static_Routing_Lab.html" class="project-row" id="static-routing">
+        <div>
+          <div class="project-name">Static Routing — Dual-Router Topology</div>
+          <div class="project-summary">Two routers interconnected over a WAN link (10.0.0.0/30) — static routes configured on both to enable end-to-end communication between two separate LANs. Site-to-site routing scenario.</div>
+          <div class="project-tags">
+            <span class="project-tag">Static Routing</span>
+            <span class="project-tag">WAN Link</span>
+            <span class="project-tag">Cisco IOS</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="LAN_Internet_Lab.html" class="project-row" id="lan-internet">
+        <div>
+          <div class="project-name">LAN-to-Internet Connectivity</div>
+          <div class="project-summary">LAN PC routing to an external server through a gateway router — includes real troubleshooting of an incorrect default gateway and the fix that restored end-to-end connectivity.</div>
+          <div class="project-tags">
+            <span class="project-tag">Default Gateway</span>
+            <span class="project-tag">Routing</span>
+            <span class="project-tag">Troubleshooting</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="Console_Telnet_Lab.html" class="project-row" id="console-telnet">
+        <div>
+          <div class="project-name">Console Line &amp; Telnet</div>
+          <div class="project-summary">Two router access methods — direct physical management via console cable and remote network management via Telnet VTY lines. Passwords configured for both console and privileged EXEC modes.</div>
+          <div class="project-tags">
+            <span class="project-tag">Console</span>
+            <span class="project-tag">VTY Lines</span>
+            <span class="project-tag">Telnet</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+      <a href="SSH_Lab.html" class="project-row" id="ssh">
+        <div>
+          <div class="project-name">SSH &amp; Secure Remote Access</div>
+          <div class="project-summary">SSH version 2 configured on a Cisco router — RSA key generation, local user authentication, VTY lines restricted to SSH only. Encrypted replacement for Telnet.</div>
+          <div class="project-tags">
+            <span class="project-tag">SSH v2</span>
+            <span class="project-tag">RSA Encryption</span>
+            <span class="project-tag">Network Security</span>
+          </div>
+        </div>
+        <div class="project-arrow-col">↗</div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-copy">© 2026 Likubangwa Jay-Z Nyeliso</div>
+    <a href="index.html" class="footer-back">← Back to Landing</a>
+  </footer>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>

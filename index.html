@@ -377,7 +377,7 @@
 
       <p class="landing-sub">Portfolio &amp; Lab Reports</p>
 
-      <a class="enter-btn" href="portfolio.html" id="enterBtn">
+      <a class="enter-btn" href="about.html" id="enterBtn">
         <div class="btn-circle" id="btnCircle">
           <span class="btn-arrow">→</span>
         </div>
@@ -539,7 +539,7 @@
 
     function goToPortfolio() {
       document.getElementById('pageTransition').classList.add('go');
-      setTimeout(() => { window.location.href = 'portfolio.html'; }, 480);
+      setTimeout(() => { window.location.href = 'about.html'; }, 480);
     }
     enterBtn.addEventListener('click', e => { e.preventDefault(); goToPortfolio(); });
     document.addEventListener('keydown', e => { if (e.key === 'Enter') goToPortfolio(); });
