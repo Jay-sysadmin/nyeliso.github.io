@@ -39,7 +39,7 @@
     }
     .grid-bg {
       position: fixed;
-      inset: 0;
+      inset: -5% -5%;
       background-image:
         linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
@@ -47,10 +47,11 @@
       animation: gridMove 25s linear infinite;
       will-change: transform;
       z-index: 0;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
     }
     @keyframes gridMove {
-      0%   { transform: translateY(0); }
-      100% { transform: translateY(60px); }
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 60px; }
     }
     .glow-1 {
       position: fixed;
@@ -60,6 +61,8 @@
       top: -150px; right: -150px;
       z-index: 0;
       pointer-events: none;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform;
     }
     .glow-2 {
       position: fixed;
@@ -69,6 +72,8 @@
       bottom: -100px; left: -100px;
       z-index: 0;
       pointer-events: none;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform;
     }
     .cursor {
       position: fixed;
@@ -92,6 +97,52 @@
     }
     .cursor.expand      { width: 20px; height: 20px; }
     .cursor-ring.expand { width: 56px; height: 56px; border-color: rgba(0,229,255,0.7); }
+
+    /* ── BOOT SEQUENCE ── */
+    .boot-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      transition: opacity 0.5s ease;
+    }
+    .boot-screen.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .boot-lines {
+      width: 100%;
+      max-width: 480px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.9;
+    }
+    .boot-line {
+      opacity: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+    .boot-line.show { opacity: 1; }
+    .boot-ok { color: var(--green); }
+    .boot-final { color: var(--accent); margin-top: 0.4rem; }
+    .boot-caret {
+      display: inline-block;
+      width: 7px; height: 14px;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: caretBlink 1s step-end infinite;
+    }
+
+    @keyframes caretBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
     .landing {
       position: relative;
       z-index: 10;
@@ -103,6 +154,17 @@
       flex-direction: column;
       align-items: center;
     }
+    .landing-label,
+    .landing-name,
+    .landing-sub,
+    .enter-btn {
+      opacity: 0;
+    }
+    body.revealed .landing-label { animation: fadeUp 0.7s ease 0.05s forwards; }
+    body.revealed .landing-name  { animation: fadeUp 0.8s ease 0.2s forwards; }
+    body.revealed .landing-sub   { animation: fadeUp 0.8s ease 0.4s forwards; }
+    body.revealed .enter-btn     { animation: fadeUp 0.8s ease 0.6s forwards; }
+
     .landing-label {
       font-family: 'Space Mono', monospace;
       font-size: 0.7rem;
@@ -110,8 +172,6 @@
       letter-spacing: 0.3em;
       text-transform: uppercase;
       margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.3s forwards;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -130,8 +190,6 @@
       line-height: 1.15;
       letter-spacing: 0.04em;
       margin-bottom: 1.25rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.5s forwards;
       text-align: center;
     }
     .landing-name .outline {
@@ -147,9 +205,7 @@
       color: var(--muted);
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      margin-bottom: 4rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.7s forwards;
+      margin-bottom: 3rem;
     }
     .enter-btn {
       display: inline-flex;
@@ -158,8 +214,6 @@
       gap: 1rem;
       text-decoration: none;
       color: inherit;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1s forwards;
       cursor: none;
     }
     .enter-btn:hover .btn-circle { border-color: var(--accent); background: rgba(0,229,255,0.08); }
@@ -173,6 +227,7 @@
       align-items: center;
       justify-content: center;
       transition: border-color 0.3s, background 0.3s;
+      will-change: transform;
     }
     .btn-arrow {
       font-size: 1.5rem;
@@ -188,40 +243,51 @@
       text-transform: uppercase;
       transition: color 0.3s;
     }
-    .corner-tl {
+    .btn-hint {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--border);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.85rem;
+    }
+    .btn-hint kbd {
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      font-family: inherit;
+    }
+
+    /* ── CORNERS ── */
+    .corner {
       position: fixed;
-      top: 2rem; left: 2.5rem;
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
       color: var(--muted);
       letter-spacing: 0.1em;
       z-index: 10;
       opacity: 0;
-      animation: fadeIn 1s ease 1.2s forwards;
+      line-height: 1.7;
     }
-    .corner-br {
-      position: fixed;
-      bottom: 2rem; right: 2.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      z-index: 10;
-      text-align: right;
-      opacity: 0;
-      animation: fadeIn 1s ease 1.2s forwards;
+    body.revealed .corner { animation: fadeIn 1s ease 0.75s forwards; }
+    body.revealed .corner-bl { animation-delay: 0.9s; }
+
+    .corner-tl { top: 2rem; left: 2.5rem; text-align: left; }
+    .corner-tr { top: 2rem; right: 2.5rem; text-align: right; }
+    .corner-bl { bottom: 2rem; left: 2.5rem; text-align: left; }
+    .corner-br { bottom: 2rem; right: 2.5rem; text-align: right; }
+
+    .corner-dim { color: var(--border); }
+    .status-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 0.4rem;
+      animation: pulse 2s ease infinite;
     }
-    .corner-bl {
-      position: fixed;
-      bottom: 2rem; left: 2.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      z-index: 10;
-      opacity: 0;
-      animation: fadeIn 1s ease 1.4s forwards;
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
     .scanline {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -262,23 +328,47 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+
+    @media (max-width: 640px) {
+      .corner-tr, .corner-bl { display: none; }
+      .btn-hint { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .grid-bg { animation: none; }
+      .status-dot { animation: none; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="grid-bg"></div>
-  <div class="glow-1"></div>
-  <div class="glow-2"></div>
+  <div class="grid-bg" id="gridBg"></div>
+  <div class="glow-1" id="glow1"></div>
+  <div class="glow-2" id="glow2"></div>
   <div class="scanline"></div>
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <div class="corner-tl">WINDHOEK, NAMIBIA</div>
-  <div class="corner-br">NUST · BSc CS · 2026</div>
-  <div class="corner-bl">SYSADMIN · IT OFFICER</div>
+  <div class="corner corner-tl" id="cornerClock">
+    WINDHOEK, NAMIBIA<br>
+    <span class="corner-dim" id="localTime">--:--:--</span>
+  </div>
+  <div class="corner corner-tr">
+    <span class="status-dot"></span>STATUS: ONLINE<br>
+    <span class="corner-dim" id="latency">LATENCY: --ms</span>
+  </div>
+  <div class="corner corner-bl">SYSADMIN · IT OFFICER</div>
+  <div class="corner corner-br">
+    <span class="corner-dim" id="uptime">SESSION 00:00:00</span>
+  </div>
 
   <div class="page-transition" id="pageTransition"></div>
+
+  <div class="boot-screen" id="bootScreen">
+    <div class="boot-lines" id="bootLines"></div>
+  </div>
 
   <div class="landing">
     <div class="landing-label">Welcome to</div>
@@ -291,40 +381,162 @@
     <p class="landing-sub">Portfolio &amp; Lab Reports</p>
 
     <a class="enter-btn" href="portfolio.html" id="enterBtn">
-      <div class="btn-circle">
+      <div class="btn-circle" id="btnCircle">
         <span class="btn-arrow">↓</span>
       </div>
       <span class="btn-label">Enter Portfolio</span>
+      <span class="btn-hint">or press <kbd>Enter</kbd> ↵</span>
     </a>
   </div>
 
   <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── Custom cursor ── */
     const cursor     = document.getElementById('cursor');
     const cursorRing = document.getElementById('cursorRing');
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
 
     document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
       cursor.style.left     = e.clientX + 'px';
       cursor.style.top      = e.clientY + 'px';
       cursorRing.style.left = e.clientX + 'px';
       cursorRing.style.top  = e.clientY + 'px';
     });
 
+    /* ── Boot sequence ── */
+    const bootScreen = document.getElementById('bootScreen');
+    const bootLines  = document.getElementById('bootLines');
+
+    const BOOT_STEPS = [
+      { text: '$ ./init_portfolio.sh', ok: false },
+      { text: '[  OK  ] Mounting /home/jay', ok: true },
+      { text: '[  OK  ] Starting network services', ok: true },
+      { text: '[  OK  ] Loading identity: Likubangwa Jay-Z Nyeliso', ok: true },
+      { text: '[  OK  ] System ready', ok: true },
+    ];
+
+    function revealSite() {
+      document.body.classList.add('revealed');
+    }
+
+    function runBoot() {
+      if (reduceMotion) {
+        bootScreen.remove();
+        revealSite();
+        return;
+      }
+      let delay = 120;
+      BOOT_STEPS.forEach((step, i) => {
+        setTimeout(() => {
+          const line = document.createElement('div');
+          line.className = 'boot-line' + (step.ok ? ' boot-ok' : '');
+          line.textContent = step.text;
+          if (i === BOOT_STEPS.length - 1) {
+            const caret = document.createElement('span');
+            caret.className = 'boot-caret';
+            line.appendChild(caret);
+          }
+          bootLines.appendChild(line);
+          requestAnimationFrame(() => line.classList.add('show'));
+        }, delay);
+        delay += i === 0 ? 260 : 180;
+      });
+      setTimeout(() => {
+        bootScreen.classList.add('hide');
+        revealSite();
+        setTimeout(() => bootScreen.remove(), 550);
+      }, delay + 320);
+    }
+    runBoot();
+
+    /* ── Live Windhoek clock ── */
+    const localTimeEl = document.getElementById('localTime');
+    function tickClock() {
+      const fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Africa/Windhoek',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      });
+      localTimeEl.textContent = fmt.format(new Date());
+    }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    /* ── Session uptime ── */
+    const uptimeEl = document.getElementById('uptime');
+    const bootTime = performance.now();
+    function tickUptime() {
+      const secs = Math.floor((performance.now() - bootTime) / 1000);
+      const h = String(Math.floor(secs / 3600)).padStart(2, '0');
+      const m = String(Math.floor((secs % 3600) / 60)).padStart(2, '0');
+      const s = String(secs % 60).padStart(2, '0');
+      uptimeEl.textContent = `SESSION ${h}:${m}:${s}`;
+    }
+    setInterval(tickUptime, 1000);
+
+    /* ── Simulated latency readout ── */
+    const latencyEl = document.getElementById('latency');
+    function tickLatency() {
+      const ms = 8 + Math.floor(Math.random() * 14);
+      latencyEl.textContent = `LATENCY: ${ms}ms`;
+    }
+    tickLatency();
+    setInterval(tickLatency, 2200);
+
+    /* ── Parallax glow drift + magnetic button (skipped if reduced motion) ── */
+    if (!reduceMotion) {
+      const glow1 = document.getElementById('glow1');
+      const glow2 = document.getElementById('glow2');
+      const btnCircle = document.getElementById('btnCircle');
+      const enterBtn = document.getElementById('enterBtn');
+
+      function raf() {
+        const nx = (mouseX / window.innerWidth - 0.5);
+        const ny = (mouseY / window.innerHeight - 0.5);
+        glow1.style.transform = `translate(${nx * -40}px, ${ny * -40}px)`;
+        glow2.style.transform = `translate(${nx * 40}px, ${ny * 40}px)`;
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      enterBtn.addEventListener('mousemove', e => {
+        const rect = btnCircle.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) * 0.25;
+        const dy = (e.clientY - cy) * 0.25;
+        btnCircle.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      enterBtn.addEventListener('mouseleave', () => {
+        btnCircle.style.transform = 'translate(0, 0)';
+      });
+    }
+
+    /* ── Enter button expand + navigation ── */
     const enterBtn = document.getElementById('enterBtn');
 
     enterBtn.addEventListener('mouseenter', () => {
       cursor.classList.add('expand');
       cursorRing.classList.add('expand');
     });
-
     enterBtn.addEventListener('mouseleave', () => {
       cursor.classList.remove('expand');
       cursorRing.classList.remove('expand');
     });
 
-    enterBtn.addEventListener('click', e => {
-      e.preventDefault();
+    function goToPortfolio() {
       document.getElementById('pageTransition').classList.add('go');
       setTimeout(() => { window.location.href = 'portfolio.html'; }, 480);
+    }
+
+    enterBtn.addEventListener('click', e => {
+      e.preventDefault();
+      goToPortfolio();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') goToPortfolio();
     });
   </script>
 
