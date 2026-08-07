@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="google-site-verification" content="1aO533X_7m_hgY-3IqJU--73k-UkhSdxM2WnqSDgj2w"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Likubangwa Jay-Z Nyeliso | Sysadmin & IT Professional</title>
+  <meta name="description" content="Likubangwa Jay-Z Nyeliso — System Administrator and BSc Computer Science student in Windhoek, Namibia."/>
+  <meta property="og:title" content="Likubangwa Jay-Z Nyeliso | Sysadmin & IT Professional"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://jay-sysadmin.github.io/nyeliso.github.io/"/>
+  <meta property="og:image" content="https://jay-sysadmin.github.io/nyeliso.github.io/og-banner.svg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="canonical" href="https://jay-sysadmin.github.io/nyeliso.github.io/"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Likubangwa Jay-Z Nyeliso","jobTitle":"System Administrator","url":"https://jay-sysadmin.github.io/nyeliso.github.io/","email":"jaynyeliso@gmail.com","sameAs":["https://www.linkedin.com/in/likubangwa-nyeliso-39367b25b/","https://github.com/Jay-sysadmin"],"address":{"@type":"PostalAddress","addressLocality":"Windhoek","addressCountry":"NA"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Likubangwa Jay-Z Nyeliso","jobTitle":"System Administrator","url":"https://jay-sysadmin.github.io/nyeliso.github.io/portfolio.html","sameAs":["https://www.linkedin.com/in/likubangwa-nyeliso-39367b25b/","https://github.com/Jay-sysadmin"],"knowsAbout":["System Administration","Network Security","Fortinet Firewalls","Active Directory","Linux Infrastructure"]}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #07070e;
+      --surface: #0e0e18;
+      --surface2: #13131f;
+      --border: #1a1a2e;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --text: #e8eaf6;
+      --muted: #94a3b8;
+      --green: #00c896;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 3rem;
+      background: rgba(7,7,14,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
+    .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+    .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding: 0 3rem; padding-top: 5rem; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding-right: 4rem; padding-bottom: 4rem; }
+    .hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .hero-role { font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 2rem; color: var(--text); }
+    .hero-role em { font-style: normal; color: transparent; -webkit-text-stroke: 1px rgba(0,229,255,0.4); }
+    .hero-bio { color: var(--muted); font-size: 1rem; line-height: 1.8; max-width: 440px; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 2rem; background: var(--accent); color: #07070e; font-weight: 700; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 2rem; border: 1px solid var(--border); color: var(--muted); transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-right { border-left: 1px solid var(--border); display: flex; flex-direction: column; justify-content: flex-end; padding-left: 4rem; padding-bottom: 4rem; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .hero-stat { position: relative; padding: 1.75rem; background: var(--bg); overflow: hidden; transition: background 0.25s ease, transform 0.25s ease; }
+    .hero-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--stat-c, var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hero-stat::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--stat-c, var(--accent)) 18%, transparent), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+    .hero-stat.in-view::before { transform: scaleX(1); }
+    .hero-stat:hover { background: var(--surface); transform: translateY(-2px); }
+    .hero-stat:hover::after { opacity: 1; }
+    .hero-stat-index { position: absolute; top: 0.75rem; right: 0.9rem; font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--border); letter-spacing: 0.1em; transition: color 0.25s ease; }
+    .hero-stat:hover .hero-stat-index { color: var(--stat-c, var(--accent)); }
+    .hero-stat-val { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--stat-c, var(--accent)), var(--text) 160%); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+    .hero-stat-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+    .hero-status { margin-top: 2rem; display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--green); letter-spacing: 0.1em; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* ── LAYOUT ── */
+    .two-col-layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar { border-right: 1px solid var(--border); position: sticky; top: 54px; height: calc(100vh - 54px); display: flex; flex-direction: column; padding: 3rem 2rem; overflow-y: auto; }
+    .sidebar-label { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0.5; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; list-style: none; }
+    .sidebar-nav a { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; padding: 0.6rem 0.75rem; border-left: 2px solid transparent; transition: color 0.2s, border-color 0.2s; display: block; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--accent); border-left-color: var(--accent); }
+    .sidebar-bottom { margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .sidebar-link { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; padding: 0.4rem 0; transition: color 0.2s; }
+    .sidebar-link:hover { color: var(--accent); }
+    .main-content { min-width: 0; }
+
+    /* ── SECTIONS ── */
+    .portfolio-section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
+    .sec-tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sec-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.05; }
+    .sec-sub { color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 560px; margin-bottom: 3rem; }
+
+    /* ── REVEAL ON SCROLL ── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ── ABOUT ── */
+    .about-text p { color: var(--muted); line-height: 1.85; font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .about-metrics { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .metric-row { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.2s; gap: 1rem; }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-row:hover { background: var(--surface); }
+    .metric-val2 { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--text); letter-spacing: 0.04em; text-align: right; }
+    .metric-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
+    .about-split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+
+    /* ── SKILLS: gap-free layout ── */
+    .skills-counter { display: flex; align-items: baseline; gap: 0.6rem; font-family: 'Space Mono', monospace; margin-bottom: 2rem; }
+    .skills-counter .num { font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .skills-counter .lbl { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+    .skill-block-featured { background: var(--surface); border: 1px solid var(--border); padding: 1.85rem; margin-bottom: 1px; }
+    .skills-columns { display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); align-items: flex-start; }
+    .skills-col { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .skill-block { background: var(--surface); padding: 1.75rem; min-width: 0; transition: background 0.25s; position: relative; }
+    .skill-block:hover { background: var(--surface2); }
+    .skill-block-title { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; }
+    .skill-block-title .cnt { color: var(--border); font-weight: 400; }
+    .skill-block-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .skill-pill-group { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .skill-pill { font-family: 'Space Mono', monospace; font-size: 0.66rem; padding: 0.35rem 0.7rem; border: 1px solid rgba(0,229,255,0.2); background: rgba(0,229,255,0.04); color: var(--text); letter-spacing: 0.01em; border-radius: 2px; transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s; white-space: normal; max-width: 100%; line-height: 1.4; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .skill-block:hover .skill-pill, .skill-block-featured:hover .skill-pill { border-color: rgba(0,229,255,0.35); background: rgba(0,229,255,0.07); }
+    .skill-pill:hover { background: rgba(0,229,255,0.15) !important; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .skill-pill:active { transform: scale(0.94); background: rgba(0,229,255,0.28) !important; }
+    .skill-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ── SKILL MODAL ── */
+    .skill-modal-overlay { position: fixed; inset: 0; background: rgba(4,4,9,0.75); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 500; padding: 1.5rem; }
+    .skill-modal-overlay.open { display: flex; }
+    .skill-modal { background: var(--surface); border: 1px solid var(--border); max-width: 460px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; animation: modalIn 0.18s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .skill-modal-top { padding: 1.75rem 1.75rem 1.25rem; border-bottom: 1px solid var(--border); }
+    .skill-modal-cat { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .skill-modal-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.3; padding-right: 2rem; }
+    .skill-modal-close { position: absolute; top: 1.4rem; right: 1.5rem; background: none; border: 1px solid var(--border); color: var(--muted); width: 28px; height: 28px; font-size: 0.9rem; cursor: pointer; transition: color 0.2s, border-color 0.2s; line-height: 1; }
+    .skill-modal-close:hover { color: var(--accent); border-color: var(--accent); }
+    .skill-modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+    .skill-modal-note { color: var(--muted); font-size: 0.88rem; line-height: 1.75; margin-bottom: 1.25rem; }
+    .skill-modal-label { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .skill-modal-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .skill-modal-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 600; transition: border-color 0.2s, background 0.2s, color 0.2s; }
+    .skill-modal-link:hover { border-color: var(--accent); background: rgba(0,229,255,0.06); color: var(--accent); }
+    .skill-modal-link-arrow { font-size: 0.9rem; flex-shrink: 0; }
+
+    /* ── PROJECTS ── */
+    .project-cat-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+    .project-cat-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .project-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .project-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background 0.2s; position: relative; }
+    .project-row:last-child { border-bottom: none; }
+    .project-row:hover { background: var(--surface); }
+    .project-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.25s; }
+    .project-row:hover::before { transform: scaleY(1); }
+    .project-name { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.5rem; color: var(--text); transition: color 0.2s; }
+    .project-row:hover .project-name { color: var(--accent); }
+    .project-summary { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.02em; line-height: 1.75; max-width: 580px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.85rem; }
+    .project-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; padding: 0.25rem 0.7rem; background: rgba(0,229,255,0.05); border: 1px solid rgba(0,229,255,0.15); color: var(--accent); letter-spacing: 0.05em; }
+    .project-arrow-col { font-size: 1.2rem; color: var(--muted); transition: color 0.2s, transform 0.2s; flex-shrink: 0; }
+    .project-row:hover .project-arrow-col { color: var(--accent); transform: translate(3px, -3px); }
+
+    /* ── EXPERIENCE ── */
+    .exp-block { display: grid; grid-template-columns: 180px 1fr; gap: 3rem; padding-bottom: 3rem; margin-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .exp-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .exp-date-col { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; padding-top: 0.2rem; line-height: 1.7; }
+    .exp-role { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
+    .exp-org { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exp-points li { font-size: 0.95rem; color: var(--muted); line-height: 1.75; padding-left: 1rem; position: relative; }
+    .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
+    .verified-badge { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--green); border: 1px solid rgba(0,200,150,0.3); padding: 0.2rem 0.6rem; letter-spacing: 0.1em; text-decoration: none; white-space: nowrap; transition: border-color 0.2s; }
+    .verified-badge:hover { border-color: var(--green); }
+
+    /* ── CERTIFICATIONS ── */
+    .cert-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .cert-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background 0.2s; gap: 2rem; }
+    .cert-row:last-child { border-bottom: none; }
+    .cert-row:hover { background: var(--surface); }
+    .cert-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+    .cert-issuer { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em; }
+    .cert-badge { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--green); letter-spacing: 0.12em; white-space: nowrap; flex-shrink: 0; }
+
+    /* ── CONTACT ── */
+    .contact-split { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
+    .contact-intro { padding-top: 0.5rem; }
+    .contact-headline { font-size: 1.1rem; font-weight: 600; line-height: 1.7; color: var(--text); margin-bottom: 2rem; }
+    .contact-availability { display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
+    .contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .contact-card { background: var(--surface); padding: 1.5rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; transition: background 0.2s; position: relative; }
+    .contact-card:hover { background: var(--surface2); }
+    .contact-card-icon { width: 38px; height: 38px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-family: 'Space Mono', monospace; color: var(--accent); flex-shrink: 0; }
+    .contact-card-body { flex: 1; min-width: 0; }
+    .contact-card-type { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .contact-card-val { font-size: 0.8rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s; }
+    .contact-card:hover .contact-card-val { color: var(--accent); }
+    .contact-card-arrow { font-size: 0.9rem; color: var(--muted); transition: color 0.2s, transform 0.2s; flex-shrink: 0; }
+    .contact-card:hover .contact-card-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+    /* ── FOOTER ── */
+    footer { padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; }
+    .footer-back { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+    .footer-back:hover { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero-right { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 3rem; margin-top: 2rem; }
+      .hero-left { padding-right: 0; }
+      .two-col-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .portfolio-section { padding: 3.5rem 1.5rem; }
+      .about-split { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-columns { flex-direction: column; }
+      .exp-block { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-split { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-cards { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Jay-Z Nyeliso</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-eyebrow">System Administrator · IT Professional</div>
+      <h1 class="hero-role">Building<br><em>Reliable</em><br>Infrastructure</h1>
+      <p class="hero-bio">BSc Computer Science student at NUST and experienced System Administrator based in Windhoek, Namibia. Deployed enterprise server infrastructure across national healthcare facilities under the PEPFAR initiative.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="jay%20cv.pdf" target="_blank" class="btn-ghost">Download CV</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats" id="heroStats">
+        <div class="hero-stat" style="--stat-c: var(--accent);">
+          <div class="hero-stat-index">01</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="250" data-suffix="+">0</span></div>
+          <div class="hero-stat-label">Servers Deployed</div>
+        </div>
+        <div class="hero-stat" style="--stat-c: var(--accent2);">
+          <div class="hero-stat-index">02</div>
+          <div class="hero-stat-val"><span class="count-up" data-source=".project-row">0</span></div>
+          <div class="hero-stat-label">Lab Projects</div>
+        </div>
+        <div class="hero-stat" style="--stat-c: var(--green);">
+          <div class="hero-stat-index">03</div>
+          <div class="hero-stat-val"><span class="count-up" data-source=".cert-row" data-suffix="×">0</span></div>
+          <div class="hero-stat-label">Cisco Certified</div>
+        </div>
+        <div class="hero-stat" style="--stat-c: var(--accent);">
+          <div class="hero-stat-index">04</div>
+          <div class="hero-stat-val"><span class="count-up" data-count="2026" data-duration="1800">0</span></div>
+          <div class="hero-stat-label">BSc Graduating</div>
+        </div>
+      </div>
+      <div class="hero-status"><div class="status-dot"></div>Available for opportunities</div>
+    </div>
+  </section>
+
+  <!-- TWO-COL LAYOUT -->
+  <div class="two-col-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-label">Navigate</div>
+      <ul class="sidebar-nav">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Technical Stack</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certs">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <a href="https://www.linkedin.com/in/likubangwa-nyeliso-39367b25b/" target="_blank" class="sidebar-link">LinkedIn ↗</a>
+        <a href="https://github.com/Jay-sysadmin" target="_blank" class="sidebar-link">GitHub ↗</a>
+        <a href="index.html" class="sidebar-link">← Landing Page</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- ABOUT -->
+      <section class="portfolio-section" id="about">
+        <div class="sec-tag">About</div>
+        <h2 class="sec-title">Who I Am</h2>
+        <div class="about-split">
+          <div class="about-text reveal">
+            <p>I'm Likubangwa Jay-Z Nyeliso — a BSc Computer Science student at the Namibia University of Science and Technology (NUST), graduating 2026, specializing in system and network administration.</p>
+            <p>I worked as a System Administrator and IT Officer at I-TECH Namibia, seconded to the Ministry of Health and Social Services under the PEPFAR digital health initiative. I was part of a national rollout of 250+ HP and Supermicro servers and Fortinet firewalls across healthcare facilities across Namibia — strengthening IT infrastructure and health information systems in the public health sector.</p>
+            <p>I build and document hands-on lab environments covering Active Directory, Linux infrastructure, networking, and data centre design — turning real-world work into reproducible documentation. Driven by documentation and proactive monitoring.</p>
+          </div>
+          <div class="about-metrics reveal">
+            <div class="metric-row"><span class="metric-label">Location</span><span class="metric-val2">Windhoek, Namibia</span></div>
+            <div class="metric-row"><span class="metric-label">Education</span><span class="metric-val2">BSc CS, NUST '26</span></div>
+            <div class="metric-row"><span class="metric-label">Focus</span><span class="metric-val2">Sysadmin · Networking · AD</span></div>
+            <div class="metric-row"><span class="metric-label">Status</span><span class="metric-val2" style="color:var(--green)">Available</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="portfolio-section" id="skills">
+        <div class="sec-tag">Technical Stack</div>
+        <h2 class="sec-title">Systems, Networks &amp; Scripts</h2>
+        <p class="sec-sub">Grouped by how much I actually work with it, largest first — click any item for where it's been applied.</p>
+
+        <div class="skills-counter reveal">
+          <span class="num count-up" data-count="43">0</span>
+          <span class="lbl">Tools &amp; Protocols<br>Across 7 Domains</span>
+        </div>
+
+        <div class="skill-block-featured reveal">
+          <div class="skill-block-title">Networking <span class="cnt">09</span></div>
+          <div class="skill-pill-group">
+            <span class="skill-pill" tabindex="0" role="button">IP Addressing &amp; Subnetting</span>
+            <span class="skill-pill" tabindex="0" role="button">NIC Configuration</span>
+            <span class="skill-pill" tabindex="0" role="button">VLANs (802.1Q) &amp; Inter-VLAN Routing</span>
+            <span class="skill-pill" tabindex="0" role="button">Trunking &amp; Static Routing</span>
+            <span class="skill-pill" tabindex="0" role="button">DHCP &amp; DNS Configuration</span>
+            <span class="skill-pill" tabindex="0" role="button">Default Gateway Configuration</span>
+            <span class="skill-pill" tabindex="0" role="button">Fortinet Firewalls (FortiGate / FortiOS)</span>
+            <span class="skill-pill" tabindex="0" role="button">Wireless Access Points</span>
+            <span class="skill-pill" tabindex="0" role="button">Network Troubleshooting</span>
+          </div>
+        </div>
+
+        <div class="skills-columns reveal">
+          <div class="skills-col">
+            <div class="skill-block">
+              <div class="skill-block-title">Hardware &amp; Infrastructure <span class="cnt">07</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">Server Hardware Setup &amp; Configuration</span>
+                <span class="skill-pill" tabindex="0" role="button">HP Servers</span>
+                <span class="skill-pill" tabindex="0" role="button">Supermicro Servers</span>
+                <span class="skill-pill" tabindex="0" role="button">SSD Replication &amp; Swapping</span>
+                <span class="skill-pill" tabindex="0" role="button">BIOS / BMC Configuration</span>
+                <span class="skill-pill" tabindex="0" role="button">Firmware Upgrades</span>
+                <span class="skill-pill" tabindex="0" role="button">Storage &amp; RAM Installation</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-title">Cisco IOS &amp; Remote Access <span class="cnt">06</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">Cisco Packet Tracer</span>
+                <span class="skill-pill" tabindex="0" role="button">Cisco IOS CLI (Router &amp; Switch Configuration)</span>
+                <span class="skill-pill" tabindex="0" role="button">Console &amp; VTY Line Configuration</span>
+                <span class="skill-pill" tabindex="0" role="button">Telnet &amp; SSH v2</span>
+                <span class="skill-pill" tabindex="0" role="button">RSA Key Generation</span>
+                <span class="skill-pill" tabindex="0" role="button">Router Subinterfaces</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-title">Desktop Support &amp; Remote Tools <span class="cnt">03</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">IT Troubleshooting</span>
+                <span class="skill-pill" tabindex="0" role="button">RDP, TeamViewer &amp; AnyDesk</span>
+                <span class="skill-pill" tabindex="0" role="button">Microsoft Office Suite (Word, Excel, PowerPoint)</span>
+              </div>
+            </div>
+          </div>
+          <div class="skills-col">
+            <div class="skill-block">
+              <div class="skill-block-title">Operating Systems &amp; Virtualization <span class="cnt">07</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">Windows Server &amp; Desktop</span>
+                <span class="skill-pill" tabindex="0" role="button">Linux (Ubuntu, Mint)</span>
+                <span class="skill-pill" tabindex="0" role="button">FreeBSD</span>
+                <span class="skill-pill" tabindex="0" role="button">macOS</span>
+                <span class="skill-pill" tabindex="0" role="button">OS Installation</span>
+                <span class="skill-pill" tabindex="0" role="button">VirtualBox</span>
+                <span class="skill-pill" tabindex="0" role="button">VMware</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-title">Active Directory &amp; Identity Management <span class="cnt">06</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">Active Directory Domain Services (AD DS)</span>
+                <span class="skill-pill" tabindex="0" role="button">Group Policy Objects (GPO)</span>
+                <span class="skill-pill" tabindex="0" role="button">OU &amp; Group Management</span>
+                <span class="skill-pill" tabindex="0" role="button">Delegated Administration</span>
+                <span class="skill-pill" tabindex="0" role="button">Shared Folders &amp; Permissions</span>
+                <span class="skill-pill" tabindex="0" role="button">ADUC</span>
+              </div>
+            </div>
+            <div class="skill-block">
+              <div class="skill-block-title">Documentation, Monitoring &amp; Automation <span class="cnt">05</span></div>
+              <div class="skill-pill-group">
+                <span class="skill-pill" tabindex="0" role="button">Bash Scripting</span>
+                <span class="skill-pill" tabindex="0" role="button">SOP Authoring &amp; Technical Documentation</span>
+                <span class="skill-pill" tabindex="0" role="button">Inventory Management</span>
+                <span class="skill-pill" tabindex="0" role="button">Email Server Administration</span>
+                <span class="skill-pill" tabindex="0" role="button">Netdata Monitoring</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="portfolio-section" id="projects">
+        <div class="sec-tag">Lab Work</div>
+        <h2 class="sec-title">Hands-On Builds &amp; Lab Reports</h2>
+        <p class="sec-sub">Real deployments and reproducible lab environments — each documented the way I'd document it on the job.</p>
+
+        <div class="project-cat-label reveal">Systems &amp; Infrastructure</div>
+        <div class="project-list reveal" style="margin-bottom:3rem;">
+
+          <div class="project-row">
+            <div>
+              <div class="project-name">PEPFAR Digital Infrastructure Rollout</div>
+              <div class="project-summary">National deployment of 250+ HP and Supermicro servers and Fortinet firewalls across Namibia's healthcare facilities under the PEPFAR initiative, seconded through I-TECH Namibia to the Ministry of Health.</div>
+              <div class="project-tags"><span class="project-tag">HP Servers</span><span class="project-tag">Supermicro</span><span class="project-tag">Fortinet</span><span class="project-tag">Healthcare IT</span></div>
+            </div>
+            <div class="project-arrow-col">—</div>
+          </div>
+
+          <a href="Data_Centre_Design_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Tier-1 Data Centre Design</div>
+              <div class="project-summary">Complete Tier-1 spec across 6×42U racks, 65 active devices — power planning, altitude-derated UPS sizing for Windhoek at 1,654 m ASL, and precision cooling calculations for a ~40.3 kW IT load.</div>
+              <div class="project-tags"><span class="project-tag">Rack Design</span><span class="project-tag">UPS Sizing</span><span class="project-tag">Precision Cooling</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Netdata_Monitoring_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Netdata Server Monitoring</div>
+              <div class="project-summary">Real-time infrastructure monitoring on a Linux Ubuntu VM — CPU, RAM, disk I/O and network metrics, live alerting configuration, and custom dashboard setup via Netdata Cloud.</div>
+              <div class="project-tags"><span class="project-tag">Netdata</span><span class="project-tag">Linux Ubuntu</span><span class="project-tag">systemctl</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="AD_Portfolio_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Active Directory Administration</div>
+              <div class="project-summary">Windows Server 2022 AD domain (corp.local) built from scratch — OU structure, Admins OU, seven departmental security groups, two delegated admin accounts, GPO restrictions, NTFS permissions, and trust-relationship troubleshooting.</div>
+              <div class="project-tags"><span class="project-tag">AD DS</span><span class="project-tag">GPO</span><span class="project-tag">ADUC</span><span class="project-tag">Windows Server 2022</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_Dns_Server_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">DNS Server Deployment (BIND9)</div>
+              <div class="project-summary">Linux Mint 22 configured as a BIND9 DNS server — forward and reverse zones for server.lan, A and PTR records, UFW firewall rules for port 53, and cross-platform resolution testing from a Windows 10 client.</div>
+              <div class="project-tags"><span class="project-tag">BIND9</span><span class="project-tag">Forward &amp; Reverse DNS</span><span class="project-tag">UFW</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_File_Server_Samba_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Linux File Server &amp; Samba Access Control</div>
+              <div class="project-summary">Linux Mint server configured with Samba for department-based file shares — IT, HR, and Finance isolated using Linux groups, Setgid permissions, and Samba authentication. Tested and verified access from a Windows 10 client.</div>
+              <div class="project-tags"><span class="project-tag">Samba</span><span class="project-tag">Setgid</span><span class="project-tag">SMB Auth</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Linux_Backup_Automation_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Server Backup, Restore &amp; Automation</div>
+              <div class="project-summary">Compressed tar/gzip backups of departmental data, restore-tested with ownership preserved, wrapped in a bash script scheduled nightly via cron — with logging, 7-day retention cleanup, and a deliberate failure test.</div>
+              <div class="project-tags"><span class="project-tag">tar / gzip</span><span class="project-tag">Bash Scripting</span><span class="project-tag">Cron</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+        </div>
+
+        <div class="project-cat-label reveal">Networking — Cisco Packet Tracer</div>
+        <div class="project-list reveal">
+
+          <a href="Basic_Network_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Basic LAN &amp; Routed Network</div>
+              <div class="project-summary">Foundational lab — simple switch-based LAN progressing to a fully routed two-network topology. Covers MAC vs IP addressing, subnet boundaries, and cross-network routing.</div>
+              <div class="project-tags"><span class="project-tag">Switching</span><span class="project-tag">Routing Basics</span><span class="project-tag">Subnetting</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="DHCP_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">DHCP Server Configuration</div>
+              <div class="project-summary">Router configured as DHCP server — excluded reserved addresses, created OFFICE pool on 192.168.2.0/24, pushed gateway and DNS to clients automatically. No manual PC configuration needed.</div>
+              <div class="project-tags"><span class="project-tag">DHCP</span><span class="project-tag">IP Pools</span><span class="project-tag">Cisco IOS</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="VLAN_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">VLANs &amp; Router-on-a-Stick</div>
+              <div class="project-summary">Students and Staff separated into VLAN 10 and VLAN 20 — trunk link configured between switch and router, then inter-VLAN routing enabled via 802.1Q subinterfaces on a single physical router port.</div>
+              <div class="project-tags"><span class="project-tag">VLANs</span><span class="project-tag">802.1Q Trunking</span><span class="project-tag">Inter-VLAN Routing</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Static_Routing_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Static Routing — Dual-Router Topology</div>
+              <div class="project-summary">Two routers interconnected over a WAN link (10.0.0.0/30) — static routes configured on both to enable end-to-end communication between two separate LANs. Site-to-site routing scenario.</div>
+              <div class="project-tags"><span class="project-tag">Static Routing</span><span class="project-tag">WAN Link</span><span class="project-tag">Cisco IOS</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="LAN_Internet_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">LAN-to-Internet Connectivity</div>
+              <div class="project-summary">LAN PC routing to an external server through a gateway router — includes real troubleshooting of an incorrect default gateway and the fix that restored end-to-end connectivity.</div>
+              <div class="project-tags"><span class="project-tag">Default Gateway</span><span class="project-tag">Routing</span><span class="project-tag">Troubleshooting</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="Console_Telnet_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">Console Line &amp; Telnet</div>
+              <div class="project-summary">Two router access methods — direct physical management via console cable and remote network management via Telnet VTY lines. Passwords configured for both console and privileged EXEC modes.</div>
+              <div class="project-tags"><span class="project-tag">Console</span><span class="project-tag">VTY Lines</span><span class="project-tag">Telnet</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+
+          <a href="SSH_Lab.html" class="project-row">
+            <div>
+              <div class="project-name">SSH &amp; Secure Remote Access</div>
+              <div class="project-summary">SSH version 2 configured on a Cisco router — RSA key generation, local user authentication, VTY lines restricted to SSH only. Encrypted replacement for Telnet.</div>
+              <div class="project-tags"><span class="project-tag">SSH v2</span><span class="project-tag">RSA Encryption</span><span class="project-tag">Network Security</span></div>
+            </div>
+            <div class="project-arrow-col">↗</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="portfolio-section" id="experience">
+        <div class="sec-tag">Career</div>
+        <h2 class="sec-title">From Health Facilities to Home Lab</h2>
+
+        <div class="exp-block reveal">
+          <div class="exp-date-col">Aug 2025 — Oct 2025<br><br>I-TECH Namibia<br>Windhoek, Namibia</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;">
+              <div class="exp-role">System Administrator / IT Officer</div>
+              <a href="Confirmation%20letter%20.pdf" target="_blank" class="verified-badge">✓ VERIFIED ↗</a>
+            </div>
+            <div class="exp-org">I-TECH Namibia · PEPFAR Digital Health Initiative</div>
+            <ul class="exp-points">
+              <li>Deployed and configured 250+ HP and Supermicro servers and Fortinet firewalls nationwide</li>
+              <li>Performed firmware upgrades, BIOS/BMC configuration, and hardware scaling across facilities</li>
+              <li>Authored SOPs to standardise system management across health facilities</li>
+              <li>Applied networking fundamentals and troubleshooting across health facility infrastructure</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-block reveal">
+          <div class="exp-date-col">Oct 2025 — Nov 2025<br><br>Ministry of Health<br>Windhoek, Namibia</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;">
+              <div class="exp-role">IT Intern — Health Information Systems</div>
+              <a href="Confirmation%20letter%20.pdf" target="_blank" class="verified-badge">✓ VERIFIED ↗</a>
+            </div>
+            <div class="exp-org">Ministry of Health and Social Services · Seconded via I-TECH Namibia</div>
+            <ul class="exp-points">
+              <li>Configured and deployed wireless access points across healthcare facilities</li>
+              <li>Network troubleshooting and IT support within the Health Information System section</li>
+              <li>Maintained technical documentation and IT inventory</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="portfolio-section" id="education">
+        <div class="sec-tag">Education</div>
+        <h2 class="sec-title">Academic Background</h2>
+        <div class="exp-block reveal">
+          <div class="exp-date-col">2023 — 2026<br><br>NUST<br>Windhoek, Namibia</div>
+          <div>
+            <div class="exp-role">BSc Computer Science (NQF Level 7)</div>
+            <div class="exp-org">Namibia University of Science and Technology</div>
+            <ul class="exp-points">
+              <li>Distinction in IT Infrastructure Administration &amp; Services (83), Systems Virtualisation (76), Applied Statistics &amp; Probability (76), and Wireless Technologies (75)</li>
+              <li>Credit in Innovation &amp; Entrepreneurship (69), Database Administration (66), and Data Networks (63)</li>
+              <li>Coursework in Advanced Network Security, Data Centre Infrastructure Management, Operating Systems, and Information Systems Security Essentials</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS -->
+      <section class="portfolio-section" id="certs">
+        <div class="sec-tag">Certifications</div>
+        <h2 class="sec-title">Credentials</h2>
+        <div class="cert-list reveal">
+          <a href="https://www.netacad.com/courses/network-support-security" target="_blank" rel="noopener" class="cert-row">
+            <div><div class="cert-name">Network Support and Security</div><div class="cert-issuer">Cisco Networking Academy · Apr 2026</div></div>
+            <div class="cert-badge">VERIFIED ↗</div>
+          </a>
+          <a href="https://www.netacad.com/courses/networking-basics" target="_blank" rel="noopener" class="cert-row">
+            <div><div class="cert-name">Networking Basics</div><div class="cert-issuer">Cisco Networking Academy · Apr 2026</div></div>
+            <div class="cert-badge">VERIFIED ↗</div>
+          </a>
+          <a href="https://www.netacad.com/courses/computer-hardware-basics" target="_blank" rel="noopener" class="cert-row">
+            <div><div class="cert-name">Computer Hardware Basics</div><div class="cert-issuer">Cisco Networking Academy · Apr 2026</div></div>
+            <div class="cert-badge">VERIFIED ↗</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="portfolio-section" id="contact">
+        <div class="sec-tag">Contact</div>
+        <h2 class="sec-title">Get In Touch</h2>
+        <div class="contact-split reveal">
+          <div class="contact-intro">
+            <p class="contact-headline">Open to full-time roles, internships, and freelance infrastructure work in Namibia and remotely.</p>
+            <div class="contact-availability"><div class="status-dot"></div><span>Currently available</span></div>
+          </div>
+          <div class="contact-cards">
+            <a href="mailto:jaynyeliso@gmail.com" class="contact-card">
+              <div class="contact-card-icon">✉</div>
+              <div class="contact-card-body"><div class="contact-card-type">Email</div><div class="contact-card-val">jaynyeliso@gmail.com</div></div>
+              <div class="contact-card-arrow">↗</div>
+            </a>
+            <a href="tel:+264816356536" class="contact-card">
+              <div class="contact-card-icon">☎</div>
+              <div class="contact-card-body"><div class="contact-card-type">Phone</div><div class="contact-card-val">+264 81 635 6536</div></div>
+              <div class="contact-card-arrow">↗</div>
+            </a>
+            <a href="https://www.linkedin.com/in/likubangwa-nyeliso-39367b25b/" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon">in</div>
+              <div class="contact-card-body"><div class="contact-card-type">LinkedIn</div><div class="contact-card-val">Likubangwa Nyeliso</div></div>
+              <div class="contact-card-arrow">↗</div>
+            </a>
+            <a href="https://github.com/Jay-sysadmin" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon">⌥</div>
+              <div class="contact-card-body"><div class="contact-card-type">GitHub</div><div class="contact-card-val">Jay-sysadmin</div></div>
+              <div class="contact-card-arrow">↗</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-copy">© 2026 Likubangwa Jay-Z Nyeliso</div>
+        <a href="index.html" class="footer-back">← Back to Landing</a>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- SKILL DETAIL MODAL -->
+  <div class="skill-modal-overlay" id="skillModalOverlay">
+    <div class="skill-modal" role="dialog" aria-modal="true" aria-labelledby="skillModalTitle">
+      <div class="skill-modal-top">
+        <button class="skill-modal-close" id="skillModalClose" aria-label="Close">✕</button>
+        <div class="skill-modal-cat" id="skillModalCat">Category</div>
+        <div class="skill-modal-title" id="skillModalTitle">Skill name</div>
+      </div>
+      <div class="skill-modal-body">
+        <p class="skill-modal-note" id="skillModalNote"></p>
+        <div id="skillModalLinksWrap">
+          <div class="skill-modal-label">Where I've used this</div>
+          <div class="skill-modal-links" id="skillModalLinks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar active-link highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => navObserver.observe(s));
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Count-up numbers
+    function animateCount(el) {
+      const target = el.dataset.source ? document.querySelectorAll(el.dataset.source).length : parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = parseInt(el.dataset.duration, 10) || 1200;
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const statEls = document.querySelectorAll('.hero-stat');
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          const counter = entry.target.querySelector('.count-up');
+          if (counter && !counter.dataset.animated) { counter.dataset.animated = 'true'; animateCount(counter); }
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    statEls.forEach(el => statObserver.observe(el));
+
+    const skillsCounterEl = document.querySelector('.skills-counter .count-up');
+    if (skillsCounterEl) {
+      const scObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !skillsCounterEl.dataset.animated) {
+            skillsCounterEl.dataset.animated = 'true';
+            animateCount(skillsCounterEl);
+            scObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      scObserver.observe(skillsCounterEl.closest('.skills-counter'));
+    }
+
+    // Reveal on scroll
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      if (reduceMotion || !('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in-view')); return; }
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Skill modal
+    const SKILL_INFO = {
+      "Server Hardware Setup & Configuration": { links: [], note: "Deployed and configured 250+ HP and Supermicro servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "HP Servers": { links: [], note: "Deployed and configured 250+ HP servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "Supermicro Servers": { links: [], note: "Deployed and configured Supermicro servers nationwide as part of the PEPFAR digital health infrastructure rollout." },
+      "SSD Replication & Swapping": { links: [], note: "Hands-on hardware maintenance and storage swaps performed during the national server deployment." },
+      "BIOS / BMC Configuration": { links: [], note: "Performed firmware upgrades and BIOS/BMC configuration across healthcare facility servers." },
+      "Firmware Upgrades": { links: [], note: "Performed firmware upgrades and hardware scaling across facilities during the PEPFAR rollout." },
+      "Storage & RAM Installation": { links: [], note: "Hardware scaling — storage and RAM installation — across facilities during the PEPFAR server deployment." },
+      "IP Addressing & Subnetting": { links: ["Basic_Network_Lab.html"], note: "" },
+      "NIC Configuration": { links: [], note: "Applied across home lab builds and desktop support work." },
+      "VLANs (802.1Q) & Inter-VLAN Routing": { links: ["VLAN_Lab.html"], note: "" },
+      "Trunking & Static Routing": { links: ["Static_Routing_Lab.html", "VLAN_Lab.html"], note: "" },
+      "DHCP & DNS Configuration": { links: ["DHCP_Lab.html", "Linux_Dns_Server_Lab.html"], note: "" },
+      "Default Gateway Configuration": { links: ["LAN_Internet_Lab.html"], note: "" },
+      "Fortinet Firewalls (FortiGate / FortiOS)": { links: [], note: "Deployed Fortinet firewalls nationwide across healthcare facilities as part of the PEPFAR infrastructure rollout." },
+      "Wireless Access Points": { links: [], note: "Configured and deployed wireless access points across healthcare facilities during the Ministry of Health internship." },
+      "Network Troubleshooting": { links: ["LAN_Internet_Lab.html"], note: "Also applied day-to-day during network troubleshooting and IT support at the Ministry of Health." },
+      "Cisco Packet Tracer": { links: ["Basic_Network_Lab.html", "DHCP_Lab.html", "VLAN_Lab.html", "Static_Routing_Lab.html", "LAN_Internet_Lab.html", "Console_Telnet_Lab.html", "SSH_Lab.html"], note: "Used across every Cisco networking lab." },
+      "Cisco IOS CLI (Router & Switch Configuration)": { links: ["DHCP_Lab.html", "VLAN_Lab.html", "Static_Routing_Lab.html"], note: "" },
+      "Console & VTY Line Configuration": { links: ["Console_Telnet_Lab.html"], note: "" },
+      "Telnet & SSH v2": { links: ["Console_Telnet_Lab.html", "SSH_Lab.html"], note: "" },
+      "RSA Key Generation": { links: ["SSH_Lab.html"], note: "" },
+      "Router Subinterfaces": { links: ["VLAN_Lab.html"], note: "" },
+      "Windows Server & Desktop": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Linux (Ubuntu, Mint)": { links: ["Netdata_Monitoring_Lab.html", "Linux_Dns_Server_Lab.html", "Linux_File_Server_Samba_Lab.html", "Linux_Backup_Automation_Lab.html"], note: "" },
+      "FreeBSD": { links: [], note: "Explored in home lab virtualization environment." },
+      "macOS": { links: [], note: "Everyday desktop support and administration experience." },
+      "OS Installation": { links: [], note: "Routine part of server hardware setup and home lab builds." },
+      "VirtualBox": { links: [], note: "Home lab environment used for building and testing Windows Server and Linux systems." },
+      "VMware": { links: [], note: "Used for virtualization coursework and lab environments." },
+      "Active Directory Domain Services (AD DS)": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Group Policy Objects (GPO)": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "OU & Group Management": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Delegated Administration": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Shared Folders & Permissions": { links: ["AD_Portfolio_Lab.html", "Linux_File_Server_Samba_Lab.html"], note: "" },
+      "ADUC": { links: ["AD_Portfolio_Lab.html"], note: "" },
+      "Bash Scripting": { links: ["Linux_Backup_Automation_Lab.html"], note: "" },
+      "SOP Authoring & Technical Documentation": { links: [], note: "Authored SOPs to standardise system management across health facilities during the PEPFAR rollout." },
+      "Inventory Management": { links: [], note: "Maintained technical documentation and IT inventory during the Ministry of Health internship." },
+      "Email Server Administration": { links: [], note: "Part of ongoing IT operations and infrastructure administration work." },
+      "Netdata Monitoring": { links: ["Netdata_Monitoring_Lab.html"], note: "" },
+      "IT Troubleshooting": { links: ["LAN_Internet_Lab.html"], note: "Applied daily during network troubleshooting and IT support work." },
+      "RDP, TeamViewer & AnyDesk": { links: [], note: "Used for remote desktop support and troubleshooting." },
+      "Microsoft Office Suite (Word, Excel, PowerPoint)": { links: [], note: "Used for documentation, SOPs, spreadsheets, and reporting." }
+    };
+
+    const overlay = document.getElementById('skillModalOverlay');
+    const modalCat = document.getElementById('skillModalCat');
+    const modalTitle = document.getElementById('skillModalTitle');
+    const modalNote = document.getElementById('skillModalNote');
+    const modalLinksWrap = document.getElementById('skillModalLinksWrap');
+    const modalLinks = document.getElementById('skillModalLinks');
+    const modalClose = document.getElementById('skillModalClose');
+
+    function projectTitleFor(href) {
+      const row = document.querySelector(`a.project-row[href="${href}"]`);
+      return row ? row.querySelector('.project-name').textContent : href;
+    }
+
+    function openSkillModal(pillEl) {
+      const skillText = pillEl.textContent.trim();
+      const blockTitle = pillEl.closest('.skill-block, .skill-block-featured').querySelector('.skill-block-title').textContent.replace(/\s*\d+\s*$/, '').trim();
+      const info = SKILL_INFO[skillText] || { links: [], note: '' };
+      modalCat.textContent = blockTitle;
+      modalTitle.textContent = skillText;
+      modalNote.textContent = info.note || `Part of the ${blockTitle} toolkit.`;
+      modalLinks.innerHTML = '';
+      if (info.links && info.links.length > 0) {
+        modalLinksWrap.style.display = 'block';
+        info.links.forEach(href => {
+          const a = document.createElement('a');
+          a.href = href;
+          a.className = 'skill-modal-link';
+          a.innerHTML = `<span>${projectTitleFor(href)}</span><span class="skill-modal-link-arrow">↗</span>`;
+          modalLinks.appendChild(a);
+        });
+      } else {
+        modalLinksWrap.style.display = 'none';
+      }
+      overlay.classList.add('open');
+    }
+    function closeSkillModal() { overlay.classList.remove('open'); }
+
+    document.querySelectorAll('.skill-pill').forEach(pill => {
+      pill.addEventListener('click', () => openSkillModal(pill));
+      pill.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSkillModal(pill); } });
+    });
+    modalClose.addEventListener('click', closeSkillModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeSkillModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeSkillModal(); });
+  </script>
+
+</body>
+</html>
