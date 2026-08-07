@@ -12,7 +12,11 @@
   <meta property="og:image" content="https://jay-sysadmin.github.io/nyeliso.github.io/og-banner.png"/>
   <meta name="google-site-verification" content="1aO533X_7m_hgY-3IqJU--73k-UkhSdxM2WnqSDgj2w"/>
   <link rel="canonical" href="https://jay-sysadmin.github.io/nyeliso.github.io/"/>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3ELN%3C/text%3E%3C/svg%3E"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <meta name="theme-color" content="#07070e"/>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Likubangwa Jay-Z Nyeliso","jobTitle":"System Administrator","url":"https://jay-sysadmin.github.io/nyeliso.github.io/","email":"jaynyeliso@gmail.com","sameAs":["https://www.linkedin.com/in/likubangwa-nyeliso-39367b25b/","https://github.com/Jay-sysadmin"],"address":{"@type":"PostalAddress","addressLocality":"Windhoek","addressCountry":"NA"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Namibia University of Science and Technology"},"knowsAbout":["System Administration","Network Security","Fortinet Firewalls","Active Directory"]}</script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
   <style>
@@ -67,6 +71,7 @@
     }
     .cursor {
       position: fixed;
+      top: -100px; left: -100px;
       width: 12px; height: 12px;
       background: var(--accent);
       border-radius: 50%;
@@ -77,6 +82,7 @@
     }
     .cursor-ring {
       position: fixed;
+      top: -100px; left: -100px;
       width: 36px; height: 36px;
       border: 1px solid rgba(0,229,255,0.4);
       border-radius: 50%;
@@ -334,9 +340,27 @@
       .btn-hint { display: none; }
     }
 
+    @media (max-width: 420px) {
+      .page { padding: 6.5rem 1.25rem 3rem; }
+      .fetch-card { max-width: 100%; }
+      .fetch-body { padding: 1.25rem 1.15rem; }
+      .fetch-key { width: 68px; font-size: 0.66rem; }
+      .fetch-row { font-size: 0.66rem; }
+      .corner-tl { font-size: 0.58rem; }
+      .landing-name { font-size: clamp(2rem, 8vw, 2.6rem); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .status-dot { animation: none; }
       *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+
+    /* Touch / coarse-pointer devices: no real mouse cursor to track, so drop
+       the custom dot+ring entirely and restore the normal system cursor —
+       otherwise they'd sit frozen at (0,0) forever since mousemove never fires. */
+    @media (hover: none), (pointer: coarse) {
+      .cursor, .cursor-ring { display: none !important; }
+      body, .enter-btn { cursor: auto !important; }
     }
   </style>
 </head>
