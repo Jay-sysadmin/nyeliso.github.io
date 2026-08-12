@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Static Routing + ACL Lab — Likubangwa Jay-Z Nyeliso</title>
+<meta name="description" content="Multi-router static routing and extended ACL lab — three-router topology, /30 point-to-point links, and traffic filtering between LANs."/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#07070e"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #07070e; --surface: #0e0e18; --surface2: #13131f;
+    --border: #1a1a2e; --accent: #00e5ff; --accent2: #7c3aed;
+    --text: #e8eaf6; --muted: #94a3b8; --green: #00c896;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+  a{color:var(--accent);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(7,7,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;}
+  .back-link{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+  .back-link:hover{color:var(--accent);}
+  main{max-width:860px;margin:0 auto;padding:8rem 2rem 5rem;}
+  .lab-tag{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+  .lab-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .lab-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:640px;margin-bottom:1.5rem;}
+  .lab-tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:3rem;}
+  .lab-tag-pill{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.3rem 0.7rem;border:1px solid rgba(0,229,255,0.2);background:rgba(0,229,255,0.04);color:var(--text);letter-spacing:0.02em;border-radius:2px;}
+  section{margin-bottom:3.5rem;}
+  section:last-of-type{margin-bottom:0;}
+  .sec-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;}
+  h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:1.25rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+  p{color:var(--muted);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+  strong{color:var(--text);font-weight:700;}
+  .topo{background:var(--surface);border:1px solid var(--border);padding:1.5rem;font-family:'Space Mono',monospace;font-size:0.72rem;line-height:1.6;color:var(--accent);overflow-x:auto;white-space:pre;margin-bottom:1.5rem;}
+  .devices-line{font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:1.5rem;}
+  .devices-line b{color:var(--text);}
+  table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:0.78rem;}
+  caption{text-align:left;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;caption-side:top;}
+  th{background:var(--surface2);color:var(--accent);text-align:left;padding:0.6rem 0.9rem;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);}
+  td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);background:var(--surface);}
+  .tables-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .tables-grid table{margin-bottom:0;}
+  pre.code{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.1rem 1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--text);overflow-x:auto;margin-bottom:1.25rem;white-space:pre-wrap;}
+  pre.code .rc{color:var(--muted);}
+  .router-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent2);letter-spacing:0.15em;text-transform:uppercase;margin:1.25rem 0 0.5rem;}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:1.5rem;}
+  .callout p{margin-bottom:0;color:var(--text);font-size:0.88rem;}
+  .flow{display:flex;flex-direction:column;align-items:flex-start;gap:0.15rem;font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+  .flow .hop{color:var(--text);}
+  .flow .arrow{color:var(--accent);}
+  ul.cmdlist{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.cmdlist li{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);}
+  ul.cmdlist li b{color:var(--accent);}
+  footer{max-width:860px;margin:0 auto;padding:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+  footer a{color:var(--muted);text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    main{padding:6.5rem 1.25rem 3.5rem;}
+    .tables-grid{grid-template-columns:1fr;}
+    footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Jay-Z Nyeliso</div>
+  <a href="portfolio.html#projects" class="back-link">← Back to Projects</a>
+</nav>
+
+<main>
+  <div class="lab-tag">Networking — Cisco Packet Tracer</div>
+  <h1>Static Routing + ACL Lab</h1>
+  <p class="lab-sub">Three-router topology connected over point-to-point /30 links, with static routes providing full LAN-to-LAN reachability and an extended ACL selectively blocking traffic between two of the LANs.</p>
+  <div class="lab-tags">
+    <span class="lab-tag-pill">Static Routing</span>
+    <span class="lab-tag-pill">Extended ACL</span>
+    <span class="lab-tag-pill">/30 Point-to-Point Links</span>
+    <span class="lab-tag-pill">Cisco IOS</span>
+  </div>
+
+  <section>
+    <div class="sec-num">01</div>
+    <h2>Lab Topology</h2>
+    <div class="devices-line"><b>Devices:</b> 3 × Cisco 2911 routers · 3 × 2960 switches · 6 × PCs</div>
+    <div class="topo">LAN 1                    LAN 2                    LAN 3
+PC1 ─┐                                                    ┌─ PC5
+     ├─ SW1 ─ R1 ───────────────── R2 ─ SW2 ─┬─           SW3 ┤
+PC2 ─┘        10.0.12.0/30    │              │                └─ PC6
+                               │              │
+                        10.0.23.0/30          │
+                               │              │
+                               R3 ────────────┘</div>
+  </section>
+
+  <section>
+    <div class="sec-num">02</div>
+    <h2>IP Addressing</h2>
+    <div class="tables-grid">
+      <table>
+        <caption>LAN 1</caption>
+        <tr><th>Device</th><th>IP</th></tr>
+        <tr><td>R1 G0/0</td><td>192.168.10.1/24</td></tr>
+        <tr><td>PC1</td><td>192.168.10.10/24</td></tr>
+        <tr><td>PC2</td><td>192.168.10.11/24</td></tr>
+        <tr><td>Gateway</td><td>192.168.10.1</td></tr>
+      </table>
+      <table>
+        <caption>LAN 2</caption>
+        <tr><th>Device</th><th>IP</th></tr>
+        <tr><td>R2 G0/1</td><td>192.168.20.1/24</td></tr>
+        <tr><td>PC3</td><td>192.168.20.10/24</td></tr>
+        <tr><td>PC4</td><td>192.168.20.11/24</td></tr>
+        <tr><td>Gateway</td><td>192.168.20.1</td></tr>
+      </table>
+      <table>
+        <caption>LAN 3</caption>
+        <tr><th>Device</th><th>IP</th></tr>
+        <tr><td>R3 G0/1</td><td>192.168.30.1/24</td></tr>
+        <tr><td>PC5</td><td>192.168.30.10/24</td></tr>
+        <tr><td>PC6</td><td>192.168.30.11/24</td></tr>
+        <tr><td>Gateway</td><td>192.168.30.1</td></tr>
+      </table>
+      <table>
+        <caption>Router Links</caption>
+        <tr><th>Device</th><th>IP</th></tr>
+        <tr><td>R1 G0/1</td><td>10.0.12.1/30</td></tr>
+        <tr><td>R2 G0/0</td><td>10.0.12.2/30</td></tr>
+        <tr><td>R2 G0/2</td><td>10.0.23.1/30</td></tr>
+        <tr><td>R3 G0/0</td><td>10.0.23.2/30</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">03</div>
+    <h2>Static Routing</h2>
+    <p>A router automatically knows its directly connected networks, but not remote ones — static routes were added on each router so every LAN can reach every other LAN.</p>
+
+    <div class="router-label">R1</div>
+    <pre class="code">ip route 192.168.20.0 255.255.255.0 10.0.12.2
+ip route 192.168.30.0 255.255.255.0 10.0.12.2</pre>
+    <p style="margin-top:-0.75rem;">Meaning: to reach LAN 2 or LAN 3, send traffic to R2.</p>
+
+    <div class="router-label">R2</div>
+    <pre class="code">ip route 192.168.10.0 255.255.255.0 10.0.12.1
+ip route 192.168.30.0 255.255.255.0 10.0.23.2</pre>
+
+    <div class="router-label">R3</div>
+    <pre class="code">ip route 192.168.10.0 255.255.255.0 10.0.23.1
+ip route 192.168.20.0 255.255.255.0 10.0.23.1</pre>
+
+    <div class="callout"><p><b>Verification:</b> <code>show ip route</code> — static routes appear marked <b>S</b>, e.g. <code>S 192.168.30.0/24 [1/0] via 10.0.12.2</code></p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">04</div>
+    <h2>Understanding /30 Router Links</h2>
+    <p>/30 networks were used between routers because a point-to-point link only needs two usable addresses. For example, <b>10.0.12.0/30</b>:</p>
+    <table>
+      <tr><th>Address</th><th>Purpose</th></tr>
+      <tr><td>10.0.12.0</td><td>Network</td></tr>
+      <tr><td>10.0.12.1</td><td>R1</td></tr>
+      <tr><td>10.0.12.2</td><td>R2</td></tr>
+      <tr><td>10.0.12.3</td><td>Broadcast</td></tr>
+    </table>
+    <p>The same logic applies to <b>10.0.23.0/30</b> between R2 and R3.</p>
+  </section>
+
+  <section>
+    <div class="sec-num">05</div>
+    <h2>Access Control List</h2>
+    <p><b>Objective:</b> block LAN 1 (192.168.10.0/24) from reaching LAN 3 (192.168.30.0/24) while allowing all other traffic.</p>
+    <div class="router-label">ACL on R1</div>
+    <pre class="code">access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+access-list 110 permit ip any any</pre>
+    <div class="router-label">Applied to interface</div>
+    <pre class="code">interface gigabitEthernet0/0
+ ip access-group 110 in</pre>
+  </section>
+
+  <section>
+    <div class="sec-num">06</div>
+    <h2>Understanding the ACL</h2>
+    <p><code>access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255</code> means: deny IP traffic from 192.168.10.0/24 to 192.168.30.0/24. The wildcard mask <b>0.0.0.255</b> represents the entire /24 network.</p>
+    <div class="callout">
+      <p><b>Why <code>permit ip any any</code>?</b> ACLs have an implicit deny at the end. Logically: deny LAN1 → LAN3, permit everything else, implicit deny everything else. Without the explicit permit line, all other traffic would be blocked too.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">07</div>
+    <h2>ACL Direction</h2>
+    <p>The ACL was applied inbound (<code>ip access-group 110 in</code>) on R1 G0/0, because that's the interface LAN 1 traffic enters R1 through.</p>
+    <div class="flow">
+      <div class="hop">PC1</div>
+      <div class="arrow">↓</div>
+      <div class="hop">SW1</div>
+      <div class="arrow">↓</div>
+      <div class="hop">R1 G0/0</div>
+      <div class="arrow">↓ ACL applied here</div>
+      <div class="hop">R2</div>
+      <div class="arrow">↓</div>
+      <div class="hop">R3</div>
+      <div class="arrow">↓</div>
+      <div class="hop">PC5</div>
+    </div>
+    <p>The ACL is directional — it stops matching traffic as it enters R1, before it ever reaches R2 or R3.</p>
+  </section>
+
+  <section>
+    <div class="sec-num">08</div>
+    <h2>Expected Test Results</h2>
+    <table>
+      <tr><th>Test</th><th>Result</th></tr>
+      <tr><td>PC1 → PC5</td><td style="color:#ff6b6b;">Blocked</td></tr>
+      <tr><td>PC2 → PC6</td><td style="color:#ff6b6b;">Blocked</td></tr>
+      <tr><td>PC1 → PC3</td><td style="color:var(--green);">Allowed</td></tr>
+      <tr><td>PC5 → PC1</td><td style="color:var(--green);">Allowed</td></tr>
+      <tr><td>PC3 → PC5</td><td style="color:var(--green);">Allowed</td></tr>
+    </table>
+    <p>The key concept: the ACL blocks traffic <b>originating from LAN 1</b>, not traffic originating from LAN 3 — reply traffic and traffic in the other direction is unaffected.</p>
+  </section>
+
+  <section>
+    <div class="sec-num">09</div>
+    <h2>Verification Commands</h2>
+    <ul class="cmdlist">
+      <li><b>show ip interface brief</b> — check interfaces</li>
+      <li><b>show ip route</b> — check the full routing table</li>
+      <li><b>show ip route static</b> — check static routes only</li>
+      <li><b>ping &lt;IP-address&gt;</b> — test connectivity</li>
+      <li><b>traceroute &lt;IP-address&gt;</b> (router) / <b>tracert &lt;IP-address&gt;</b> (PC) — trace the path</li>
+      <li><b>show access-lists</b> or <b>show access-lists 110</b> — check ACL entries and match counters</li>
+      <li><b>show running-config</b> — see where the ACL is applied</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-num">10</div>
+    <h2>Syntax to Remember</h2>
+    <div class="router-label">Static route</div>
+    <pre class="code">ip route DESTINATION MASK NEXT-HOP
+<span class="rc">Example: ip route 192.168.30.0 255.255.255.0 10.0.12.2</span></pre>
+    <div class="router-label">Extended ACL</div>
+    <pre class="code">access-list 110 deny ip SOURCE WILDCARD DESTINATION WILDCARD
+<span class="rc">Remember: Source → Destination</span></pre>
+    <div class="router-label">ACL application</div>
+    <pre class="code">ip access-group 110 in
+<span class="rc">or: ip access-group 110 out — direction matters</span></pre>
+  </section>
+</main>
+
+<footer>
+  <div>© 2026 Likubangwa Jay-Z Nyeliso</div>
+  <a href="portfolio.html">← Back to Portfolio</a>
+</footer>
+
+</body>
+</html>

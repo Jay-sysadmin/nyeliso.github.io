@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JayTech Small Company Network — Likubangwa Jay-Z Nyeliso</title>
+<meta name="description" content="Small company network simulation — VLANs, router-on-a-stick inter-VLAN routing, static routing to a branch office, and connectivity testing."/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#07070e"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #07070e; --surface: #0e0e18; --surface2: #13131f;
+    --border: #1a1a2e; --accent: #00e5ff; --accent2: #7c3aed;
+    --text: #e8eaf6; --muted: #94a3b8; --green: #00c896;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+  a{color:var(--accent);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(7,7,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;}
+  .back-link{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+  .back-link:hover{color:var(--accent);}
+  main{max-width:860px;margin:0 auto;padding:8rem 2rem 5rem;}
+  .lab-tag{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+  .lab-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .lab-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:640px;margin-bottom:1.5rem;}
+  .lab-tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:3rem;}
+  .lab-tag-pill{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.3rem 0.7rem;border:1px solid rgba(0,229,255,0.2);background:rgba(0,229,255,0.04);color:var(--text);letter-spacing:0.02em;border-radius:2px;}
+  section{margin-bottom:3.5rem;}
+  section:last-of-type{margin-bottom:0;}
+  .sec-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;}
+  h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:1.25rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+  p{color:var(--muted);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+  strong{color:var(--text);font-weight:700;}
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.plain li{font-size:0.92rem;color:var(--muted);padding-left:1rem;position:relative;}
+  ul.plain li::before{content:'—';position:absolute;left:0;color:var(--border);}
+  .topo{background:var(--surface);border:1px solid var(--border);padding:1.5rem;font-family:'Space Mono',monospace;font-size:0.7rem;line-height:1.55;color:var(--accent);overflow-x:auto;white-space:pre;margin-bottom:1.5rem;}
+  .conn-list{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.1rem 1.4rem;margin-bottom:1.5rem;line-height:1.9;}
+  .conn-list b{color:var(--text);}
+  table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:0.78rem;}
+  caption{text-align:left;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;caption-side:top;}
+  th{background:var(--surface2);color:var(--accent);text-align:left;padding:0.6rem 0.9rem;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);}
+  td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);background:var(--surface);}
+  .tables-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .tables-grid table{margin-bottom:0;}
+  pre.code{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.1rem 1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--text);overflow-x:auto;margin-bottom:1.25rem;white-space:pre-wrap;}
+  .router-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent2);letter-spacing:0.15em;text-transform:uppercase;margin:1.25rem 0 0.5rem;}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:1.5rem;}
+  .callout p{margin-bottom:0;color:var(--text);font-size:0.88rem;}
+  ul.cmdlist{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.cmdlist li{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);}
+  ul.cmdlist li b{color:var(--accent);}
+  footer{max-width:860px;margin:0 auto;padding:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+  footer a{color:var(--muted);text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    main{padding:6.5rem 1.25rem 3.5rem;}
+    .tables-grid{grid-template-columns:1fr;}
+    footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Jay-Z Nyeliso</div>
+  <a href="portfolio.html#projects" class="back-link">← Back to Projects</a>
+</nav>
+
+<main>
+  <div class="lab-tag">Networking — Cisco Packet Tracer</div>
+  <h1>JayTech Small Company Network</h1>
+  <p class="lab-sub">A small company network simulation with an IT department, HR department, and a branch office — built to practice VLAN segmentation, router-on-a-stick inter-VLAN routing, static routing to a remote branch, and end-to-end connectivity testing.</p>
+  <div class="lab-tags">
+    <span class="lab-tag-pill">VLANs</span>
+    <span class="lab-tag-pill">Inter-VLAN Routing</span>
+    <span class="lab-tag-pill">Router-on-a-Stick</span>
+    <span class="lab-tag-pill">Static Routing</span>
+    <span class="lab-tag-pill">Network Troubleshooting</span>
+  </div>
+
+  <section>
+    <div class="sec-num">01</div>
+    <h2>Project Overview</h2>
+    <p>This project simulates a small company's network with an IT department, HR department, and a branch network. The lab was designed to practice:</p>
+    <ul class="plain">
+      <li>IPv4 addressing</li>
+      <li>VLAN configuration</li>
+      <li>Access ports</li>
+      <li>Trunking</li>
+      <li>Router-on-a-stick</li>
+      <li>Inter-VLAN routing</li>
+      <li>Static routing</li>
+      <li>Network connectivity testing</li>
+      <li>Basic Cisco troubleshooting</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-num">02</div>
+    <h2>Topology</h2>
+    <div class="topo">JAYTECH SMALL COMPANY NETWORK
+
+  VLAN 10 - IT              VLAN 20 - HR
+ ┌───────────────┐         ┌───────┐
+ │        │      │         │       │
+PC1      PC2    (SW1)─────PC3
+192.168.10.10  192.168.10.11    192.168.20.10
+      │           │              │
+      └─────┬─────┘──────────────┘
+            │
+           G0/1 (TRUNK)
+            │
+           G0/0
+            │
+            R1
+      ┌─────┴─────┐
+   G0/0.10      G0/0.20
+192.168.10.1  192.168.20.1
+      │
+     G0/1
+  10.0.0.1/30
+      │
+  10.0.0.2/30
+     G0/0
+      │
+      R2
+      │
+     G0/1
+  192.168.40.1
+      │
+    (SW2)
+      │
+     PC4
+  192.168.40.10  (Branch)</div>
+    <div class="conn-list">
+      <b>Physical connections</b><br>
+      PC1 → SW1 Fa0/1<br>
+      PC2 → SW1 Fa0/2<br>
+      PC3 → SW1 Fa0/3<br>
+      SW1 G0/1 → R1 G0/0<br>
+      R1 G0/1 → R2 G0/0<br>
+      R2 G0/1 → SW2 → PC4
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">03</div>
+    <h2>IP Addressing Plan</h2>
+    <table>
+      <tr><th>Device</th><th>Interface</th><th>Address</th><th>Purpose</th></tr>
+      <tr><td>R1</td><td>G0/0.10</td><td>192.168.10.1/24</td><td>VLAN 10 gateway</td></tr>
+      <tr><td>R1</td><td>G0/0.20</td><td>192.168.20.1/24</td><td>VLAN 20 gateway</td></tr>
+      <tr><td>R1</td><td>G0/1</td><td>10.0.0.1/30</td><td>R1–R2 link</td></tr>
+      <tr><td>R2</td><td>G0/0</td><td>10.0.0.2/30</td><td>R1–R2 link</td></tr>
+      <tr><td>R2</td><td>G0/1</td><td>192.168.40.1/24</td><td>Branch gateway</td></tr>
+      <tr><td>PC1</td><td>—</td><td>192.168.10.10/24</td><td>IT</td></tr>
+      <tr><td>PC2</td><td>—</td><td>192.168.10.11/24</td><td>IT</td></tr>
+      <tr><td>PC3</td><td>—</td><td>192.168.20.10/24</td><td>HR</td></tr>
+      <tr><td>PC4</td><td>—</td><td>192.168.40.10/24</td><td>Branch</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-num">04</div>
+    <h2>VLAN Configuration</h2>
+    <p><b>VLAN 10</b> = IT &nbsp;·&nbsp; <b>VLAN 20</b> = HR</p>
+    <div class="conn-list">
+      <b>SW1 access ports</b><br>
+      Fa0/1 → VLAN 10 → PC1<br>
+      Fa0/2 → VLAN 10 → PC2<br>
+      Fa0/3 → VLAN 20 → PC3
+    </div>
+    <div class="router-label">SW1 Configuration</div>
+    <pre class="code">vlan 10
+ name IT
+exit
+vlan 20
+ name HR
+exit
+interface range fastEthernet 0/1-2
+ switchport mode access
+ switchport access vlan 10
+exit
+interface fastEthernet 0/3
+ switchport mode access
+ switchport access vlan 20
+exit
+interface gigabitEthernet 0/1
+ switchport mode trunk
+exit
+end</pre>
+    <div class="callout"><p><b>Check:</b> <code>show vlan brief</code> and <code>show interfaces trunk</code></p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">05</div>
+    <h2>R1 — Router-on-a-Stick Configuration</h2>
+    <p>R1 uses subinterfaces to provide gateways for both VLANs over a single trunked physical link.</p>
+    <pre class="code">interface gigabitEthernet 0/0
+ no shutdown
+exit
+interface gigabitEthernet 0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+exit
+interface gigabitEthernet 0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+exit
+interface gigabitEthernet 0/1
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+exit
+end</pre>
+    <div class="callout"><p><b>Check:</b> <code>show ip interface brief</code> — expected: G0/0.10 → 192.168.10.1, G0/0.20 → 192.168.20.1, G0/1 → 10.0.0.1</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">06</div>
+    <h2>R2 Configuration</h2>
+    <pre class="code">interface gigabitEthernet 0/0
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+exit
+interface gigabitEthernet 0/1
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+exit
+end</pre>
+    <div class="callout"><p><b>Check:</b> <code>show ip interface brief</code></p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">07</div>
+    <h2>Static Routes</h2>
+    <div class="router-label">R1 — needs a route to the branch network</div>
+    <pre class="code">ip route 192.168.40.0 255.255.255.0 10.0.0.2
+end</pre>
+    <div class="router-label">R2 — needs routes to the two company VLANs</div>
+    <pre class="code">ip route 192.168.10.0 255.255.255.0 10.0.0.1
+ip route 192.168.20.0 255.255.255.0 10.0.0.1
+end</pre>
+    <div class="callout"><p><b>Check:</b> <code>show ip route</code> on both routers</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">08</div>
+    <h2>PC Configuration</h2>
+    <div class="tables-grid">
+      <table>
+        <caption>PC1</caption>
+        <tr><td>IP</td><td>192.168.10.10</td></tr>
+        <tr><td>Mask</td><td>255.255.255.0</td></tr>
+        <tr><td>Gateway</td><td>192.168.10.1</td></tr>
+      </table>
+      <table>
+        <caption>PC2</caption>
+        <tr><td>IP</td><td>192.168.10.11</td></tr>
+        <tr><td>Mask</td><td>255.255.255.0</td></tr>
+        <tr><td>Gateway</td><td>192.168.10.1</td></tr>
+      </table>
+      <table>
+        <caption>PC3</caption>
+        <tr><td>IP</td><td>192.168.20.10</td></tr>
+        <tr><td>Mask</td><td>255.255.255.0</td></tr>
+        <tr><td>Gateway</td><td>192.168.20.1</td></tr>
+      </table>
+      <table>
+        <caption>PC4</caption>
+        <tr><td>IP</td><td>192.168.40.10</td></tr>
+        <tr><td>Mask</td><td>255.255.255.0</td></tr>
+        <tr><td>Gateway</td><td>192.168.40.1</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">09</div>
+    <h2>Testing Commands</h2>
+    <ul class="cmdlist">
+      <li><b>show ip interface brief</b> — check router interfaces</li>
+      <li><b>show vlan brief</b> — check VLANs</li>
+      <li><b>show interfaces trunk</b> — check trunk status</li>
+      <li><b>show ip route</b> — check the routing table</li>
+      <li><b>ping 10.0.0.2</b> (on R1) — test R1 → R2</li>
+      <li><b>ping 10.0.0.1</b> (on R2) — test R2 → R1</li>
+      <li><b>ping 192.168.10.1</b> (PC1), <b>ping 192.168.20.1</b> (PC3), <b>ping 192.168.40.1</b> (PC4) — test PC → gateway</li>
+      <li><b>ping 192.168.20.10</b> (from PC1) — test inter-VLAN routing</li>
+      <li><b>ping 192.168.40.10</b> (from PC1) — test branch connectivity</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div>© 2026 Likubangwa Jay-Z Nyeliso</div>
+  <a href="portfolio.html">← Back to Portfolio</a>
+</footer>
+
+</body>
+</html>
