@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Port Security Lab — Likubangwa Jay-Z Nyeliso</title>
+<meta name="description" content="Port Security lab — restricting a switch port to a single sticky MAC address and testing a violation."/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#07070e"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #07070e; --surface: #0e0e18; --surface2: #13131f;
+    --border: #1a1a2e; --accent: #00e5ff; --accent2: #7c3aed;
+    --text: #e8eaf6; --muted: #94a3b8; --green: #00c896;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+  a{color:var(--accent);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(7,7,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;}
+  .back-link{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+  .back-link:hover{color:var(--accent);}
+  main{max-width:860px;margin:0 auto;padding:8rem 2rem 5rem;}
+  .lab-tag{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+  .lab-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .lab-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:640px;margin-bottom:1.5rem;}
+  .lab-tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:3rem;}
+  .lab-tag-pill{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.3rem 0.7rem;border:1px solid rgba(0,229,255,0.2);background:rgba(0,229,255,0.04);color:var(--text);letter-spacing:0.02em;border-radius:2px;}
+  section{margin-bottom:3.5rem;}
+  section:last-of-type{margin-bottom:0;}
+  .sec-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;}
+  h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:1.25rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+  p{color:var(--muted);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+  strong{color:var(--text);font-weight:700;}
+  .topo{background:var(--surface);border:1px solid var(--border);padding:1.5rem;font-family:'Space Mono',monospace;font-size:0.72rem;line-height:1.6;color:var(--accent);overflow-x:auto;white-space:pre;margin-bottom:1.5rem;}
+  .conn-list{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.1rem 1.4rem;margin-bottom:1.5rem;line-height:1.9;}
+  .conn-list b{color:var(--text);}
+  table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:0.78rem;}
+  th{background:var(--surface2);color:var(--accent);text-align:left;padding:0.6rem 0.9rem;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);}
+  td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);background:var(--surface);}
+  pre.code{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.1rem 1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--text);overflow-x:auto;margin-bottom:1.25rem;white-space:pre-wrap;}
+  .router-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent2);letter-spacing:0.15em;text-transform:uppercase;margin:1.25rem 0 0.5rem;}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:1.5rem;}
+  .callout p{margin-bottom:0;color:var(--text);font-size:0.88rem;}
+  .callout.warn{border-left-color:#ff6b6b;}
+  ul.cmdlist{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.cmdlist li{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);}
+  ul.cmdlist li b{color:var(--accent);}
+  footer{max-width:860px;margin:0 auto;padding:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+  footer a{color:var(--muted);text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    main{padding:6.5rem 1.25rem 3.5rem;}
+    footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Jay-Z Nyeliso</div>
+  <a href="portfolio.html#projects" class="back-link">← Back to Projects</a>
+</nav>
+
+<main>
+  <div class="lab-tag">Networking — Cisco Packet Tracer</div>
+  <h1>Port Security Lab</h1>
+  <p class="lab-sub">A switch port locked to a single, automatically-learned MAC address — with a deliberate violation test to confirm the port shuts itself down when an unauthorized device connects.</p>
+  <div class="lab-tags">
+    <span class="lab-tag-pill">Port Security</span>
+    <span class="lab-tag-pill">Sticky MAC</span>
+    <span class="lab-tag-pill">Cisco IOS</span>
+  </div>
+
+  <section>
+    <div class="sec-num">01</div>
+    <h2>Topology</h2>
+    <div class="topo">PC1 ─── SW1 ─── PC2
+     Fa0/1     Fa0/2</div>
+  </section>
+
+  <section>
+    <div class="sec-num">02</div>
+    <h2>Configure Ports</h2>
+    <pre class="code">interface fa0/1
+ switchport mode access
+ no shutdown
+exit
+interface fa0/2
+ switchport mode access
+ no shutdown
+exit</pre>
+    <div class="callout"><p><b>Note:</b> PC-facing ports are configured as access ports.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">03</div>
+    <h2>Enable Port Security</h2>
+    <pre class="code">interface fa0/1
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation shutdown</pre>
+    <div class="callout"><p><b>Note:</b> Only one MAC address is allowed on this port. An unauthorized MAC address triggers a shutdown.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">04</div>
+    <h2>Enable Sticky MAC</h2>
+    <pre class="code">switchport port-security mac-address sticky</pre>
+    <div class="callout"><p><b>Note:</b> The switch automatically learns and saves the connected PC's MAC address as the allowed one.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">05</div>
+    <h2>Verify</h2>
+    <pre class="code">show port-security interface fa0/1</pre>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Port Security</td><td>Enabled</td></tr>
+      <tr><td>Port Status</td><td>Secure-up</td></tr>
+      <tr><td>Maximum MAC Addresses</td><td>1</td></tr>
+      <tr><td>Sticky MAC Addresses</td><td>1</td></tr>
+      <tr><td>Security Violation Count</td><td>0</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-num">06</div>
+    <h2>Test a Violation</h2>
+    <p>Connected a different PC to Fa0/1 — its MAC address doesn't match the sticky-learned MAC, so the port should shut down.</p>
+    <div class="callout warn"><p><b>Result:</b> Secure-shutdown</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">07</div>
+    <h2>Recover the Port</h2>
+    <pre class="code">interface fa0/1
+ shutdown
+ no shutdown</pre>
+    <p>Reconnect the authorized PC afterward.</p>
+  </section>
+
+  <section>
+    <div class="sec-num">08</div>
+    <h2>Key Commands to Remember</h2>
+    <ul class="cmdlist">
+      <li><b>switchport port-security</b> — enable port security on the interface</li>
+      <li><b>switchport port-security maximum 1</b> — allow only one learned MAC</li>
+      <li><b>switchport port-security mac-address sticky</b> — auto-learn and save the MAC</li>
+      <li><b>switchport port-security violation shutdown</b> — err-disable the port on a violation</li>
+      <li><b>show port-security interface fa0/1</b> — check status, violation count, learned MAC</li>
+    </ul>
+    <div class="callout"><p><b>Main idea:</b> Port security controls which devices are allowed to connect to a switch port.</p></div>
+  </section>
+</main>
+
+<footer>
+  <div>© 2026 Likubangwa Jay-Z Nyeliso</div>
+  <a href="portfolio.html">← Back to Portfolio</a>
+</footer>
+
+</body>
+</html>

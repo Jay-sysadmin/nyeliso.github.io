@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NAT / PAT Lab — Likubangwa Jay-Z Nyeliso</title>
+<meta name="description" content="NAT/PAT lab — translating a private LAN to a single public IP with port address translation and overload."/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#07070e"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #07070e; --surface: #0e0e18; --surface2: #13131f;
+    --border: #1a1a2e; --accent: #00e5ff; --accent2: #7c3aed;
+    --text: #e8eaf6; --muted: #94a3b8; --green: #00c896;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+  a{color:var(--accent);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(7,7,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;}
+  .back-link{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+  .back-link:hover{color:var(--accent);}
+  main{max-width:860px;margin:0 auto;padding:8rem 2rem 5rem;}
+  .lab-tag{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+  .lab-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .lab-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:640px;margin-bottom:1.5rem;}
+  .lab-tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:3rem;}
+  .lab-tag-pill{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.3rem 0.7rem;border:1px solid rgba(0,229,255,0.2);background:rgba(0,229,255,0.04);color:var(--text);letter-spacing:0.02em;border-radius:2px;}
+  section{margin-bottom:3.5rem;}
+  section:last-of-type{margin-bottom:0;}
+  .sec-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;}
+  h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:1.25rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+  p{color:var(--muted);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+  strong{color:var(--text);font-weight:700;}
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.plain li{font-size:0.92rem;color:var(--muted);padding-left:1rem;position:relative;}
+  ul.plain li::before{content:'—';position:absolute;left:0;color:var(--border);}
+  .topo{background:var(--surface);border:1px solid var(--border);padding:1.5rem;font-family:'Space Mono',monospace;font-size:0.72rem;line-height:1.6;color:var(--accent);overflow-x:auto;white-space:pre;margin-bottom:1.5rem;}
+  .conn-list{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.1rem 1.4rem;margin-bottom:1.5rem;line-height:1.9;}
+  .conn-list b{color:var(--text);}
+  table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:0.78rem;}
+  caption{text-align:left;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;caption-side:top;}
+  th{background:var(--surface2);color:var(--accent);text-align:left;padding:0.6rem 0.9rem;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);}
+  td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);background:var(--surface);}
+  pre.code{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.1rem 1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--text);overflow-x:auto;margin-bottom:1.25rem;white-space:pre-wrap;}
+  .router-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent2);letter-spacing:0.15em;text-transform:uppercase;margin:1.25rem 0 0.5rem;}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:1.5rem;}
+  .callout p{margin-bottom:0;color:var(--text);font-size:0.88rem;}
+  .flow{display:flex;flex-direction:column;align-items:flex-start;gap:0.15rem;font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+  .flow .hop{color:var(--text);}
+  .flow .arrow{color:var(--accent);}
+  ul.cmdlist{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.cmdlist li{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);}
+  ul.cmdlist li b{color:var(--accent);}
+  footer{max-width:860px;margin:0 auto;padding:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+  footer a{color:var(--muted);text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    main{padding:6.5rem 1.25rem 3.5rem;}
+    footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Jay-Z Nyeliso</div>
+  <a href="portfolio.html#projects" class="back-link">← Back to Projects</a>
+</nav>
+
+<main>
+  <div class="lab-tag">Networking — Cisco Packet Tracer</div>
+  <h1>NAT / PAT Lab</h1>
+  <p class="lab-sub">A four-PC private LAN behind a router, translated to a single public IP toward an ISP using NAT overload (PAT) — so multiple internal hosts share one public address, each distinguished by port number.</p>
+  <div class="lab-tags">
+    <span class="lab-tag-pill">NAT</span>
+    <span class="lab-tag-pill">PAT / Overload</span>
+    <span class="lab-tag-pill">Default Routing</span>
+    <span class="lab-tag-pill">Cisco IOS</span>
+  </div>
+
+  <section>
+    <div class="sec-num">01</div>
+    <h2>Topology</h2>
+    <div class="topo">PC1 ─┐
+PC2 ─┤
+PC3 ─┤── SW1 ── R1 ── ISP
+PC4 ─┘
+  192.168.10.0/24   203.0.113.0/30</div>
+    <div class="conn-list">
+      <b>Connections</b><br>
+      PC1 → SW1 Fa0/1 &nbsp;·&nbsp; PC2 → SW1 Fa0/2 &nbsp;·&nbsp; PC3 → SW1 Fa0/3 &nbsp;·&nbsp; PC4 → SW1 Fa0/4<br>
+      SW1 Gi0/1 → R1 Gi0/0<br>
+      R1 Gi0/1 → ISP Gi0/0
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">02</div>
+    <h2>IP Addressing</h2>
+    <table>
+      <tr><th>Device</th><th>IP</th></tr>
+      <tr><td>R1 G0/0 (LAN)</td><td>192.168.10.1/24</td></tr>
+      <tr><td>PC1</td><td>192.168.10.10</td></tr>
+      <tr><td>PC2</td><td>192.168.10.11</td></tr>
+      <tr><td>PC3</td><td>192.168.10.12</td></tr>
+      <tr><td>PC4</td><td>192.168.10.13</td></tr>
+      <tr><td>R1 G0/1 (ISP side)</td><td>203.0.113.2/30</td></tr>
+      <tr><td>ISP G0/0</td><td>203.0.113.1/30</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-num">03</div>
+    <h2>R1 IP Configuration</h2>
+    <pre class="code">interface g0/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+exit
+interface g0/1
+ ip address 203.0.113.2 255.255.255.252
+ no shutdown
+exit</pre>
+    <div class="callout"><p><b>Note:</b> G0/0 = company LAN, G0/1 = ISP side.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">04</div>
+    <h2>ISP Configuration</h2>
+    <pre class="code">interface g0/0
+ ip address 203.0.113.1 255.255.255.252
+ no shutdown
+exit</pre>
+    <div class="callout"><p><b>Test:</b> <code>ping 203.0.113.1</code></p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">05</div>
+    <h2>NAT Inside / Outside</h2>
+    <p>On R1:</p>
+    <pre class="code">interface g0/0
+ ip nat inside
+exit
+interface g0/1
+ ip nat outside
+exit</pre>
+    <div class="callout"><p><b>Note:</b> Inside = private network. Outside = ISP/public side.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">06</div>
+    <h2>PAT (Port Address Translation)</h2>
+    <pre class="code">access-list 1 permit 192.168.10.0 0.0.0.255
+ip nat inside source list 1 interface g0/1 overload</pre>
+    <div class="callout"><p><b>Note:</b> <code>overload</code> is what makes this PAT — multiple PCs can share the single public address 203.0.113.2, distinguished by port.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">07</div>
+    <h2>Default Route</h2>
+    <pre class="code">ip route 0.0.0.0 0.0.0.0 203.0.113.1</pre>
+    <div class="callout"><p><b>Note:</b> Sends any traffic to an unknown destination toward the ISP.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">08</div>
+    <h2>Verify</h2>
+    <ul class="cmdlist">
+      <li><b>ping 203.0.113.1</b> — from a PC, confirms the path out through NAT works</li>
+      <li><b>show ip nat translations</b> — lists inside/outside interfaces, dynamic translations, hits, misses</li>
+      <li><b>show ip nat statistics</b> — translation counters</li>
+    </ul>
+    <p><b>Key result:</b> 192.168.10.x → 203.0.113.2 — that's PAT.</p>
+    <table>
+      <tr><th>Inside Global</th><th>Inside Local</th></tr>
+      <tr><td>203.0.113.2:1028</td><td>192.168.10.13:1</td></tr>
+    </table>
+    <div class="flow">
+      <div class="hop">PC4 — 192.168.10.13</div>
+      <div class="arrow">↓</div>
+      <div class="hop">R1 / PAT</div>
+      <div class="arrow">↓</div>
+      <div class="hop">203.0.113.2:1028</div>
+    </div>
+    <p>This means PC4's traffic left the network as 203.0.113.2 on port 1028 — the router tracks that mapping so return traffic gets routed back to the correct internal PC.</p>
+  </section>
+</main>
+
+<footer>
+  <div>© 2026 Likubangwa Jay-Z Nyeliso</div>
+  <a href="portfolio.html">← Back to Portfolio</a>
+</footer>
+
+</body>
+</html>

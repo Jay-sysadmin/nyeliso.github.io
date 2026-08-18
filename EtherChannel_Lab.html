@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EtherChannel / LACP Lab — Likubangwa Jay-Z Nyeliso</title>
+<meta name="description" content="EtherChannel and LACP lab — bundling redundant switch links into a single logical port-channel."/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#07070e"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #07070e; --surface: #0e0e18; --surface2: #13131f;
+    --border: #1a1a2e; --accent: #00e5ff; --accent2: #7c3aed;
+    --text: #e8eaf6; --muted: #94a3b8; --green: #00c896;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+  a{color:var(--accent);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(7,7,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;}
+  .back-link{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+  .back-link:hover{color:var(--accent);}
+  main{max-width:860px;margin:0 auto;padding:8rem 2rem 5rem;}
+  .lab-tag{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+  .lab-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .lab-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:640px;margin-bottom:1.5rem;}
+  .lab-tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:3rem;}
+  .lab-tag-pill{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.3rem 0.7rem;border:1px solid rgba(0,229,255,0.2);background:rgba(0,229,255,0.04);color:var(--text);letter-spacing:0.02em;border-radius:2px;}
+  section{margin-bottom:3.5rem;}
+  section:last-of-type{margin-bottom:0;}
+  .sec-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;}
+  h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:1.25rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+  p{color:var(--muted);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+  strong{color:var(--text);font-weight:700;}
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.plain li{font-size:0.92rem;color:var(--muted);padding-left:1rem;position:relative;}
+  ul.plain li::before{content:'—';position:absolute;left:0;color:var(--border);}
+  .topo{background:var(--surface);border:1px solid var(--border);padding:1.5rem;font-family:'Space Mono',monospace;font-size:0.72rem;line-height:1.6;color:var(--accent);overflow-x:auto;white-space:pre;margin-bottom:1.5rem;}
+  .conn-list{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:1.1rem 1.4rem;margin-bottom:1.5rem;line-height:1.9;}
+  .conn-list b{color:var(--text);}
+  table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:0.78rem;}
+  caption{text-align:left;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;caption-side:top;}
+  th{background:var(--surface2);color:var(--accent);text-align:left;padding:0.6rem 0.9rem;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);}
+  td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);background:var(--surface);}
+  pre.code{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.1rem 1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--text);overflow-x:auto;margin-bottom:1.25rem;white-space:pre-wrap;}
+  pre.code .rc{color:var(--muted);}
+  .router-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent2);letter-spacing:0.15em;text-transform:uppercase;margin:1.25rem 0 0.5rem;}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:1.5rem;}
+  .callout p{margin-bottom:0;color:var(--text);font-size:0.88rem;}
+  ul.cmdlist{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  ul.cmdlist li{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--muted);padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);}
+  ul.cmdlist li b{color:var(--accent);}
+  .before-after{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+  .ba-card{background:var(--surface);border:1px solid var(--border);padding:1.25rem;font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--text);text-align:center;}
+  .ba-label{font-size:0.58rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;display:block;}
+  footer{max-width:860px;margin:0 auto;padding:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+  footer a{color:var(--muted);text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    main{padding:6.5rem 1.25rem 3.5rem;}
+    .before-after{grid-template-columns:1fr;}
+    footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Jay-Z Nyeliso</div>
+  <a href="portfolio.html#projects" class="back-link">← Back to Projects</a>
+</nav>
+
+<main>
+  <div class="lab-tag">Networking — Cisco Packet Tracer</div>
+  <h1>EtherChannel / LACP Lab</h1>
+  <p class="lab-sub">Two redundant switch-to-switch links bundled into a single logical port-channel using LACP — more bandwidth, redundancy, and a link topology that Spanning Tree Protocol sees as one path instead of a loop.</p>
+  <div class="lab-tags">
+    <span class="lab-tag-pill">EtherChannel</span>
+    <span class="lab-tag-pill">LACP</span>
+    <span class="lab-tag-pill">Port-Channel</span>
+    <span class="lab-tag-pill">Cisco IOS</span>
+  </div>
+
+  <section>
+    <div class="sec-num">01</div>
+    <h2>Topology</h2>
+    <div class="topo">PC1                              PC2
+ │                                │
+Fa0                              Fa0
+ │                                │
+Fa0/1                            Fa0/1
+SW1 ═══════════════════════════ SW2
+ │  Fa0/23 ══════════════════ Fa0/23  │
+ │  Fa0/24 ══════════════════ Fa0/24  │</div>
+    <div class="conn-list">
+      <b>Connections</b><br>
+      PC1 Fa0 → SW1 Fa0/1<br>
+      SW1 Fa0/23 → SW2 Fa0/23<br>
+      SW1 Fa0/24 → SW2 Fa0/24<br>
+      SW2 Fa0/1 → PC2 Fa0
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-num">02</div>
+    <h2>Configure LACP</h2>
+    <div class="router-label">SW1 &amp; SW2</div>
+    <pre class="code">interface range fa0/23 - 24
+ channel-group 1 mode active
+exit</pre>
+    <div class="callout"><p><b>Note:</b> <code>active</code> enables LACP negotiation between the two switches.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">03</div>
+    <h2>Verify</h2>
+    <pre class="code">show etherchannel summary</pre>
+    <div class="router-label">Result</div>
+    <pre class="code">Po1(SU)                LACP
+  Fa0/23(P)
+  Fa0/24(P)</pre>
+    <table>
+      <tr><th>Symbol</th><th>Meaning</th></tr>
+      <tr><td>Po1</td><td>Port-Channel 1</td></tr>
+      <tr><td>SU</td><td>Layer 2 port-channel is active</td></tr>
+      <tr><td>LACP</td><td>EtherChannel negotiation protocol in use</td></tr>
+      <tr><td>P</td><td>Port is successfully bundled</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-num">04</div>
+    <h2>What We Learned</h2>
+    <p>EtherChannel combines multiple physical links into one logical link.</p>
+    <div class="before-after">
+      <div class="ba-card">
+        <span class="ba-label">Before — two separate links</span>
+        SW1 ─── SW2<br>SW1 ─── SW2
+      </div>
+      <div class="ba-card">
+        <span class="ba-label">After — one logical link</span>
+        SW1 ══ SW2<br>&nbsp;&nbsp;&nbsp;Po1
+      </div>
+    </div>
+    <ul class="plain">
+      <li>More bandwidth — traffic load-balances across bundled links</li>
+      <li>Redundancy — if one physical link fails, the bundle keeps forwarding</li>
+      <li>Better link utilization than leaving redundant links idle</li>
+      <li>STP sees the bundle as a single logical link, not a loop</li>
+    </ul>
+    <div class="callout"><p><b>Main takeaway:</b> LACP combines multiple physical switch links into one logical EtherChannel. Main command to remember: <code>channel-group 1 mode active</code></p></div>
+  </section>
+
+  <section>
+    <div class="sec-num">05</div>
+    <h2>Commands to Remember</h2>
+    <ul class="cmdlist">
+      <li><b>interface range fa0/23 - 24</b> — select multiple interfaces at once</li>
+      <li><b>channel-group 1 mode active</b> — add interfaces to Port-Channel 1 using LACP active mode</li>
+      <li><b>show etherchannel summary</b> — verify bundle status and member ports</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div>© 2026 Likubangwa Jay-Z Nyeliso</div>
+  <a href="portfolio.html">← Back to Portfolio</a>
+</footer>
+
+</body>
+</html>
