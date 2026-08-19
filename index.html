@@ -127,6 +127,78 @@
     }
     @keyframes caretBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+    /* ── TOP NAV (company-site header) ── */
+    .topnav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,15,0.9) 0%, rgba(10,10,15,0.55) 65%, transparent 100%);
+      opacity: 0;
+    }
+    body.revealed .topnav { animation: fadeIn 0.9s ease 0.1s forwards; }
+
+    .nav-left { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .nav-brand { text-decoration: none; color: inherit; cursor: none; }
+    .nav-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+      letter-spacing: 0.01em;
+    }
+    .nav-name-accent { color: var(--accent); font-weight: 600; }
+    .nav-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .nav-dot { color: var(--border); }
+
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-status {
+      display: flex;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .nav-status-dim { color: var(--border); margin-left: 0.35rem; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.2rem 0.7rem 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: border-color 0.3s, background 0.3s, color 0.3s;
+      will-change: transform;
+      cursor: none;
+    }
+    .nav-cta:hover { border-color: var(--accent); background: rgba(0,229,255,0.08); color: var(--accent); }
+    .nav-cta-arrow { transition: transform 0.3s; }
+    .nav-cta:hover .nav-cta-arrow { transform: translateX(4px); }
+
     /* ── PAGE FRAME ── */
     .page {
       position: relative;
@@ -136,6 +208,7 @@
       grid-template-columns: 1.05fr 0.95fr;
       align-items: center;
       padding: 0 4vw;
+      padding-top: 6.5rem;
     }
 
     .hero-col {
@@ -147,16 +220,14 @@
     }
 
     .landing-label,
-    .landing-name,
-    .landing-sub,
-    .enter-btn,
+    .landing-intro,
+    .landing-tag,
     .fetch-card {
       opacity: 0;
     }
-    body.revealed .landing-label { animation: fadeUp 0.7s ease 0.05s forwards; }
-    body.revealed .landing-name  { animation: fadeUp 0.8s ease 0.2s forwards; }
-    body.revealed .landing-sub   { animation: fadeUp 0.8s ease 0.4s forwards; }
-    body.revealed .enter-btn     { animation: fadeUp 0.8s ease 0.6s forwards; }
+    body.revealed .landing-label { animation: fadeUp 0.7s ease 0.15s forwards; }
+    body.revealed .landing-intro { animation: fadeUp 0.8s ease 0.3s forwards; }
+    body.revealed .landing-tag   { animation: fadeUp 0.8s ease 0.45s forwards; }
     body.revealed .fetch-card    { animation: fadeUp 0.9s ease 0.5s forwards; }
 
     .landing-label {
@@ -165,74 +236,44 @@
       color: var(--accent);
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 1rem;
     }
     .landing-label::before { content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.5; }
-    .landing-name {
-      font-size: clamp(2.4rem, 5.4vw, 4.6rem);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: 0.02em;
-      margin-bottom: 1.25rem;
+    .landing-intro {
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.005em;
+      color: var(--text);
+      max-width: 30ch;
+      margin-bottom: 1.75rem;
     }
-    .landing-name .outline {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(0,229,255,0.5);
-      font-weight: 300;
-      letter-spacing: 0.04em;
-    }
-    .landing-sub {
+    .landing-intro strong { font-weight: 800; color: var(--accent); }
+    .landing-tag {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+      font-size: 0.7rem;
       color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-    }
-    .enter-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 1.25rem;
-      text-decoration: none;
-      color: inherit;
-      cursor: none;
-    }
-    .enter-btn:hover .btn-circle { border-color: var(--accent); background: rgba(0,229,255,0.08); }
-    .enter-btn:hover .btn-arrow  { transform: translateX(5px); }
-    .enter-btn:hover .btn-label  { color: var(--accent); }
-    .btn-circle {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.3s, background 0.3s;
-      will-change: transform;
-      flex-shrink: 0;
-    }
-    .btn-arrow { font-size: 1.4rem; color: var(--accent); transition: transform 0.3s; line-height: 1; }
-    .btn-text-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .btn-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .btn-hint {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--border);
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--border);
+      width: fit-content;
     }
-    .btn-hint kbd { color: var(--muted); border: 1px solid var(--border); padding: 0.1rem 0.4rem; font-family: inherit; }
+    .landing-tag kbd {
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.05rem 0.4rem;
+      font-family: inherit;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: none;
+    }
 
     /* ── NEOFETCH CARD ── */
     .fetch-wrap { display: flex; justify-content: center; }
@@ -287,22 +328,7 @@
     .fetch-swatches { display: flex; gap: 6px; margin-top: 1.1rem; }
     .fetch-swatches span { width: 16px; height: 16px; display: block; }
 
-    /* ── CORNERS ── */
-    .corner {
-      position: fixed;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      z-index: 10;
-      opacity: 0;
-      line-height: 1.7;
-    }
-    body.revealed .corner { animation: fadeIn 1s ease 0.75s forwards; }
-    .corner-tl { top: 2rem; left: 2.5rem; text-align: left; }
-    .corner-tr { top: 2rem; right: 2.5rem; text-align: right; }
-    .corner-bl { bottom: 2rem; left: 2.5rem; text-align: left; }
-    .corner-dim { color: var(--border); }
+    /* ── STATUS INDICATOR (used inside nav) ── */
     .status-dot {
       display: inline-block; width: 5px; height: 5px; border-radius: 50%;
       background: var(--green); margin-right: 0.4rem; animation: pulse 2s ease infinite;
@@ -327,27 +353,30 @@
 
     @media (max-width: 980px) {
       html, body { height: auto; overflow: auto; }
+      .topnav { padding: 1.1rem 1.5rem; align-items: flex-start; }
+      .nav-status { display: none; }
       .page {
         height: auto;
         grid-template-columns: 1fr;
-        padding: 7rem 1.5rem 4rem;
+        padding: 7.5rem 1.5rem 4rem;
         gap: 3rem;
       }
-      .hero-col { align-items: center; text-align: center; padding-right: 0; }
-      .landing-label::before { display: none; }
+      .hero-col { align-items: flex-start; text-align: left; padding-right: 0; }
+      .landing-intro { max-width: none; }
       .fetch-wrap { order: 3; }
-      .corner-tr, .corner-bl { display: none; }
-      .btn-hint { display: none; }
     }
 
     @media (max-width: 420px) {
+      .topnav { padding: 1rem 1.15rem; }
+      .nav-meta { font-size: 0.56rem; }
+      .nav-cta-label { display: none; }
+      .nav-cta { padding: 0.7rem; border-radius: 50%; }
       .page { padding: 6.5rem 1.25rem 3rem; }
       .fetch-card { max-width: 100%; }
       .fetch-body { padding: 1.25rem 1.15rem; }
       .fetch-key { width: 68px; font-size: 0.66rem; }
       .fetch-row { font-size: 0.66rem; }
-      .corner-tl { font-size: 0.58rem; }
-      .landing-name { font-size: clamp(2rem, 8vw, 2.6rem); }
+      .landing-intro { font-size: clamp(1.3rem, 6vw, 1.6rem); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -360,7 +389,7 @@
        otherwise they'd sit frozen at (0,0) forever since mousemove never fires. */
     @media (hover: none), (pointer: coarse) {
       .cursor, .cursor-ring { display: none !important; }
-      body, .enter-btn { cursor: auto !important; }
+      body, .nav-cta, .nav-brand { cursor: auto !important; }
     }
   </style>
 </head>
@@ -374,15 +403,27 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <div class="corner corner-tl" id="cornerClock">
-    WINDHOEK, NAMIBIA<br>
-    <span class="corner-dim" id="localTime">--:--:--</span>
-  </div>
-  <div class="corner corner-tr">
-    <span class="status-dot"></span>STATUS: ONLINE<br>
-    <span class="corner-dim" id="latency">LATENCY: --ms</span>
-  </div>
-  <div class="corner corner-bl">SYSADMIN · IT OFFICER</div>
+  <nav class="topnav">
+    <div class="nav-left">
+      <a class="nav-brand" href="#" aria-label="Home">
+        <span class="nav-name">Likubangwa <span class="nav-name-accent">Jay-Z Nyeliso</span></span>
+      </a>
+      <div class="nav-meta">
+        <span>Windhoek, Namibia</span>
+        <span class="nav-dot">·</span>
+        <span id="localTime">--:--:--</span>
+        <span class="nav-dot">·</span>
+        <span>Sysadmin &amp; IT Officer</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="nav-status"><span class="status-dot"></span>Online<span class="nav-status-dim">&nbsp;·&nbsp;<span id="latency">--ms</span></span></span>
+      <a class="nav-cta" href="portfolio.html" id="enterBtn">
+        <span class="nav-cta-label">Enter Portfolio</span>
+        <span class="nav-cta-arrow">→</span>
+      </a>
+    </div>
+  </nav>
 
   <div class="page-transition" id="pageTransition"></div>
 
@@ -392,24 +433,11 @@
 
   <div class="page">
     <div class="hero-col">
-      <div class="landing-label">Welcome to</div>
+      <div class="landing-label">Hey, welcome 👋</div>
 
-      <h1 class="landing-name">
-        Likubangwa
-        <span class="outline">Jay-Z Nyeliso</span>
-      </h1>
+      <p class="landing-intro">I design, secure, and keep <strong>enterprise infrastructure</strong> running.</p>
 
-      <p class="landing-sub">Portfolio &amp; Lab Reports</p>
-
-      <a class="enter-btn" href="portfolio.html" id="enterBtn">
-        <div class="btn-circle" id="btnCircle">
-          <span class="btn-arrow">→</span>
-        </div>
-        <div class="btn-text-wrap">
-          <span class="btn-label">Enter Portfolio</span>
-          <span class="btn-hint">or press <kbd>Enter</kbd> ↵</span>
-        </div>
-      </a>
+      <span class="landing-tag">Portfolio &amp; Lab Reports · press <kbd>Enter</kbd> ↵</span>
     </div>
 
     <div class="fetch-wrap">
@@ -518,7 +546,7 @@
     const latencyEl = document.getElementById('latency');
     function tickLatency() {
       const ms = 8 + Math.floor(Math.random() * 14);
-      latencyEl.textContent = `LATENCY: ${ms}ms`;
+      latencyEl.textContent = `${ms}ms`;
     }
     tickLatency();
     setInterval(tickLatency, 2200);
@@ -527,7 +555,6 @@
     if (!reduceMotion) {
       const glow1 = document.getElementById('glow1');
       const glow2 = document.getElementById('glow2');
-      const btnCircle = document.getElementById('btnCircle');
       const enterBtnEl = document.getElementById('enterBtn');
 
       function raf() {
@@ -540,14 +567,14 @@
       requestAnimationFrame(raf);
 
       enterBtnEl.addEventListener('mousemove', e => {
-        const rect = btnCircle.getBoundingClientRect();
+        const rect = enterBtnEl.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        const dx = (e.clientX - cx) * 0.25;
-        const dy = (e.clientY - cy) * 0.25;
-        btnCircle.style.transform = `translate(${dx}px, ${dy}px)`;
+        const dx = (e.clientX - cx) * 0.18;
+        const dy = (e.clientY - cy) * 0.18;
+        enterBtnEl.style.transform = `translate(${dx}px, ${dy}px)`;
       });
-      enterBtnEl.addEventListener('mouseleave', () => { btnCircle.style.transform = 'translate(0, 0)'; });
+      enterBtnEl.addEventListener('mouseleave', () => { enterBtnEl.style.transform = 'translate(0, 0)'; });
     }
 
     /* ── Enter button expand + navigation ── */
