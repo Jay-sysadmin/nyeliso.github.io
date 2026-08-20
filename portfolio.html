@@ -41,6 +41,7 @@
       color: var(--text);
       font-family: 'Syne', sans-serif;
       overflow-x: hidden;
+      padding-bottom: 3.9rem;
     }
 
     /* ── NAV ── */
@@ -104,9 +105,108 @@
 
     /* ── SECTIONS ── */
     .portfolio-section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
-    .sec-tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sec-tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem; }
+    .sec-num { color: var(--border); font-weight: 700; letter-spacing: 0.05em; }
     .sec-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.05; }
     .sec-sub { color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 560px; margin-bottom: 3rem; }
+
+    /* ── NEXT-SECTION WAYFINDER ── */
+    .sec-next { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: flex-end; gap: 0.85rem; }
+    .sec-next-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    .sec-next-link { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .sec-next-link:hover { color: var(--accent); }
+    .sec-next-arrow { transition: transform 0.2s; }
+    .sec-next-link:hover .sec-next-arrow { transform: translateX(4px); }
+
+    /* ── FIXED SECTION NAVIGATOR ── */
+    .section-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      padding: 0.85rem 1.5rem;
+      background: rgba(7,7,14,0.88);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+    }
+    .section-nav-btn {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .section-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .section-nav-btn:disabled { opacity: 0.25; cursor: default; }
+    .section-nav-current {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.66rem;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 160px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .section-nav-current .idx { color: var(--accent); }
+    .section-nav-dots { display: flex; gap: 0.4rem; }
+    .section-nav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none; padding: 0;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .section-nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+    /* ── LAB STEPPER (browse projects sequentially) ── */
+    .lab-stepper {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+    .lab-stepper-info { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+    .lab-stepper-label { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    .lab-stepper-label span { color: var(--accent); }
+    .lab-stepper-name { font-size: 1rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 380px; }
+    .lab-stepper-controls { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .lab-stepper-btn {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      background: none; color: var(--text);
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .lab-stepper-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.06); }
+    .lab-stepper-open {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none;
+      border: 1px solid rgba(0,229,255,0.3);
+      padding: 0.6rem 1.1rem;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .lab-stepper-open:hover { background: rgba(0,229,255,0.08); border-color: var(--accent); }
+
+    @keyframes labPulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,229,255,0.55); }
+      70% { box-shadow: 0 0 0 12px rgba(0,229,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,229,255,0); }
+    }
+    .project-row.lab-focus { animation: labPulse 1s ease-out 1; }
 
     /* ── REVEAL ON SCROLL ── */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1); }
@@ -236,6 +336,17 @@
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+      .section-nav { gap: 0.75rem; padding: 0.7rem 1rem; }
+      .section-nav-dots { display: none; }
+      .section-nav-current { min-width: 0; font-size: 0.6rem; }
+      .lab-stepper { padding: 1.1rem 1.25rem; }
+      .lab-stepper-name { max-width: 200px; }
+      .sec-next { justify-content: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .lab-stepper-open { display: none; }
+      .lab-stepper-name { max-width: 140px; }
     }
 
     /* ── PRINT ── */
@@ -248,6 +359,7 @@
 
       nav, .sidebar, .hero-status, .status-dot,
       .skill-modal-overlay, .btn-primary, .btn-ghost,
+      .section-nav, .sec-next, .lab-stepper,
       .hero-eyebrow::before { display: none !important; }
 
       .hero { min-height: 0; border-bottom: 1px solid #ccc; padding: 0 0 1rem; grid-template-columns: 1fr; }
@@ -306,6 +418,14 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+
+  <!-- FIXED SECTION NAVIGATOR — move between sections without scrolling -->
+  <div class="section-nav" id="sectionNav">
+    <button class="section-nav-btn" id="secPrevBtn" aria-label="Previous section">←</button>
+    <div class="section-nav-current"><span class="idx" id="secIdx">01</span> / 08 — <span id="secName">Home</span></div>
+    <div class="section-nav-dots" id="secDots"></div>
+    <button class="section-nav-btn" id="secNextBtn" aria-label="Next section">→</button>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="home">
@@ -371,7 +491,7 @@
 
       <!-- ABOUT -->
       <section class="portfolio-section" id="about">
-        <div class="sec-tag">About</div>
+        <div class="sec-tag"><span class="sec-num">02</span>About</div>
         <h2 class="sec-title">Who I Am</h2>
         <div class="about-split">
           <div class="about-text reveal">
@@ -386,11 +506,12 @@
             <div class="metric-row"><span class="metric-label">Status</span><span class="metric-val2" style="color:var(--green)">Available</span></div>
           </div>
         </div>
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#skills" class="sec-next-link">Technical Stack <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- SKILLS -->
       <section class="portfolio-section" id="skills">
-        <div class="sec-tag">Technical Stack</div>
+        <div class="sec-tag"><span class="sec-num">03</span>Technical Stack</div>
         <h2 class="sec-title">Systems, Networks &amp; Scripts</h2>
         <p class="sec-sub">Grouped by how much I actually work with it, largest first — click any item for where it's been applied.</p>
 
@@ -488,13 +609,26 @@
             </div>
           </div>
         </div>
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#projects" class="sec-next-link">Lab Work <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- PROJECTS -->
       <section class="portfolio-section" id="projects">
-        <div class="sec-tag">Lab Work</div>
+        <div class="sec-tag"><span class="sec-num">04</span>Lab Work</div>
         <h2 class="sec-title">Hands-On Builds &amp; Lab Reports</h2>
         <p class="sec-sub">Real deployments and reproducible lab environments — each documented the way I'd document it on the job.</p>
+
+        <div class="lab-stepper reveal" id="labStepper">
+          <div class="lab-stepper-info">
+            <span class="lab-stepper-label">Browsing lab <span id="labStepperCount">1 / 19</span></span>
+            <span class="lab-stepper-name" id="labStepperName">—</span>
+          </div>
+          <div class="lab-stepper-controls">
+            <button class="lab-stepper-btn" id="labPrevBtn" aria-label="Previous lab" type="button">←</button>
+            <a class="lab-stepper-open" id="labStepperOpen" href="#" target="_blank" rel="noopener">Open Report ↗</a>
+            <button class="lab-stepper-btn" id="labNextBtn" aria-label="Next lab" type="button">→</button>
+          </div>
+        </div>
 
         <div class="project-cat-label reveal">Systems &amp; Infrastructure</div>
         <div class="project-list reveal" style="margin-bottom:3rem;">
@@ -683,11 +817,13 @@
             <div class="project-arrow-col">↗</div>
           </a>
         </div>
+
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#experience" class="sec-next-link">Career <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- EXPERIENCE -->
       <section class="portfolio-section" id="experience">
-        <div class="sec-tag">Career</div>
+        <div class="sec-tag"><span class="sec-num">05</span>Career</div>
         <h2 class="sec-title">From Health Facilities to Home Lab</h2>
 
         <div class="exp-block reveal">
@@ -722,11 +858,13 @@
             </ul>
           </div>
         </div>
+
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#education" class="sec-next-link">Academic Background <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- EDUCATION -->
       <section class="portfolio-section" id="education">
-        <div class="sec-tag">Education</div>
+        <div class="sec-tag"><span class="sec-num">06</span>Education</div>
         <h2 class="sec-title">Academic Background</h2>
         <div class="exp-block reveal">
           <div class="exp-date-col">2023 — 2026<br><br>NUST<br>Windhoek, Namibia</div>
@@ -740,11 +878,13 @@
             </ul>
           </div>
         </div>
+
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#certs" class="sec-next-link">Credentials <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- CERTIFICATIONS -->
       <section class="portfolio-section" id="certs">
-        <div class="sec-tag">Certifications</div>
+        <div class="sec-tag"><span class="sec-num">07</span>Certifications</div>
         <h2 class="sec-title">Credentials</h2>
         <div class="cert-list reveal">
           <a href="https://www.netacad.com/courses/network-support-security" target="_blank" rel="noopener" class="cert-row">
@@ -760,11 +900,13 @@
             <div class="cert-badge">VERIFIED ↗</div>
           </a>
         </div>
+
+        <div class="sec-next"><span class="sec-next-label">Next</span><a href="#contact" class="sec-next-link">Get In Touch <span class="sec-next-arrow">→</span></a></div>
       </section>
 
       <!-- CONTACT -->
       <section class="portfolio-section" id="contact">
-        <div class="sec-tag">Contact</div>
+        <div class="sec-tag"><span class="sec-num">08</span>Contact</div>
         <h2 class="sec-title">Get In Touch</h2>
         <div class="contact-split reveal">
           <div class="contact-intro">
@@ -794,6 +936,7 @@
             </a>
           </div>
         </div>
+        <div class="sec-next"><span class="sec-next-label">Back to</span><a href="#home" class="sec-next-link">Top <span class="sec-next-arrow">↑</span></a></div>
       </section>
 
       <footer>
@@ -823,7 +966,53 @@
   </div>
 
   <script>
-    // Sidebar active-link highlight on scroll
+    // ── Section order + fixed bottom navigator ──
+    const SECTION_META = [
+      { id: 'home', label: 'Home' },
+      { id: 'about', label: 'About' },
+      { id: 'skills', label: 'Skills' },
+      { id: 'projects', label: 'Projects' },
+      { id: 'experience', label: 'Experience' },
+      { id: 'education', label: 'Education' },
+      { id: 'certs', label: 'Certifications' },
+      { id: 'contact', label: 'Contact' }
+    ];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let currentSectionIdx = 0;
+    const secIdxEl = document.getElementById('secIdx');
+    const secNameEl = document.getElementById('secName');
+    const secDotsEl = document.getElementById('secDots');
+    const secPrevBtn = document.getElementById('secPrevBtn');
+    const secNextBtn = document.getElementById('secNextBtn');
+
+    SECTION_META.forEach((s, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'section-nav-dot' + (i === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Go to ' + s.label);
+      dot.addEventListener('click', () => goToSection(i));
+      secDotsEl.appendChild(dot);
+    });
+
+    function updateSectionNavUI(idx) {
+      currentSectionIdx = idx;
+      secIdxEl.textContent = String(idx + 1).padStart(2, '0');
+      secNameEl.textContent = SECTION_META[idx].label;
+      Array.from(secDotsEl.children).forEach((d, i) => d.classList.toggle('active', i === idx));
+      secPrevBtn.disabled = idx === 0;
+      secNextBtn.disabled = idx === SECTION_META.length - 1;
+    }
+    function goToSection(idx) {
+      idx = Math.max(0, Math.min(SECTION_META.length - 1, idx));
+      const target = document.getElementById(SECTION_META[idx].id);
+      if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+    secPrevBtn.addEventListener('click', () => goToSection(currentSectionIdx - 1));
+    secNextBtn.addEventListener('click', () => goToSection(currentSectionIdx + 1));
+    updateSectionNavUI(0);
+
+    // Sidebar active-link highlight on scroll + drives the fixed navigator above
     const sections = document.querySelectorAll('section[id]');
     const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
     const navObserver = new IntersectionObserver(entries => {
@@ -832,12 +1021,40 @@
           sidebarLinks.forEach(a => a.classList.remove('active'));
           const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
           if (active) active.classList.add('active');
+          const idx = SECTION_META.findIndex(s => s.id === entry.target.id);
+          if (idx !== -1) updateSectionNavUI(idx);
         }
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     sections.forEach(s => navObserver.observe(s));
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // ── Lab stepper: browse project rows one at a time with prev/next ──
+    const labLinks = Array.from(document.querySelectorAll('.project-row[href]'));
+    const labStepperCount = document.getElementById('labStepperCount');
+    const labStepperName = document.getElementById('labStepperName');
+    const labStepperOpen = document.getElementById('labStepperOpen');
+    const labPrevBtn = document.getElementById('labPrevBtn');
+    const labNextBtn = document.getElementById('labNextBtn');
+    let currentLabIdx = 0;
+
+    function updateLabStepper(idx, scrollTo) {
+      if (!labLinks.length) return;
+      currentLabIdx = ((idx % labLinks.length) + labLinks.length) % labLinks.length;
+      const row = labLinks[currentLabIdx];
+      labStepperCount.textContent = `${currentLabIdx + 1} / ${labLinks.length}`;
+      labStepperName.textContent = row.querySelector('.project-name').textContent;
+      labStepperOpen.href = row.getAttribute('href');
+      if (scrollTo) {
+        row.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        row.classList.remove('lab-focus');
+        void row.offsetWidth;
+        row.classList.add('lab-focus');
+      }
+    }
+    if (labPrevBtn) labPrevBtn.addEventListener('click', () => updateLabStepper(currentLabIdx - 1, true));
+    if (labNextBtn) labNextBtn.addEventListener('click', () => updateLabStepper(currentLabIdx + 1, true));
+    labLinks.forEach((row, i) => { row.addEventListener('click', () => { currentLabIdx = i; }); });
+    updateLabStepper(0, false);
 
     // Count-up numbers
     function animateCount(el) {
