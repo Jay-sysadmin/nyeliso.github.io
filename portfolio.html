@@ -259,6 +259,7 @@
     </button>
 
     <nav class="navbtns" id="navbtns" aria-label="Primary">
+      <a class="navbtn" href="index.html">← Landing</a>
       <button class="navbtn" data-go="home">Home</button>
       <button class="navbtn" data-go="about">About</button>
       <button class="navbtn" data-go="stack">Stack</button>
@@ -647,7 +648,9 @@
       document.getElementById('nextLbl').textContent = next ? LABELS[next] : '';
       document.getElementById('pagerCount').textContent = `${i + 1} / ${PAGES.length}`;
       document.title = (id === 'home' ? '' : LABELS[id] + ' | ') + 'Likubangwa Jay-Z Nyeliso';
-      if (pushHash && location.hash !== '#/' + id) history.pushState(null, '', '#/' + id);
+      if (pushHash && location.hash !== '#/' + id) {
+        try { history.pushState(null, '', '#/' + id); } catch (err) { /* sandboxed preview blocks history changes; page still works */ }
+      }
       window.scrollTo({ top: 0, behavior: 'auto' });
       document.getElementById('navbtns').classList.remove('open');
       document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
